@@ -25,7 +25,7 @@ typedef enum {
     NSInteger _sectionCounter;   // for check playing extract section.
 }
 @property (nonatomic, strong, setter=setEkisu:, getter=ekisu) Ekisu *ekisu;
-@property (nonatomic, strong) NSString* identifier; // video id
+@property (nonatomic, strong) NSString *videoAddress; // video address
 @property (nonatomic, strong, setter=setPlayer:, getter=player) AVPlayer *player;
 @property (strong) AVPlayerItem *playerItem;
 @property (nonatomic) Playmode playmode;
@@ -35,7 +35,7 @@ typedef enum {
 @property (nonatomic, strong) NSArray *extractSections;
 @property (nonatomic) NSTimeInterval extractDuration;
 
-- (instancetype)initWithIdentifier:(NSString *)identifier;
+- (instancetype)initWithVideoAddress:(NSString *)videoAddress;
 
 - (void)setFrame:(CGRect)frame;
 

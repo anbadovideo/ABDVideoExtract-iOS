@@ -10,6 +10,8 @@
 #import "AFNetworking.h"
 #import "GAI.h"
 #import "iVersion.h"
+#import "MenuTableViewController.h"
+#import "SlideNavigationController.h"
 
 @interface AppDelegate ()
 
@@ -33,6 +35,32 @@
     [GAI sharedInstance].dispatchInterval = 20;
     [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelError];
     [[GAI sharedInstance] trackerWithTrackingId:@"UA-45579903-4"];
+
+    /* Drawer Menu setting. */
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    MenuTableViewController *menuViewController = (MenuTableViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:@"MenuTableViewController"];
+    [SlideNavigationController sharedInstance].leftMenu = menuViewController;
+    [SlideNavigationController sharedInstance].enableShadow = NO;
+    [SlideNavigationController sharedInstance].enableSwipeGesture = NO;
+
+    UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [button setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
+    [button setTintColor:[UIColor whiteColor]];
+    [button addTarget:[SlideNavigationController sharedInstance] action:@selector(toggleLeftMenu) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    [SlideNavigationController sharedInstance].leftBarButtonItem = leftBarButtonItem;
+
+    [[NSNotificationCenter defaultCenter] addObserverForName:SlideNavigationControllerDidOpen object:nil queue:nil usingBlock:^(NSNotification *note) {
+        NSString *menu = note.userInfo[@"menu"];
+        NSLog(@"Opened %@", menu);
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    }];
+    [[NSNotificationCenter defaultCenter] addObserverForName:SlideNavigationControllerDidClose object:nil queue:nil usingBlock:^(NSNotification *note) {
+        NSString *menu = note.userInfo[@"menu"];
+        NSLog(@"Closed %@", menu);
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    }];
+
 
     return YES;
 }
