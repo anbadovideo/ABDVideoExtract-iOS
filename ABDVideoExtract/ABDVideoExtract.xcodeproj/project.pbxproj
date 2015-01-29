@@ -16,6 +16,7 @@
 		0466D2761A77596600092D08 /* ABDVideoExtractTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0466D2751A77596600092D08 /* ABDVideoExtractTests.m */; };
 		77722268F2A3C6B073268293 /* ABDMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 777220A4F580FAA26F4A28BE /* ABDMoviePlayerController.m */; };
 		7772239721CC3A488E86A1F8 /* ABDMoviePlayerControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772226D4E6357E067889A32 /* ABDMoviePlayerControls.m */; };
+		777227875D7B095B5DDCE276 /* ExtractSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772267CEB501E29A49C8FC7 /* ExtractSection.m */; };
 		BE8A7480BCE6ABF5789B53B1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D78DA377083B18294D2CE893 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,8 @@
 		777220A4F580FAA26F4A28BE /* ABDMoviePlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDMoviePlayerController.m; sourceTree = "<group>"; };
 		777221E95CFA1B7CAF8698C9 /* ABDMoviePlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDMoviePlayerController.h; sourceTree = "<group>"; };
 		7772226D4E6357E067889A32 /* ABDMoviePlayerControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDMoviePlayerControls.m; sourceTree = "<group>"; };
+		777223394EC4D7CDD41EAC48 /* ExtractSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtractSection.h; sourceTree = "<group>"; };
+		7772267CEB501E29A49C8FC7 /* ExtractSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtractSection.m; sourceTree = "<group>"; };
 		77722E176C2DE1624FE5BF97 /* ABDMoviePlayerControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDMoviePlayerControls.h; sourceTree = "<group>"; };
 		AC6009DC0E13367AC920E021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D78DA377083B18294D2CE893 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +106,7 @@
 				0466D2681A77596600092D08 /* LaunchScreen.xib */,
 				0466D2591A77596600092D08 /* Supporting Files */,
 				777228438658165C982A143F /* ABDMoviePlayerController */,
+				7772245463F68C96AEC5967B /* Models */,
 			);
 			path = ABDVideoExtract;
 			sourceTree = "<group>";
@@ -140,6 +144,15 @@
 				AC6009DC0E13367AC920E021 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		7772245463F68C96AEC5967B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				777223394EC4D7CDD41EAC48 /* ExtractSection.h */,
+				7772267CEB501E29A49C8FC7 /* ExtractSection.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		777228438658165C982A143F /* ABDMoviePlayerController */ = {
@@ -303,6 +316,7 @@
 				0466D25C1A77596600092D08 /* main.m in Sources */,
 				77722268F2A3C6B073268293 /* ABDMoviePlayerController.m in Sources */,
 				7772239721CC3A488E86A1F8 /* ABDMoviePlayerControls.m in Sources */,
+				777227875D7B095B5DDCE276 /* ExtractSection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
