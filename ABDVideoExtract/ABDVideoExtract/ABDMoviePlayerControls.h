@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MPMoviePlayerController.h>
 
-@interface ABDMoviePlayerControls : UIView
+@class ABDExtractSlider;
 
+@interface ABDMoviePlayerControls : UIView
+@property (nonatomic, strong) ABDExtractSlider *extractSlider;
 @end

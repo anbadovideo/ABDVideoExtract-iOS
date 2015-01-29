@@ -9,6 +9,15 @@
 #import "ABDExtractSlider.h"
 
 @implementation ABDExtractSlider
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self constructSlider];
+    }
+    return self;
+}
+
 - (instancetype)initWithDuration:(NSTimeInterval)duration extractSections:(NSArray *)extractSections {
     self = [super init];
     if (self) {
