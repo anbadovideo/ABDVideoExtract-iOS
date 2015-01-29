@@ -1,5 +1,5 @@
 //
-//  ABDMoviePlayerController.m
+//  ABDVideoPlayerViewController.m
 //  ABDVideoExtract
 //
 //  Created by Seung-won Kim on 1/29/15.
@@ -7,12 +7,12 @@
 //
 
 #import <objc/runtime.h>
-#import "ABDMoviePlayerController.h"
-#import "ABDMoviePlayerControls.h"
+#import "ABDVideoPlayerViewController.h"
+#import "ABDVideoPlayerControls.h"
 
-@implementation ABDMoviePlayerController
+@implementation ABDVideoPlayerViewController
 
-- (void)setControls:(ABDMoviePlayerControls *)controls {
+- (void)setControls:(ABDVideoPlayerControls *)controls {
     if (_controls != controls) {
         _controls = controls;
         _controls.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);

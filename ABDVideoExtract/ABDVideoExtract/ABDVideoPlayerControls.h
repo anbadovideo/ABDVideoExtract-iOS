@@ -1,5 +1,5 @@
 //
-//  ABDMoviePlayerControls.h
+//  ABDVideoPlayerControls.h
 //  ABDVideoExtract
 //
 //  Created by Seung-won Kim on 1/29/15.
@@ -10,7 +10,10 @@
 #import <MediaPlayer/MPMoviePlayerController.h>
 
 @class ABDExtractSlider;
+@class ABDVideoPlayerViewController;
 
-@interface ABDMoviePlayerControls : UIView
+@interface ABDVideoPlayerControls : UIView
 @property (nonatomic, strong) ABDExtractSlider *extractSlider;
+
+- (id)initWithMoviePlayer:(ABDVideoPlayerViewController *)moviePlayer;
 @end
