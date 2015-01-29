@@ -8,6 +8,8 @@
 
 #import "XCDYouTubeVideoPlayerViewController.h"
 
-@interface ABDMoviePlayerController : XCDYouTubeVideoPlayerViewController
+@class ABDMoviePlayerControls;
 
+@interface ABDMoviePlayerController : XCDYouTubeVideoPlayerViewController
+@property (nonatomic, strong) ABDMoviePlayerControls *controls;
 @end
