@@ -14,6 +14,10 @@
 		0466D2671A77596600092D08 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0466D2661A77596600092D08 /* Images.xcassets */; };
 		0466D26A1A77596600092D08 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0466D2681A77596600092D08 /* LaunchScreen.xib */; };
 		0466D2761A77596600092D08 /* ABDVideoExtractTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0466D2751A77596600092D08 /* ABDVideoExtractTests.m */; };
+		046F7C171A7A01C300084B94 /* slider_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F7C131A7A01C300084B94 /* slider_active@2x.png */; };
+		046F7C181A7A01C300084B94 /* slider_deactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F7C141A7A01C300084B94 /* slider_deactive@2x.png */; };
+		046F7C191A7A01C300084B94 /* slider_section_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F7C151A7A01C300084B94 /* slider_section_active@2x.png */; };
+		046F7C1A1A7A01C300084B94 /* slider_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F7C161A7A01C300084B94 /* slider_thumb@2x.png */; };
 		77722268F2A3C6B073268293 /* ABDMoviePlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 777220A4F580FAA26F4A28BE /* ABDMoviePlayerController.m */; };
 		7772229CF85E509617B60DAB /* ABDExtractSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 777224EB1B0C458AC2423CF0 /* ABDExtractSlider.m */; };
 		7772239721CC3A488E86A1F8 /* ABDMoviePlayerControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772226D4E6357E067889A32 /* ABDMoviePlayerControls.m */; };
@@ -45,6 +49,10 @@
 		0466D26F1A77596600092D08 /* ABDVideoExtractTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABDVideoExtractTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0466D2741A77596600092D08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0466D2751A77596600092D08 /* ABDVideoExtractTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABDVideoExtractTests.m; sourceTree = "<group>"; };
+		046F7C131A7A01C300084B94 /* slider_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_active@2x.png"; sourceTree = "<group>"; };
+		046F7C141A7A01C300084B94 /* slider_deactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_deactive@2x.png"; sourceTree = "<group>"; };
+		046F7C151A7A01C300084B94 /* slider_section_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_section_active@2x.png"; sourceTree = "<group>"; };
+		046F7C161A7A01C300084B94 /* slider_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_thumb@2x.png"; sourceTree = "<group>"; };
 		50F14C761127AA8BCD082E3B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		77722022BAA09760E74C1E0D /* ABDExtractSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDExtractSlider.h; sourceTree = "<group>"; };
 		777220A4F580FAA26F4A28BE /* ABDMoviePlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDMoviePlayerController.m; sourceTree = "<group>"; };
@@ -119,6 +127,7 @@
 			children = (
 				0466D25A1A77596600092D08 /* Info.plist */,
 				0466D25B1A77596600092D08 /* main.m */,
+				77722FD62A986BB3B5FF2D49 /* extractSliderAssets */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -169,6 +178,17 @@
 				777224EB1B0C458AC2423CF0 /* ABDExtractSlider.m */,
 			);
 			name = ABDMoviePlayerController;
+			sourceTree = "<group>";
+		};
+		77722FD62A986BB3B5FF2D49 /* extractSliderAssets */ = {
+			isa = PBXGroup;
+			children = (
+				046F7C131A7A01C300084B94 /* slider_active@2x.png */,
+				046F7C141A7A01C300084B94 /* slider_deactive@2x.png */,
+				046F7C151A7A01C300084B94 /* slider_section_active@2x.png */,
+				046F7C161A7A01C300084B94 /* slider_thumb@2x.png */,
+			);
+			name = extractSliderAssets;
 			sourceTree = "<group>";
 		};
 		C4FC5D47B386172ED7EFE1C5 /* Frameworks */ = {
@@ -248,8 +268,6 @@
 			mainGroup = 0466D24D1A77596600092D08;
 			productRefGroup = 0466D2571A77596600092D08 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-			);
 			projectRoot = "";
 			targets = (
 				0466D2551A77596600092D08 /* ABDVideoExtract */,
@@ -263,9 +281,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				046F7C1A1A7A01C300084B94 /* slider_thumb@2x.png in Resources */,
 				0466D2651A77596600092D08 /* Main.storyboard in Resources */,
 				0466D26A1A77596600092D08 /* LaunchScreen.xib in Resources */,
 				0466D2671A77596600092D08 /* Images.xcassets in Resources */,
+				046F7C191A7A01C300084B94 /* slider_section_active@2x.png in Resources */,
+				046F7C171A7A01C300084B94 /* slider_active@2x.png in Resources */,
+				046F7C181A7A01C300084B94 /* slider_deactive@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,6 +537,7 @@
 				0466D27B1A77596600092D08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0466D27C1A77596600092D08 /* Build configuration list for PBXNativeTarget "ABDVideoExtractTests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +546,7 @@
 				0466D27E1A77596600092D08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

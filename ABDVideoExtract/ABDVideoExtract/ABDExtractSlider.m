@@ -26,5 +26,11 @@
     self.minimumValue = 0.0f;
     self.maximumValue = 1.0f;
     self.value = 0.0f;
+
+    self.continuous = YES;
+
+    [self setMaximumTrackImage:[UIImage imageNamed:@"slider_deactive.png"] forState:UIControlStateNormal];
+    [self setMinimumTrackImage:[UIImage imageNamed:@"slider_active.png"] forState:UIControlStateNormal];
+    [self setThumbImage:[UIImage imageNamed:@"slider_thumb.png"] forState:UIControlStateNormal];
 }
 @end
