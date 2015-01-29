@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ABDExtractSlider : UISlider
+@class ExtractSection;
 
+@interface ABDExtractSlider : UISlider
+@property (nonatomic) NSTimeInterval duration;
+@property (nonatomic, strong) NSArray *extractSections;
+
+- (instancetype)initWithDuration:(NSTimeInterval)duration extractSections:(NSArray *)extractSections;
 @end
