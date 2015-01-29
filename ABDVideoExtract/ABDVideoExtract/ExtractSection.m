@@ -9,5 +9,13 @@
 #import "ExtractSection.h"
 
 @implementation ExtractSection
-
+- (instancetype)initWithStartTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    _startTime = startTime;
+    _endTime = endTime;
+    return self;
+}
 @end

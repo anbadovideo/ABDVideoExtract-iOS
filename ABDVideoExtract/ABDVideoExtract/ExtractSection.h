@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface ExtractSection : NSObject
-
+@property (nonatomic) NSTimeInterval startTime;
+@property (nonatomic) NSTimeInterval endTime;
 @end
