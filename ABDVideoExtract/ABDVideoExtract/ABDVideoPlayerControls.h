@@ -14,6 +14,7 @@
 
 @interface ABDVideoPlayerControls : UIView
 @property (nonatomic, strong) ABDExtractSlider *extractSlider;
+@property (nonatomic, strong) NSArray *extractSections;
 
 - (id)initWithMoviePlayer:(ABDVideoPlayerViewController *)moviePlayer;
 @end

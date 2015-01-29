@@ -9,11 +9,14 @@
 #import "ABDVideoPlayerControls.h"
 #import "ABDExtractSlider.h"
 #import "ABDVideoPlayerViewController.h"
+#import "ExtractSection.h"
 
 const static int kHeightOfBottomBar = 44;
 
 @interface ABDVideoPlayerControls ()
 @property (nonatomic, weak) ABDVideoPlayerViewController *playerViewController;
+@property (nonatomic) NSUInteger sectionCounter;
+
 @property (nonatomic, getter = isShowing) BOOL showing;
 
 @property (nonatomic, strong) NSTimer *durationTimer;
@@ -31,6 +34,9 @@ const static int kHeightOfBottomBar = 44;
     self = [super init];
     if (self) {\
         _playerViewController = playerViewController;
+
+        // 건너 띈 구간 체크를 위한 카운터.
+        _sectionCounter = 0;
 
         [self setup];
         [self addNotifications];
@@ -134,5 +140,24 @@ const static int kHeightOfBottomBar = 44;
     double totalTime = floor(_playerViewController.moviePlayer.duration);
 //    [self setTimeLabelValues:currentTime totalTime:totalTime];
     _extractSlider.value = (float)(currentTime);
+
+    [self checkSection];
+}
+
+#pragma mark - monitoring extract sections
+
+- (void)checkSection {
+    NSTimeInterval timeInterval = _playerViewController.moviePlayer.currentPlaybackTime;
+    if (_sectionCounter == [_extractSections count]-1 && timeInterval > [_extractSections[_sectionCounter] endTime]) {
+        // 마지막 섹션일 때 별도 처리
+        [_playerViewController.moviePlayer pause];
+    } else if ([_extractSections[_sectionCounter] endTime] < timeInterval && timeInterval < [_extractSections[_sectionCounter+1] startTime]) {
+        [UIView animateWithDuration:0.5f animations:^{
+            // 이전 섹션의 endTime과 다음 섹션의 startTime 사이일 때 ; 즉, skip해야하는 timeline일 때
+            _playerViewController.moviePlayer.currentPlaybackTime = [_extractSections[_sectionCounter+1] startTime];
+            _sectionCounter++;
+        } completion:^(BOOL finished) {
+        }];
+    }
 }
 @end
