@@ -29,10 +29,11 @@ const static int kHeightOfBottomBar = 44;
 
 - (id)initWithMoviePlayer:(ABDVideoPlayerViewController *)playerViewController {
     self = [super init];
-    if (self) {
-        [self setup];
-
+    if (self) {\
         _playerViewController = playerViewController;
+
+        [self setup];
+        [self addNotifications];
     }
     return self;
 }
@@ -56,5 +57,82 @@ const static int kHeightOfBottomBar = 44;
 
     self.bottomBar.frame = CGRectMake(0, self.frame.size.height - kHeightOfBottomBar, self.frame.size.width, kHeightOfBottomBar);
     _extractSlider.frame = CGRectMake(0, 0, _bottomBar.frame.size.width, _bottomBar.frame.size.height);
+}
+
+# pragma mark - Notifications
+
+- (void)addNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlaybackStateDidChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieDurationAvailable:) name:MPMovieDurationAvailableNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieLoadStateDidChange:) name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
+}
+
+- (void)movieFinished:(NSNotification *)note {
+    [self.durationTimer invalidate];
+    [_playerViewController.moviePlayer setCurrentPlaybackTime:0.0];
+    [self monitorMoviePlayback]; //reset values
+//    [self hideControls:nil];
+}
+
+- (void)movieLoadStateDidChange:(NSNotification *)note {
+    switch (_playerViewController.moviePlayer.loadState) {
+        case MPMovieLoadStatePlayable:
+        case MPMovieLoadStatePlaythroughOK:
+//            [self showControls:nil];
+            break;
+        case MPMovieLoadStateStalled:
+        case MPMovieLoadStateUnknown:
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)moviePlaybackStateDidChange:(NSNotification *)note {
+    switch (_playerViewController.moviePlayer.playbackState) {
+        case MPMoviePlaybackStatePlaying:
+            [self startDurationTimer];
+
+        case MPMoviePlaybackStateSeekingBackward:
+        case MPMoviePlaybackStateSeekingForward:
+            break;
+        case MPMoviePlaybackStateInterrupted:
+            break;
+        case MPMoviePlaybackStatePaused:
+        case MPMoviePlaybackStateStopped:
+            [self stopDurationTimer];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)movieDurationAvailable:(NSNotification *)note {
+    [self setDurationSliderMaxMinValues];
+}
+
+# pragma mark - Internal Methods
+
+- (void)startDurationTimer {
+    self.durationTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(monitorMoviePlayback) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.durationTimer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)stopDurationTimer {
+    [self.durationTimer invalidate];
+}
+
+- (void)setDurationSliderMaxMinValues {
+    NSTimeInterval duration = _playerViewController.moviePlayer.duration;
+    _extractSlider.minimumValue = 0.f;
+    _extractSlider.maximumValue = (float)duration;
+}
+
+- (void)monitorMoviePlayback {
+    double currentTime = floor(_playerViewController.moviePlayer.currentPlaybackTime);
+    double totalTime = floor(_playerViewController.moviePlayer.duration);
+//    [self setTimeLabelValues:currentTime totalTime:totalTime];
+    _extractSlider.value = (float)(currentTime);
 }
 @end

@@ -33,7 +33,7 @@
 
     // set valuee range of slider 0 to 1
     self.minimumValue = 0.0f;
-    self.maximumValue = 1.0f;
+//    self.maximumValue = 1.0f;
     self.value = 0.0f;
 
     self.continuous = YES;
