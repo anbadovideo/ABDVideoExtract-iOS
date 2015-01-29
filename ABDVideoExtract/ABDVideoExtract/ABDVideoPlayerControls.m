@@ -64,6 +64,7 @@ const static int kHeightOfBottomBar = 44;
     CGRect screenBound = [[UIScreen mainScreen] bounds];
     self.bottomBar.frame = CGRectMake(0, screenBound.size.height - kHeightOfBottomBar, screenBound.size.width, kHeightOfBottomBar);
     _extractSlider.frame = CGRectMake(0, 0, _bottomBar.frame.size.width, _bottomBar.frame.size.height);
+    [_extractSlider setNeedsDisplay];
 }
 
 # pragma mark - Notifications
