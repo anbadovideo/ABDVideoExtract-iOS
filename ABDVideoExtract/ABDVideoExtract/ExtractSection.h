@@ -11,4 +11,6 @@
 @interface ExtractSection : NSObject
 @property (nonatomic) NSTimeInterval startTime;
 @property (nonatomic) NSTimeInterval endTime;
+
+- (instancetype)initWithStartTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime;
 @end
