@@ -123,7 +123,7 @@ const static int kHeightOfBottomBar = 44;
 # pragma mark - Internal Methods
 
 - (void)startDurationTimer {
-    self.durationTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(monitorMoviePlayback) userInfo:nil repeats:YES];
+    self.durationTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(monitorMoviePlayback) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self.durationTimer forMode:NSDefaultRunLoopMode];
 }
 
@@ -138,8 +138,8 @@ const static int kHeightOfBottomBar = 44;
 }
 
 - (void)monitorMoviePlayback {
-    double currentTime = floor(_playerViewController.moviePlayer.currentPlaybackTime);
-    double totalTime = floor(_playerViewController.moviePlayer.duration);
+    double currentTime = _playerViewController.moviePlayer.currentPlaybackTime;
+    double totalTime = _playerViewController.moviePlayer.duration;
 //    [self setTimeLabelValues:currentTime totalTime:totalTime];
     _extractSlider.value = (float)(currentTime);
 

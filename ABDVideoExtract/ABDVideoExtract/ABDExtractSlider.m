@@ -45,8 +45,6 @@ const int kHeightOfSlider = 44;
 
     self.continuous = YES;
 
-    [self setMaximumTrackImage:[UIImage imageNamed:@"slider_deactive.png"] forState:UIControlStateNormal];
-    [self setMinimumTrackImage:[UIImage imageNamed:@"slider_active.png"] forState:UIControlStateNormal];
     [self setThumbImage:[UIImage imageNamed:@"slider_thumb.png"] forState:UIControlStateNormal];
 }
 
