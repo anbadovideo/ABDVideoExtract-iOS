@@ -18,6 +18,7 @@
 @property (nonatomic, strong, setter=setPlayer:, getter=player) AVPlayer *player;
 @property (nonatomic, strong) ABDPlaybackView *playbackView;
 @property (nonatomic, strong) ABDPlayerControls *controls;
+@property (nonatomic, strong) NSArray *extractSections;
 
 - (instancetype)initWithIdentifier:(NSString *)identifier;
 @end

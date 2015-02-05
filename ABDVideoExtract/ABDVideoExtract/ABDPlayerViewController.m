@@ -11,6 +11,8 @@
 #import "ABDPlayerControls.h"
 #import "XCDYouTubeVideo.h"
 #import "XCDYouTubeClient.h"
+#import "ExtractSection.h"
+#import "ABDExtractSlider.h"
 
 @interface ABDPlayerViewController (Player)
 
@@ -33,6 +35,22 @@
         _identifier = [NSString stringWithFormat:@"CCCiKwgGB5I"];
     }
 
+    if (_extractSections == nil) {
+        ExtractSection *section1 = [[ExtractSection alloc] initWithStartTime:32.2f endTime:43.0f];
+        ExtractSection *section2 = [[ExtractSection alloc] initWithStartTime:47.3f endTime:70.1f];
+        ExtractSection *section3 = [[ExtractSection alloc] initWithStartTime:98.4f endTime:102.0f];
+        ExtractSection *section4 = [[ExtractSection alloc] initWithStartTime:110.4f endTime:118.0f];
+        ExtractSection *section5 = [[ExtractSection alloc] initWithStartTime:125.4f endTime:129.0f];
+        ExtractSection *section6 = [[ExtractSection alloc] initWithStartTime:164.4f endTime:170.0f];
+        NSArray *sections = @[section1, section2, section3, section4, section5, section6];
+        NSInteger ekisuDuration = 0;
+        for (ExtractSection *extractSection in sections) {
+            ekisuDuration += [extractSection endTime] - [extractSection startTime];
+        }
+        NSLog(@"ekisu duration %d", ekisuDuration);
+        _extractSections = sections;
+    }
+
     NSString *videoIdentifier = _identifier; // A 11 characters YouTube video identifier
     [[XCDYouTubeClient defaultClient] getVideoWithIdentifier:videoIdentifier completionHandler:^(XCDYouTubeVideo *video, NSError *error) {
         if (video)
@@ -43,7 +61,6 @@
 
             /* create new player, if we don't already have one */
             [self setPlayer:[AVPlayer playerWithURL:URL]];
-//            AVPlayerLayer *avPlayerLayer = [[AVPlayerLayer alloc] init];
             [[NSNotificationCenter defaultCenter] addObserver:self
                                                      selector:@selector(playerItemDidReachEnd:)
                                                          name:AVPlayerItemDidPlayToEndTimeNotification
@@ -55,6 +72,16 @@
             [_playbackView setVideoFillMode:AVLayerVideoGravityResizeAspect];
             _playbackView.frame = self.view.frame;
             [self.view.layer addSublayer:_playbackView.layer];
+
+             ABDPlayerControls *controls = [[ABDPlayerControls alloc] initWithMoviePlayer:self];
+            [controls setExtractSections:_extractSections];
+
+            ABDExtractSlider *slider = [[ABDExtractSlider alloc] init];
+            [slider setExtractSections:_extractSections];
+            [controls setExtractSlider:slider];
+
+            [self setControls:controls];
+            _controls = controls;
         }
         else
         {
@@ -67,6 +94,13 @@
     [super viewWillAppear:animated];
 }
 
+- (void)setControls:(ABDPlayerControls *)controls {
+    if (_controls != controls) {
+        _controls = controls;
+        _controls.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        [self.view addSubview:_controls];
+    }
+}
 #pragma mark - Key Value Observation Methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
