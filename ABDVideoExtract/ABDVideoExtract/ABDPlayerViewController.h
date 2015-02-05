@@ -13,9 +13,12 @@
 @class ABDPlaybackView;
 @class ABDPlayerControls;
 
-@interface ABDPlayerViewController : UIViewController
+@interface ABDPlayerViewController : UIViewController {
+    id timeObserver;
+}
 @property (nonatomic, strong) NSString* identifier; // video id
 @property (nonatomic, strong, setter=setPlayer:, getter=player) AVPlayer *player;
+@property (strong) AVPlayerItem *playerItem;
 @property (nonatomic, strong) ABDPlaybackView *playbackView;
 @property (nonatomic, strong) ABDPlayerControls *controls;
 @property (nonatomic, strong) NSArray *extractSections;
