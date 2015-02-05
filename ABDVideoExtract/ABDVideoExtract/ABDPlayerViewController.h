@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+
+@class AVPlayer;
+@class ABDPlaybackView;
+@class ABDPlayerControls;
 
 @interface ABDPlayerViewController : UIViewController
+@property (nonatomic, strong) NSString* identifier; // video id
+@property (nonatomic, strong, setter=setPlayer:, getter=player) AVPlayer *player;
+@property (nonatomic, strong) ABDPlaybackView *playbackView;
+@property (nonatomic, strong) ABDPlayerControls *controls;
 
+- (instancetype)initWithIdentifier:(NSString *)identifier;
 @end
