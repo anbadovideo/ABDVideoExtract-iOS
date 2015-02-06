@@ -15,6 +15,7 @@
 
 @interface ABDPlayerViewController : UIViewController {
     id timeObserver;
+    NSInteger _sectionCounter;   // for check playing extract section.
 }
 @property (nonatomic, strong) NSString* identifier; // video id
 @property (nonatomic, strong, setter=setPlayer:, getter=player) AVPlayer *player;

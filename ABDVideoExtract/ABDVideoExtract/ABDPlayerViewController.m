@@ -44,6 +44,8 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     [self initSliderTimer];
     [self syncSlider];
 
+    _sectionCounter = 0;
+
     if (_identifier == nil) {
         // example video.
         _identifier = [NSString stringWithFormat:@"CCCiKwgGB5I"];
@@ -283,7 +285,25 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
         float maxValue = [_controls.extractSlider maximumValue];
         double time = CMTimeGetSeconds([self.player currentTime]);
 
-        [_controls.extractSlider setValue:(maxValue - minValue) * time / duration + minValue];
+        [_controls.extractSlider setValue:(float)(time / duration)];
+
+        // for skipping each ekisu sections.
+        [self checkExtractSection:time];
+    }
+}
+
+- (void)checkExtractSection:(NSTimeInterval)time {
+    NSTimeInterval timeInterval = time;
+    if (_sectionCounter == [_extractSections count]-1 && timeInterval > [_extractSections[_sectionCounter] endTime]) {
+        // 마지막 섹션일 때 별도 처리
+        [self.player pause];
+    } else if ([_extractSections[_sectionCounter] endTime] < timeInterval && timeInterval < [_extractSections[_sectionCounter+1] startTime]) {
+        [UIView animateWithDuration:0.5f animations:^{
+            // 이전 섹션의 endTime과 다음 섹션의 startTime 사이일 때 ; 즉, skip해야하는 timeline일 때
+            [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[_sectionCounter+1] startTime], NSEC_PER_SEC)];
+            _sectionCounter++;
+        } completion:^(BOOL finished) {
+        }];
     }
 }
 
