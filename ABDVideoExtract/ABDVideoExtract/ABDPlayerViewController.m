@@ -83,9 +83,14 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     NSString *videoIdentifier = _identifier; // A 11 characters YouTube video identifier
     [[XCDYouTubeClient defaultClient] getVideoWithIdentifier:videoIdentifier completionHandler:^(XCDYouTubeVideo *video, NSError *error) {
         if (video) {
+            // set video duration for expression of ekisu
+            _controls.extractSlider.duration = video.duration;
+
             NSDictionary *streamURLs = video.streamURLs;
-            // Todo : 나중에 HD 옵션 설정 기능 추가.
             NSURL *URL = streamURLs[@(XCDYouTubeVideoQualityHD720)] ?: streamURLs[@(XCDYouTubeVideoQualityMedium360)] ?: streamURLs[@(XCDYouTubeVideoQualitySmall240)];
+            // Todo : 나중에 HD 옵션 설정 기능 추가.
+
+            // set streaming URL
             [self setURL:URL];
         } else {
             // Handle error
@@ -347,6 +352,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
                  its duration can be fetched from the item. */
 
                 [self initSliderTimer];
+                [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_SEC)];
                 [self.player play];
 //                [self enableScrubber];
 //                [self enablePlayerButtons];
