@@ -17,4 +17,6 @@
 @property (nonatomic, strong) NSArray *extractSections;
 
 - (id)initWithMoviePlayer:(ABDPlayerViewController *)moviePlayer;
+
+- (void)hideEndingView:(BOOL)show;
 @end

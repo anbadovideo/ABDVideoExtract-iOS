@@ -20,16 +20,21 @@ const static int kHeightOfBottomBar = 44;
 
 @property (nonatomic, strong) UIView *bottomBar;
 
+/* Ending view */
+@property (nonatomic, strong) UIView *endingView;
+@property (nonatomic, strong) UIButton *replayAllButton;
+@property (nonatomic, strong) UIButton *replayEkisuButton;
 @end
 
 @implementation ABDPlayerControls
 
 - (id)initWithMoviePlayer:(ABDPlayerViewController *)playerViewController {
     self = [super init];
-    if (self) {\
+    if (self) {
         _playerViewController = playerViewController;
 
         [self setup];
+        [self setupEndingView];
     }
     return self;
 }
@@ -38,6 +43,42 @@ const static int kHeightOfBottomBar = 44;
     _bottomBar = [[UIView alloc] init];
     _bottomBar.backgroundColor = [UIColor clearColor];
     [self addSubview:_bottomBar];
+}
+
+
+- (void)setupEndingView {
+    _endingView = [[UIView alloc] initWithFrame:self.frame];
+    [_endingView setBackgroundColor:[UIColor colorWithWhite:0.1 alpha:0.7]];
+
+    _replayAllButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width / 3 - 100/2, self.frame.size.height * 2 / 5 - 100/2, 100, 100)];
+    _replayAllButton.layer.cornerRadius = _replayAllButton.bounds.size.height / 2;
+    _replayAllButton.layer.masksToBounds = YES;
+    [_replayAllButton setBackgroundColor:[UIColor colorWithRed:0.24 green:0.68 blue:0.85 alpha:1.0f]];
+    [_replayAllButton setTitle:@"Replay All" forState:UIControlStateNormal];
+    _replayAllButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [_replayAllButton addTarget:self action:@selector(replayVideo:) forControlEvents:UIControlEventTouchUpInside];
+
+    _replayEkisuButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width * 2 / 3 - 100/2, self.frame.size.height * 2 / 5 - 100/2, 100, 100)];
+    _replayEkisuButton.layer.cornerRadius = _replayAllButton.bounds.size.height / 2;
+    _replayEkisuButton.layer.masksToBounds = YES;
+    [_replayEkisuButton setBackgroundColor:[UIColor colorWithRed:0.24 green:0.68 blue:0.85 alpha:1.0f]];
+    [_replayEkisuButton setTitle:@"Replay Ekisu" forState:UIControlStateNormal];
+    _replayEkisuButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+
+    [_endingView addSubview:_replayAllButton];
+    [_endingView addSubview:_replayEkisuButton];
+    [self addSubview:_endingView];
+    [_endingView setHidden:YES];
+}
+
+- (void)adjustEndingView:(CGRect)frame {
+    _endingView.frame = frame;
+    _replayAllButton.frame = CGRectMake(self.frame.size.width / 3 - 100/2, self.frame.size.height * 2 / 5 - 100/2, 100, 100);
+    _replayEkisuButton.frame = CGRectMake(self.frame.size.width * 2 / 3 - 100/2, self.frame.size.height * 2 / 5 - 100/2, 100, 100);
+}
+
+- (void)hideEndingView:(BOOL)show {
+    [_endingView setHidden:show];
 }
 
 - (void)setExtractSlider:(ABDExtractSlider *)extractSlider {
@@ -51,6 +92,9 @@ const static int kHeightOfBottomBar = 44;
     [super layoutSubviews];
 
     CGRect screenBound = [[UIScreen mainScreen] bounds];
+
+    [self adjustEndingView:screenBound];
+
     self.bottomBar.frame = CGRectMake(0, screenBound.size.height - kHeightOfBottomBar, screenBound.size.width, kHeightOfBottomBar);
     _extractSlider.frame = CGRectMake(0, 0, _bottomBar.frame.size.width, _bottomBar.frame.size.height);
     [_extractSlider setNeedsDisplay];
