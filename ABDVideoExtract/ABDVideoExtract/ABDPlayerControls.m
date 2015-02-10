@@ -75,9 +75,9 @@ const static int kHeightOfBottomBar = 44;
 
 - (void)buttonPressed:(UIButton *)button {
     if (button == _playAllButton) {
-
+        [_playerViewController replay:PlaymodeAll];      // play all of video.
     } else if (button == _replayEkisuButton) {
-        [_playerViewController replayEkisu];    // replay ekisu
+        [_playerViewController replay:PlaymodeEkisu];    // replay ekisu.
     }
     [self hideEndingView:YES];
 }

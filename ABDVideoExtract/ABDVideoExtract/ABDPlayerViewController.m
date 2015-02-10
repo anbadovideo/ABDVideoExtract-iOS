@@ -34,6 +34,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     self = [super init];
     if (self) {
         _identifier = identifier;
+        _playmode = PlaymodeEkisu;
     }
     return self;
 }
@@ -304,7 +305,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
     /* Update the scrubber during normal playback. */
     __weak ABDPlayerViewController *weakSelf = self;
-    timeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_SEC)
+    timeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
                                                                queue:NULL /* If you pass NULL, the main queue is used. */
                                                           usingBlock:^(CMTime time)
                                                           {
@@ -336,6 +337,10 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 }
 
 - (void)checkExtractSection:(NSTimeInterval)time {
+    if (_sectionCounter == -1)
+        // if counter is -1, not ekisu play mode. but all play mode.
+        return;
+
     NSTimeInterval timeInterval = time;
     if (_sectionCounter == [_extractSections count]-1 && timeInterval > [_extractSections[_sectionCounter] endTime]) {
         // 마지막 섹션일 때 별도 처리
@@ -344,7 +349,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     } else if ([_extractSections[_sectionCounter] endTime] < timeInterval && timeInterval < [_extractSections[_sectionCounter+1] startTime]) {
         [UIView animateWithDuration:0.5f animations:^{
             // 이전 섹션의 endTime과 다음 섹션의 startTime 사이일 때 ; 즉, skip해야하는 timeline일 때
-            [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[_sectionCounter+1] startTime], NSEC_PER_SEC)];
+            [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[_sectionCounter+1] startTime], NSEC_PER_MSEC)];
             _sectionCounter++;
             NSLog(@"%d", _sectionCounter);
         } completion:^(BOOL finished) {
@@ -352,9 +357,19 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     }
 }
 
-- (void)replayEkisu {
-    _sectionCounter = 0;
-    [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_SEC)];
+- (void)replay:(Playmode)mode {
+    switch (mode) {
+        case PlaymodeEkisu: {
+            _sectionCounter = 0;
+            [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_MSEC)];
+            break;
+        }
+        case PlaymodeAll: {
+            _sectionCounter = -1;
+            [self.player seekToTime:CMTimeMakeWithSeconds(0, NSEC_PER_MSEC)];
+            break;
+        };
+    }
     [self.player play];
 }
 @end
@@ -423,7 +438,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
                  its duration can be fetched from the item. */
 
                 [self initSliderTimer];
-                [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_SEC)];
+                [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_MSEC)];
                 [self.player play];
 //                [self enableScrubber];
 //                [self enablePlayerButtons];

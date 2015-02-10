@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
+typedef enum {
+    PlaymodeEkisu,
+    PlaymodeAll
+} Playmode;
+
 @class AVPlayer;
 @class ABDPlaybackView;
 @class ABDPlayerControls;
@@ -20,11 +25,13 @@
 @property (nonatomic, strong) NSString* identifier; // video id
 @property (nonatomic, strong, setter=setPlayer:, getter=player) AVPlayer *player;
 @property (strong) AVPlayerItem *playerItem;
+@property (nonatomic) Playmode playmode;
+
 @property (nonatomic, strong) ABDPlaybackView *playbackView;
 @property (nonatomic, strong) ABDPlayerControls *controls;
 @property (nonatomic, strong) NSArray *extractSections;
 
 - (instancetype)initWithIdentifier:(NSString *)identifier;
 
-- (void)replayEkisu;
+- (void)replay:(Playmode)mode;
 @end
