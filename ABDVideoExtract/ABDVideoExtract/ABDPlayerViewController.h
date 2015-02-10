@@ -25,4 +25,6 @@
 @property (nonatomic, strong) NSArray *extractSections;
 
 - (instancetype)initWithIdentifier:(NSString *)identifier;
+
+- (void)replayEkisu;
 @end
