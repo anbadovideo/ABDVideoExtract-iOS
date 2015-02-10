@@ -59,6 +59,11 @@ const int kHeightOfSlider = 44;
     [self setNeedsDisplay];
 }
 
+// override trackRectForBounds: for drawing custom tracks;
+- (CGRect)trackRectForBounds:(CGRect)bounds {
+    return bounds;
+}
+
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
