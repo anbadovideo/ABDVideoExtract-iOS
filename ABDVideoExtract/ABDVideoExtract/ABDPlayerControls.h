@@ -19,4 +19,7 @@
 - (id)initWithMoviePlayer:(ABDPlayerViewController *)moviePlayer;
 
 - (void)hideEndingView:(BOOL)show;
+
+- (void)showControls:(void(^)(void))completion;
+- (void)hideControls:(void(^)(void))completion;
 @end

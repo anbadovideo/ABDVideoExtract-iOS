@@ -33,7 +33,6 @@ const static int kHeightOfBottomBar = 44;
     self = [super init];
     if (self) {
         _playerViewController = playerViewController;
-
         [self setup];
         [self setupEndingView];
     }
@@ -73,23 +72,10 @@ const static int kHeightOfBottomBar = 44;
     [_endingView setHidden:YES];
 }
 
-- (void)buttonPressed:(UIButton *)button {
-    if (button == _playAllButton) {
-        [_playerViewController replay:PlaymodeAll];      // play all of video.
-    } else if (button == _replayEkisuButton) {
-        [_playerViewController replay:PlaymodeEkisu];    // replay ekisu.
-    }
-    [self hideEndingView:YES];
-}
-
 - (void)adjustEndingView:(CGRect)frame {
     _endingView.frame = frame;
     _playAllButton.frame = CGRectMake(self.frame.size.width / 3 - 100/2, self.frame.size.height * 2 / 5 - 100/2, 100, 100);
     _replayEkisuButton.frame = CGRectMake(self.frame.size.width * 2 / 3 - 100/2, self.frame.size.height * 2 / 5 - 100/2, 100, 100);
-}
-
-- (void)hideEndingView:(BOOL)show {
-    [_endingView setHidden:show];
 }
 
 - (void)setExtractSlider:(ABDExtractSlider *)extractSlider {
@@ -106,8 +92,67 @@ const static int kHeightOfBottomBar = 44;
 
     [self adjustEndingView:screenBound];
 
-    self.bottomBar.frame = CGRectMake(0, screenBound.size.height - kHeightOfBottomBar, screenBound.size.width, kHeightOfBottomBar);
+    if (self.isShowing) {
+        self.bottomBar.frame = CGRectMake(0, screenBound.size.height - kHeightOfBottomBar, screenBound.size.width, kHeightOfBottomBar);
+    } else {
+        self.bottomBar.frame = CGRectMake(0, screenBound.size.height, screenBound.size.width, kHeightOfBottomBar);
+    }
     _extractSlider.frame = CGRectMake(0, 0, _bottomBar.frame.size.width, _bottomBar.frame.size.height);
     [_extractSlider setNeedsDisplay];
 }
+
+#pragma mark - touch events
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    self.isShowing ? [self hideControls:nil] : [self showControls:nil];
+}
+
+#pragma mark - control action
+
+- (void)buttonPressed:(UIButton *)button {
+    if (button == _playAllButton) {
+        [_playerViewController replay:PlaymodeAll];      // play all of video.
+    } else if (button == _replayEkisuButton) {
+        [_playerViewController replay:PlaymodeEkisu];    // replay ekisu.
+    }
+    [self hideEndingView:YES];
+}
+
+- (void)hideEndingView:(BOOL)show {
+    [_endingView setHidden:show];
+}
+
+- (void)showControls:(void(^)(void))completion {
+    if (!self.isShowing) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideControls:) object:nil];
+        [UIView animateWithDuration:0.3 delay:0.0 options:0 animations:^{
+            self.bottomBar.frame = CGRectOffset(self.bottomBar.frame, 0, -kHeightOfBottomBar);
+        } completion:^(BOOL finished) {
+            _showing = YES;
+            if (completion)
+                completion();
+            [self performSelector:@selector(hideControls:) withObject:nil afterDelay:5];
+        }];
+    } else {
+        if (completion)
+            completion();
+    }
+}
+
+- (void)hideControls:(void(^)(void))completion {
+    if (self.isShowing) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideControls:) object:nil];
+        [UIView animateWithDuration:0.3 delay:0.0 options:0 animations:^{
+            self.bottomBar.frame = CGRectOffset(self.bottomBar.frame, 0, kHeightOfBottomBar);//            self.bottomBar.alpha = 0.f;
+        } completion:^(BOOL finished) {
+            _showing = NO;
+            if (completion)
+                completion();
+        }];
+    } else {
+        if (completion)
+            completion();
+    }
+}
+
 @end

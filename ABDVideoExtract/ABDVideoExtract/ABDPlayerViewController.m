@@ -440,6 +440,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
                 [self initSliderTimer];
                 [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_MSEC)];
                 [self.player play];
+                [self.controls showControls:nil];
 //                [self enableScrubber];
 //                [self enablePlayerButtons];
             }
