@@ -34,4 +34,11 @@
     playerLayer.videoGravity = fillMode;
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+
+    CGRect screenBound = [[UIScreen mainScreen] bounds];
+    self.frame = screenBound;
+}
+
 @end
