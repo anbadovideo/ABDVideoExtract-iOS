@@ -89,15 +89,17 @@ const static int kHeightOfBottomBar = 44;
     [super layoutSubviews];
 
     CGRect screenBound = [[UIScreen mainScreen] bounds];
+    self.frame = screenBound;   // update frame of view.
+    [self adjustEndingView:screenBound];    // update endingView.
 
-    [self adjustEndingView:screenBound];
-
+    // update bottomBar.
     if (self.isShowing) {
         self.bottomBar.frame = CGRectMake(0, screenBound.size.height - kHeightOfBottomBar, screenBound.size.width, kHeightOfBottomBar);
     } else {
         self.bottomBar.frame = CGRectMake(0, screenBound.size.height, screenBound.size.width, kHeightOfBottomBar);
     }
     _extractSlider.frame = CGRectMake(0, 0, _bottomBar.frame.size.width, _bottomBar.frame.size.height);
+    // update drawing section of ekisu for new frame
     [_extractSlider setNeedsDisplay];
 }
 
