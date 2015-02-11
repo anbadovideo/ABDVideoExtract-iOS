@@ -74,8 +74,8 @@ const static int kHeightOfBottomBar = 44;
 
 - (void)adjustEndingView:(CGRect)frame {
     _endingView.frame = frame;
-    _playAllButton.frame = CGRectMake(self.frame.size.width / 3 - 100/2, self.frame.size.height * 2 / 5 - 100/2, 100, 100);
-    _replayEkisuButton.frame = CGRectMake(self.frame.size.width * 2 / 3 - 100/2, self.frame.size.height * 2 / 5 - 100/2, 100, 100);
+    _playAllButton.frame = CGRectMake(_endingView.frame.size.width / 3 - 100/2, _endingView.frame.size.height * 2 / 5 - 100/2, 100, 100);
+    _replayEkisuButton.frame = CGRectMake(_endingView.frame.size.width * 2 / 3 - 100/2, _endingView.frame.size.height * 2 / 5 - 100/2, 100, 100);
 }
 
 - (void)setExtractSlider:(ABDExtractSlider *)extractSlider {
