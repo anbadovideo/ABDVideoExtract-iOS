@@ -20,6 +20,7 @@ const static int kHeightOfBottomBar = 44;
 @property (nonatomic, strong) NSTimer *durationTimer;
 
 @property (nonatomic, strong) UIView *bottomBar;
+@property (nonatomic, strong) UILabel *remainTimeLabel;
 
 /* Ending view */
 @property (nonatomic, strong) UIView *endingView;
@@ -34,7 +35,7 @@ const static int kHeightOfBottomBar = 44;
     if (self) {
         _playerViewController = playerViewController;
         [self setup];
-        [self setupEndingView];
+//        [self setupEndingView];
     }
     return self;
 }
@@ -43,6 +44,13 @@ const static int kHeightOfBottomBar = 44;
     _bottomBar = [[UIView alloc] init];
     _bottomBar.backgroundColor = [UIColor clearColor];
     [self addSubview:_bottomBar];
+
+    _remainTimeLabel = [[UILabel alloc] init];
+    _remainTimeLabel.textColor = [UIColor whiteColor];
+    _remainTimeLabel.font = [UIFont boldSystemFontOfSize:11.f];
+    _remainTimeLabel.textAlignment = NSTextAlignmentRight;
+    [_bottomBar addSubview:_remainTimeLabel];
+    [_bottomBar bringSubviewToFront:_remainTimeLabel];
 }
 
 
@@ -82,6 +90,7 @@ const static int kHeightOfBottomBar = 44;
     if (_extractSlider != extractSlider) {
         _extractSlider = extractSlider;
         [_bottomBar addSubview:_extractSlider];
+        [_bottomBar sendSubviewToBack:_extractSlider];
     }
 }
 
@@ -101,6 +110,10 @@ const static int kHeightOfBottomBar = 44;
     _extractSlider.frame = CGRectMake(0, 0, _bottomBar.frame.size.width, _bottomBar.frame.size.height);
     // update drawing section of ekisu for new frame
     [_extractSlider setNeedsDisplay];
+}
+
+- (void)setRemainTime:(NSTimeInterval)time {
+    _remainTimeLabel.text = [NSString stringWithFormat:@"%01f", time];
 }
 
 #pragma mark - touch events

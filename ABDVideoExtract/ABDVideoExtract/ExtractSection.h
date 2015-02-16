@@ -13,4 +13,5 @@
 @property (nonatomic) NSTimeInterval endTime;
 
 - (instancetype)initWithStartTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime;
+- (NSTimeInterval)duration;
 @end

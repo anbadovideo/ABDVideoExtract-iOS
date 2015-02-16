@@ -30,6 +30,7 @@ typedef enum {
 @property (nonatomic, strong) ABDPlaybackView *playbackView;
 @property (nonatomic, strong) ABDPlayerControls *controls;
 @property (nonatomic, strong) NSArray *extractSections;
+@property (nonatomic) NSTimeInterval extractDuration;
 
 - (instancetype)initWithIdentifier:(NSString *)identifier;
 

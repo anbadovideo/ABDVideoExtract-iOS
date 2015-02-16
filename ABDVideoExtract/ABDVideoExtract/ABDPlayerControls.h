@@ -22,4 +22,6 @@
 
 - (void)showControls:(void(^)(void))completion;
 - (void)hideControls:(void(^)(void))completion;
+
+- (void)setRemainTime:(NSTimeInterval)time;
 @end
