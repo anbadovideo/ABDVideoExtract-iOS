@@ -9,8 +9,12 @@
 #import "ABDPlayerControls.h"
 #import "ABDExtractSlider.h"
 #import "ABDPlayerViewController.h"
+#import "Utility.h"
 
 const static int kHeightOfBottomBar = 44;
+const static int kWidthOfRemainLabel = 42;
+const static int kHeightOfRemainLabel = 21;
+const static int kPadding = 10;
 
 @interface ABDPlayerControls ()
 @property (nonatomic, weak) ABDPlayerViewController *playerViewController;
@@ -107,13 +111,14 @@ const static int kHeightOfBottomBar = 44;
     } else {
         self.bottomBar.frame = CGRectMake(0, screenBound.size.height, screenBound.size.width, kHeightOfBottomBar);
     }
+    _remainTimeLabel.frame = CGRectMake(_bottomBar.frame.size.width - kWidthOfRemainLabel - kPadding, kHeightOfBottomBar/2 - kHeightOfRemainLabel/2 , kWidthOfRemainLabel, kHeightOfRemainLabel);
     _extractSlider.frame = CGRectMake(0, 0, _bottomBar.frame.size.width, _bottomBar.frame.size.height);
     // update drawing section of ekisu for new frame
     [_extractSlider setNeedsDisplay];
 }
 
 - (void)setRemainTime:(NSTimeInterval)time {
-    _remainTimeLabel.text = [NSString stringWithFormat:@"%01f", time];
+    _remainTimeLabel.text = [Utility secondsToMMSS:time];
 }
 
 #pragma mark - touch events
