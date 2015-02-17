@@ -146,7 +146,7 @@ const static int kPadding = 10;
     if (!self.isShowing) {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideControls:) object:nil];
         [UIView animateWithDuration:0.3 delay:0.0 options:0 animations:^{
-            self.bottomBar.frame = CGRectOffset(self.bottomBar.frame, 0, -kHeightOfBottomBar);
+            self.bottomBar.frame = CGRectMake(self.frame.origin.x, self.frame.size.height - kHeightOfBottomBar, self.bottomBar.frame.size.width, self.bottomBar.frame.size.height);
         } completion:^(BOOL finished) {
             _showing = YES;
             if (completion)
@@ -163,7 +163,7 @@ const static int kPadding = 10;
     if (self.isShowing) {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideControls:) object:nil];
         [UIView animateWithDuration:0.3 delay:0.0 options:0 animations:^{
-            self.bottomBar.frame = CGRectOffset(self.bottomBar.frame, 0, kHeightOfBottomBar);//            self.bottomBar.alpha = 0.f;
+            self.bottomBar.frame = CGRectMake(self.frame.origin.x, self.frame.size.height, self.bottomBar.frame.size.width, self.bottomBar.frame.size.height);
         } completion:^(BOOL finished) {
             _showing = NO;
             if (completion)
