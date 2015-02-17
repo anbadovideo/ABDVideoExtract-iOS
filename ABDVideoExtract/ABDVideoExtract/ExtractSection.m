@@ -18,4 +18,11 @@
     _endTime = endTime;
     return self;
 }
+
+- (NSTimeInterval)duration {
+    if (self.endTime - self.startTime < 0)
+        return 0;
+    return self.endTime - self.startTime;
+}
+
 @end

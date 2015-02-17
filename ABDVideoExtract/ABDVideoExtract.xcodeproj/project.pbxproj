@@ -18,10 +18,13 @@
 		046F7C181A7A01C300084B94 /* slider_deactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F7C141A7A01C300084B94 /* slider_deactive@2x.png */; };
 		046F7C191A7A01C300084B94 /* slider_section_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F7C151A7A01C300084B94 /* slider_section_active@2x.png */; };
 		046F7C1A1A7A01C300084B94 /* slider_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F7C161A7A01C300084B94 /* slider_thumb@2x.png */; };
-		77722268F2A3C6B073268293 /* ABDVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 777220A4F580FAA26F4A28BE /* ABDVideoPlayerViewController.m */; };
+		04E3AFC31A81E865002DBB4D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E3AFC21A81E865002DBB4D /* AVFoundation.framework */; };
+		777221018833D82F25E327F8 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722B16FAADF6BB6DA25D6E /* Utility.m */; };
 		7772229CF85E509617B60DAB /* ABDExtractSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 777224EB1B0C458AC2423CF0 /* ABDExtractSlider.m */; };
-		7772239721CC3A488E86A1F8 /* ABDVideoPlayerControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772226D4E6357E067889A32 /* ABDVideoPlayerControls.m */; };
 		777227875D7B095B5DDCE276 /* ExtractSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772267CEB501E29A49C8FC7 /* ExtractSection.m */; };
+		77722E1C6757CA840EDD768A /* ABDPlaybackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722D79972462C08E0CF93C /* ABDPlaybackView.m */; };
+		77722EDEFEF592E1238603FF /* ABDPlayerControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722589955D461E8EE4F7F7 /* ABDPlayerControls.m */; };
+		77722F54027E30E92EEF59E5 /* ABDPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772254FA99B63169523E033 /* ABDPlayerViewController.m */; };
 		BE8A7480BCE6ABF5789B53B1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D78DA377083B18294D2CE893 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -53,15 +56,20 @@
 		046F7C141A7A01C300084B94 /* slider_deactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_deactive@2x.png"; sourceTree = "<group>"; };
 		046F7C151A7A01C300084B94 /* slider_section_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_section_active@2x.png"; sourceTree = "<group>"; };
 		046F7C161A7A01C300084B94 /* slider_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_thumb@2x.png"; sourceTree = "<group>"; };
+		04E3AFC21A81E865002DBB4D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		50F14C761127AA8BCD082E3B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		77722022BAA09760E74C1E0D /* ABDExtractSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDExtractSlider.h; sourceTree = "<group>"; };
-		777220A4F580FAA26F4A28BE /* ABDVideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDVideoPlayerViewController.m; sourceTree = "<group>"; };
-		777221E95CFA1B7CAF8698C9 /* ABDVideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDVideoPlayerViewController.h; sourceTree = "<group>"; };
-		7772226D4E6357E067889A32 /* ABDVideoPlayerControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDVideoPlayerControls.m; sourceTree = "<group>"; };
+		7772208354F438CE6D1DBD4E /* ABDPlayerControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDPlayerControls.h; sourceTree = "<group>"; };
+		777222CA363D93E8DD57617C /* ABDPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDPlayerViewController.h; sourceTree = "<group>"; };
 		777223394EC4D7CDD41EAC48 /* ExtractSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtractSection.h; sourceTree = "<group>"; };
 		777224EB1B0C458AC2423CF0 /* ABDExtractSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDExtractSlider.m; sourceTree = "<group>"; };
+		7772254FA99B63169523E033 /* ABDPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDPlayerViewController.m; sourceTree = "<group>"; };
+		77722589955D461E8EE4F7F7 /* ABDPlayerControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDPlayerControls.m; sourceTree = "<group>"; };
 		7772267CEB501E29A49C8FC7 /* ExtractSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtractSection.m; sourceTree = "<group>"; };
-		77722E176C2DE1624FE5BF97 /* ABDVideoPlayerControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDVideoPlayerControls.h; sourceTree = "<group>"; };
+		7772285A43C6E2ACC5BA0A18 /* ABDPlaybackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDPlaybackView.h; sourceTree = "<group>"; };
+		77722A6037AD17B224A5087B /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		77722B16FAADF6BB6DA25D6E /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		77722D79972462C08E0CF93C /* ABDPlaybackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDPlaybackView.m; sourceTree = "<group>"; };
 		AC6009DC0E13367AC920E021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D78DA377083B18294D2CE893 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -71,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04E3AFC31A81E865002DBB4D /* AVFoundation.framework in Frameworks */,
 				BE8A7480BCE6ABF5789B53B1 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,6 +127,7 @@
 				0466D2591A77596600092D08 /* Supporting Files */,
 				777228438658165C982A143F /* ABDVideoPlayerController */,
 				7772245463F68C96AEC5967B /* Models */,
+				7772209E4F718C6C97894D9D /* Utilities */,
 			);
 			path = ABDVideoExtract;
 			sourceTree = "<group>";
@@ -158,6 +168,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		7772209E4F718C6C97894D9D /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				77722A6037AD17B224A5087B /* Utility.h */,
+				77722B16FAADF6BB6DA25D6E /* Utility.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		7772245463F68C96AEC5967B /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,12 +189,14 @@
 		777228438658165C982A143F /* ABDVideoPlayerController */ = {
 			isa = PBXGroup;
 			children = (
-				777221E95CFA1B7CAF8698C9 /* ABDVideoPlayerViewController.h */,
-				777220A4F580FAA26F4A28BE /* ABDVideoPlayerViewController.m */,
-				77722E176C2DE1624FE5BF97 /* ABDVideoPlayerControls.h */,
-				7772226D4E6357E067889A32 /* ABDVideoPlayerControls.m */,
 				77722022BAA09760E74C1E0D /* ABDExtractSlider.h */,
 				777224EB1B0C458AC2423CF0 /* ABDExtractSlider.m */,
+				7772285A43C6E2ACC5BA0A18 /* ABDPlaybackView.h */,
+				77722D79972462C08E0CF93C /* ABDPlaybackView.m */,
+				777222CA363D93E8DD57617C /* ABDPlayerViewController.h */,
+				7772254FA99B63169523E033 /* ABDPlayerViewController.m */,
+				7772208354F438CE6D1DBD4E /* ABDPlayerControls.h */,
+				77722589955D461E8EE4F7F7 /* ABDPlayerControls.m */,
 			);
 			name = ABDVideoPlayerController;
 			sourceTree = "<group>";
@@ -194,6 +215,7 @@
 		C4FC5D47B386172ED7EFE1C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04E3AFC21A81E865002DBB4D /* AVFoundation.framework */,
 				D78DA377083B18294D2CE893 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -341,10 +363,12 @@
 				0466D2621A77596600092D08 /* ViewController.m in Sources */,
 				0466D25F1A77596600092D08 /* AppDelegate.m in Sources */,
 				0466D25C1A77596600092D08 /* main.m in Sources */,
-				77722268F2A3C6B073268293 /* ABDVideoPlayerViewController.m in Sources */,
-				7772239721CC3A488E86A1F8 /* ABDVideoPlayerControls.m in Sources */,
 				777227875D7B095B5DDCE276 /* ExtractSection.m in Sources */,
 				7772229CF85E509617B60DAB /* ABDExtractSlider.m in Sources */,
+				77722E1C6757CA840EDD768A /* ABDPlaybackView.m in Sources */,
+				77722F54027E30E92EEF59E5 /* ABDPlayerViewController.m in Sources */,
+				77722EDEFEF592E1238603FF /* ABDPlayerControls.m in Sources */,
+				777221018833D82F25E327F8 /* Utility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

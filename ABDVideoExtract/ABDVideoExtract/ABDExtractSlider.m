@@ -48,14 +48,6 @@ const int kHeightOfSlider = 44;
     [self setThumbImage:[UIImage imageNamed:@"slider_thumb.png"] forState:UIControlStateNormal];
 }
 
-- (void)setMaximumValue:(float)maximumValue {
-    [super setMaximumValue:maximumValue];
-
-    // override setMaximumValue:
-    _duration = maximumValue;
-    [self setNeedsDisplay];
-}
-
 - (void)setDuration:(NSTimeInterval)duration {
     _duration = duration;
     [self setNeedsDisplay];
@@ -65,6 +57,11 @@ const int kHeightOfSlider = 44;
     // Todo : duration이 0이면 exception 처리.
     _extractSections = extractSections;
     [self setNeedsDisplay];
+}
+
+// override trackRectForBounds: for drawing custom tracks;
+- (CGRect)trackRectForBounds:(CGRect)bounds {
+    return bounds;
 }
 
 - (void)drawRect:(CGRect)rect
@@ -81,7 +78,7 @@ const int kHeightOfSlider = 44;
     CGContextSetLineWidth(context, kHeightOfSlider);
     CGContextMoveToPoint(context, 0, CGRectGetHeight(innerRect)/2);
     CGContextAddLineToPoint(context, innerRect.size.width, CGRectGetHeight(innerRect)/2);
-    CGContextSetStrokeColorWithColor(context, [[UIColor lightGrayColor] CGColor]);
+    CGContextSetStrokeColorWithColor(context, [[UIColor colorWithWhite:0.4 alpha:1.0f] CGColor]);
     CGContextStrokePath(context);
     UIImage *selectedSide = [UIGraphicsGetImageFromCurrentImageContext() resizableImageWithCapInsets:UIEdgeInsetsZero];
 
@@ -89,7 +86,7 @@ const int kHeightOfSlider = 44;
     CGContextSetLineWidth(context, kHeightOfSlider);
     CGContextMoveToPoint(context, 0, CGRectGetHeight(innerRect)/2);
     CGContextAddLineToPoint(context, innerRect.size.width, CGRectGetHeight(innerRect)/2);
-    CGContextSetStrokeColorWithColor(context, [[UIColor darkGrayColor] CGColor]);
+    CGContextSetStrokeColorWithColor(context, [[UIColor colorWithWhite:0.15 alpha:1.0f] CGColor]);
     CGContextStrokePath(context);
     UIImage *unselectedSide = [UIGraphicsGetImageFromCurrentImageContext() resizableImageWithCapInsets:UIEdgeInsetsZero];
 
@@ -105,7 +102,7 @@ const int kHeightOfSlider = 44;
         float endPosition = (float)([_extractSections[i] endTime] / _duration) * self.frame.size.width;
         CGContextMoveToPoint(context, startPosition, CGRectGetHeight(innerRect)/2);
         CGContextAddLineToPoint(context, endPosition, CGRectGetHeight(innerRect)/2);
-        CGContextSetStrokeColorWithColor(context, [[UIColor blueColor] CGColor]);
+        CGContextSetStrokeColorWithColor(context, [[UIColor colorWithRed:0.24 green:0.68 blue:0.85 alpha:1.0f] CGColor]);
         CGContextStrokePath(context);
     }
     UIImage *selectedStripSide = [UIGraphicsGetImageFromCurrentImageContext() resizableImageWithCapInsets:UIEdgeInsetsZero];
@@ -118,7 +115,7 @@ const int kHeightOfSlider = 44;
         float endPosition = (float)([_extractSections[i] endTime] / _duration) * self.frame.size.width;
         CGContextMoveToPoint(context, startPosition, CGRectGetHeight(innerRect)/2);
         CGContextAddLineToPoint(context, endPosition, CGRectGetHeight(innerRect)/2);
-        CGContextSetStrokeColorWithColor(context, [[UIColor cyanColor] CGColor]);
+        CGContextSetStrokeColorWithColor(context, [[UIColor colorWithRed:0.24 green:0.68 blue:0.85 alpha:0.5f] CGColor]);
         CGContextStrokePath(context);
     }
     UIImage *unselectedStripSide = [UIGraphicsGetImageFromCurrentImageContext() resizableImageWithCapInsets:UIEdgeInsetsZero];
