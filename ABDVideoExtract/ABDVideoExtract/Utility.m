@@ -20,4 +20,11 @@
         return [NSString stringWithFormat:@"%02i:%02i", mm, ss];
 }
 
++ (NSTimeInterval)mmssToSeconds:(NSString *)mmss {
+    NSArray *strings = [mmss componentsSeparatedByString:@":"];
+    NSTimeInterval seconds = [strings[0] doubleValue] * 60 + [strings[1] doubleValue];
+    return seconds;
+}
+
+
 @end
