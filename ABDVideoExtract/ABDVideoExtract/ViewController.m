@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 @interface ABDEkisuCell : UITableViewCell
+@property (strong, nonatomic) IBOutlet UIView *ekisuThumbView;
 @property (nonatomic, strong) IBOutlet UIImageView *ekisuThumbnailImageView;
 @property (nonatomic, strong) IBOutlet UILabel *ekisuTitleLabel;
 @property (nonatomic, strong) IBOutlet UIView *ekisuRateView;
@@ -73,12 +74,6 @@
     ABDEkisuCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer forIndexPath:indexPath];
 
     [cell.ekisuThumbnailImageView setImage:[UIImage imageNamed:@"slider_active@2x.png"]];
-    [cell.contentView updateConstraintsIfNeeded];
-    [cell.contentView layoutIfNeeded];
-
-    cell.ekisuTitleLabel.preferredMaxLayoutWidth = CGRectGetWidth(cell.ekisuTitleLabel.frame);
-    [cell.ekisuTitleLabel sizeToFit];
-
     return cell;
 }
 
