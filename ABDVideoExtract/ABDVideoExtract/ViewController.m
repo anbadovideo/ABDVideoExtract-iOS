@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "ABDPlayerViewController.h"
 
 @interface ABDEkisuCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIView *ekisuThumbView;
@@ -29,7 +30,7 @@
 @end
 
 @interface ViewController ()
-
+@property (nonatomic, strong) ABDPlayerViewController *playerViewController;
 @end
 
 @implementation ViewController
@@ -38,7 +39,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 
-    _ekisus = @[@"1oDAuUx3m6U", @"1oDAuUx3m6U"];
+    _ekisus = @[@"s0UjELAUMjE", @"1oDAuUx3m6U"];
+
+    _playerViewController = [[ABDPlayerViewController alloc] init];     // playerViewController initializing.
 
 //    self.tableView.estimatedRowHeight = 314.0;
 }
@@ -80,11 +83,15 @@
 #pragma mark - TableView Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    [_playerViewController setIdentifier:_ekisus[[indexPath row]]]; // 해당 인덱스의 영상id 변경
+    ABDEkisuCell *cell = (ABDEkisuCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [_playerViewController setFrame:cell.ekisuThumbView.bounds];    // 해당 셀의 위치에 맞게 플레이어 뷰의 프레임을 조정
+    [cell.ekisuThumbView.layer addSublayer:_playerViewController.view.layer];   // 플레이어 뷰 삽입
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    [_playerViewController.view.layer removeFromSuperlayer];    // 비디오 플레이어 뷰 제거
+    [[_playerViewController player] pause];
 }
 
 
