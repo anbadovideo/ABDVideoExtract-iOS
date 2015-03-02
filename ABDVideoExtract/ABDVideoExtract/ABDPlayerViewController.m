@@ -13,6 +13,7 @@
 #import "XCDYouTubeClient.h"
 #import "ExtractSection.h"
 #import "ABDExtractSlider.h"
+#import "Utility.h"
 
 @interface ABDPlayerViewController ()
 @property (nonatomic, strong) NSURL *streamURL;
@@ -52,27 +53,9 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     _playbackView.frame = self.view.frame;
     [self.view addSubview:_playbackView];
 
-    // playerControl initializing.
-    ABDPlayerControls *controls = [[ABDPlayerControls alloc] initWithMoviePlayer:self];
-    [controls setExtractSections:_extractSections];
-
-    // slider initializing.
-    ABDExtractSlider *slider = [[ABDExtractSlider alloc] init];
-    [slider setExtractSections:_extractSections];
-    [controls setExtractSlider:slider];
-    [self setControls:controls];
-
-
-    _sectionCounter = 0;
-
     if (_extractSections == nil) {
-        ExtractSection *section1 = [[ExtractSection alloc] initWithStartTime:30.0f endTime:42.0f];
-        ExtractSection *section2 = [[ExtractSection alloc] initWithStartTime:43.0f endTime:44.0f];
-        ExtractSection *section3 = [[ExtractSection alloc] initWithStartTime:49.0f endTime:51.0f];
-        ExtractSection *section4 = [[ExtractSection alloc] initWithStartTime:52.0f endTime:53.0f];
-        ExtractSection *section5 = [[ExtractSection alloc] initWithStartTime:57.0f endTime:59.0f];
-        ExtractSection *section6 = [[ExtractSection alloc] initWithStartTime:75.0f endTime:76.0f];
-        NSArray *sections = @[section1, section2, section3, section4, section5, section6];
+        ExtractSection *section1 = [[ExtractSection alloc] initWithStartTime:[Utility mmssToSeconds:@"00:00"] endTime:[Utility mmssToSeconds:@"00:57"]];
+        NSArray *sections = @[section1, ];
 
         NSInteger ekisuDuration = 0;
         for (ExtractSection *extractSection in sections) {
@@ -83,9 +66,20 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
         _extractSections = sections;
     }
 
+    // playerControl initializing.
+    ABDPlayerControls *controls = [[ABDPlayerControls alloc] initWithMoviePlayer:self];
+    [controls setExtractSections:_extractSections];
+
+    // slider initializing.
+    ABDExtractSlider *slider = [[ABDExtractSlider alloc] init];
+    [slider setExtractSections:_extractSections];
+    [controls setExtractSlider:slider];
+    [self setControls:controls];
+
+    _sectionCounter = 0;    // 엑기스 구간 순차 재생을 위한 카운터
     if (_identifier == nil) {
         // example video.
-        _identifier = [NSString stringWithFormat:@"s0UjELAUMjE"];
+        _identifier = [NSString stringWithFormat:@"Bpck7y0vRQE"];
     }
     [self setIdentifier:_identifier];
 }
@@ -106,6 +100,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     // 플레이어 뷰의 프레임과 동시에 playbackView의 frame도 함께 조정
     self.view.frame = frame;
     self.playbackView.frame = frame;
+    [self.controls setNeedsLayout]; // 플레이어 뷰의 frame에 맞게 controls도 위치 재조정.
 }
 
 #pragma mark Asset URL
