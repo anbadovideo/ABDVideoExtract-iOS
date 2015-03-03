@@ -124,7 +124,11 @@ const static int kPadding = 10;
 
 #pragma mark - touch events
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self manageControlShowing];
+}
+
+- (void)manageControlShowing {
     self.isShowing ? [self hideControls:nil] : [self showControls:nil];
 }
 

@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "ABDPlayerViewController.h"
+#import "ABDPlayerControls.h"
 
 @interface ABDEkisuCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIView *ekisuThumbView;
@@ -77,21 +78,28 @@
     ABDEkisuCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer forIndexPath:indexPath];
 
     [cell.ekisuThumbnailImageView setImage:[UIImage imageNamed:@"slider_active@2x.png"]];
+//    cell.contentView.userInteractionEnabled = NO;
     return cell;
 }
 
 #pragma mark - TableView Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [_playerViewController setIdentifier:_ekisus[[indexPath row]]]; // 해당 인덱스의 영상id 변경
-    ABDEkisuCell *cell = (ABDEkisuCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    [_playerViewController setFrame:cell.ekisuThumbView.bounds];    // 해당 셀의 위치에 맞게 플레이어 뷰의 프레임을 조정
-    [cell.ekisuThumbView.layer addSublayer:_playerViewController.view.layer];   // 플레이어 뷰 삽입
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    if ([_playerViewController isPlaying]) {
+        [_playerViewController.controls manageControlShowing];  // control panel showing
+    } else {
+        [_playerViewController setIdentifier:_ekisus[[indexPath row]]]; // 해당 인덱스의 영상id 변경
+        ABDEkisuCell *cell = (ABDEkisuCell *) [self.tableView cellForRowAtIndexPath:indexPath];
+        [_playerViewController setFrame:cell.ekisuThumbView.bounds];    // 해당 셀의 위치에 맞게 플레이어 뷰의 프레임을 조정
+        [cell.ekisuThumbView addSubview:_playerViewController.view];
+        [_playerViewController.view becomeFirstResponder];              // 동영상 플레이어가 가장 이벤트처리를 먼저하도록 수정
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [_playerViewController.view.layer removeFromSuperlayer];    // 비디오 플레이어 뷰 제거
-    [[_playerViewController player] pause];
+
 }
 
 

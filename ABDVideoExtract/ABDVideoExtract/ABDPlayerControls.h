@@ -24,4 +24,6 @@
 - (void)hideControls:(void(^)(void))completion;
 
 - (void)setRemainTime:(NSTimeInterval)time;
+
+- (void)manageControlShowing;
 @end

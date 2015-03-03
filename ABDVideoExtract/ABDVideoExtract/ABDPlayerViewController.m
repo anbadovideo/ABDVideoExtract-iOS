@@ -348,6 +348,11 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     }
     [self.player play];
 }
+
+- (BOOL)isPlaying {
+    return self.player.rate > 0 && !self.player.error;
+}
+
 @end
 
 @implementation ABDPlayerViewController (Player)
