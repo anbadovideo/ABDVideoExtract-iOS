@@ -101,9 +101,8 @@ const static int kPadding = 10;
 - (void)layoutSubviews {
     [super layoutSubviews];
 
-    CGRect screenBound = [[UIScreen mainScreen] bounds];
     self.frame = _playerViewController.view.frame;   // update frame of view.
-    [self adjustEndingView:screenBound];    // update endingView.
+    [self adjustEndingView:self.frame];    // update endingView.
 
     // update bottomBar.
     self.bottomBar.frame = CGRectMake(0, _playerViewController.view.frame.size.height - kHeightOfBottomBar, _playerViewController.view.frame.size.width, kHeightOfBottomBar);
