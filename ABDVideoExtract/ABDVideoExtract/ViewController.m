@@ -87,10 +87,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    if ([_playerViewController isPlaying]) {
+    NSString *videoIdentifier = _ekisus[(NSUInteger) [indexPath row]];
+    if ([_playerViewController isPlaying] && [videoIdentifier isEqualToString:[_playerViewController identifier]]) {
         [_playerViewController.controls manageControlShowing];  // control panel showing
     } else {
-        [_playerViewController setIdentifier:_ekisus[[indexPath row]]]; // 해당 인덱스의 영상id 변경
+        [_playerViewController setIdentifier:videoIdentifier]; // 해당 인덱스의 영상id 변경
         ABDEkisuCell *cell = (ABDEkisuCell *) [self.tableView cellForRowAtIndexPath:indexPath];
         [_playerViewController setFrame:cell.ekisuThumbView.bounds];    // 해당 셀의 위치에 맞게 플레이어 뷰의 프레임을 조정
         [cell.ekisuThumbView addSubview:_playerViewController.view];
