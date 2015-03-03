@@ -97,6 +97,8 @@
     if ([_playerViewController isPlaying] && [videoIdentifier isEqualToString:[_playerViewController identifier]]) {
         [_playerViewController.controls manageControlShowing];  // control panel showing
     } else {
+        [_playerViewController.player pause];
+
         [_playerViewController setIdentifier:videoIdentifier]; // 해당 인덱스의 영상id 변경
         ABDEkisuCell *cell = (ABDEkisuCell *) [self.tableView cellForRowAtIndexPath:indexPath];
         [_playerViewController setFrame:cell.ekisuThumbView.bounds];    // 해당 셀의 위치에 맞게 플레이어 뷰의 프레임을 조정

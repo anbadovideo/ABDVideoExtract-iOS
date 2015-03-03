@@ -417,6 +417,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
                 /* Once the AVPlayerItem becomes ready to play, i.e.
                  [playerItem status] == AVPlayerItemStatusReadyToPlay,
                  its duration can be fetched from the item. */
+                [_controls hideEndingView:YES];
                 [self initSliderTimer];
                 [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_MSEC)];
                 [self.player play];
