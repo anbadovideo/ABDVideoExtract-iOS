@@ -18,6 +18,14 @@
 @end
 
 @implementation ABDEkisuCell
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    return self;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -44,7 +52,6 @@
 
     _playerViewController = [[ABDPlayerViewController alloc] init];     // playerViewController initializing.
 
-//    self.tableView.estimatedRowHeight = 314.0;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -78,7 +85,6 @@
     ABDEkisuCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer forIndexPath:indexPath];
 
     [cell.ekisuThumbnailImageView setImage:[UIImage imageNamed:@"slider_active@2x.png"]];
-//    cell.contentView.userInteractionEnabled = NO;
     return cell;
 }
 
