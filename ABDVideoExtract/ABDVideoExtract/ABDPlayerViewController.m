@@ -103,6 +103,14 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     [self.controls setNeedsLayout]; // 플레이어 뷰의 frame에 맞게 controls도 위치 재조정.
 }
 
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+
+    self.playbackView.frame = self.view.frame;  // 플레이어 뷰의 frame에 맞게 playbackView도 위치 재조정.
+    [self.controls setNeedsLayout]; // 플레이어 뷰의 frame에 맞게 controls도 위치 재조정.
+}
+
+
 #pragma mark Asset URL
 
 - (void)setIdentifier:(NSString *)identifier {
