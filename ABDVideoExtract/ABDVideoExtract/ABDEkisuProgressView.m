@@ -8,6 +8,9 @@
 
 #import "ABDEkisuProgressView.h"
 
+static const int kWidthOfLabel = 40;
+static const int kHeightOfLabel = 24;
+
 @interface ABDEkisuProgressView ()
 /**The start progress for the progress animation.*/
 @property (nonatomic, assign) CGFloat animationFromValue;
@@ -21,6 +24,8 @@
 @property (nonatomic, readwrite) CGFloat progress;
 /**The UIImageView that shows the progress image.*/
 @property (nonatomic, retain) UIImageView *progressView;
+/**The UILabel that shows the percentage of progress.*/
+@property (nonatomic, strong) UILabel *percentageLabel;
 @end
 
 @implementation ABDEkisuProgressView
@@ -67,6 +72,15 @@
     _progressView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_progressView];
 
+    _percentageLabel = [[UILabel alloc] init];
+    _percentageLabel.textColor = [UIColor whiteColor];
+    _percentageLabel.font = [UIFont boldSystemFontOfSize:20];
+    _percentageLabel.textAlignment = NSTextAlignmentCenter;
+    [_percentageLabel sizeToFit];
+    _percentageLabel.frame = CGRectMake(CGRectGetMidX(self.frame) - kWidthOfLabel/2, CGRectGetMidY(self.frame) - kHeightOfLabel/2 + 5, kWidthOfLabel, kHeightOfLabel);
+    [self addSubview:_percentageLabel];
+    [self bringSubviewToFront:_percentageLabel];
+
     //Layout
     [self layoutSubviews];
 }
@@ -83,6 +97,12 @@
 {
     _progressImage = progressImage;
     _progressView.image = _progressImage;
+    _progressView.layer.shadowColor = [[UIColor colorWithWhite:0 alpha:0.5] CGColor];
+    _progressView.layer.shadowOffset = CGSizeMake(0.0, 1.0);
+    _progressView.layer.shadowRadius = 0.0;
+    _progressView.layer.shadowOpacity = 1.0f;
+    _progressView.layer.masksToBounds = NO;
+
     [self setNeedsDisplay];
 }
 
@@ -90,6 +110,8 @@
 
 - (void)setProgress:(CGFloat)progress animated:(BOOL)animated {
     _progress = progress;
+
+    [self setPercent:progress];
 
     if (animated == NO) {
         if (_displayLink) {
@@ -111,6 +133,19 @@
            //Reuse the current display link
            }*/
     }
+}
+
+- (void)setPercent:(CGFloat)progress {
+    [_percentageLabel setText:[NSString stringWithFormat:@"%d%%", (int) (progress * 100)]];
+    NSMutableAttributedString *text =
+            [[NSMutableAttributedString alloc]
+                    initWithAttributedString: _percentageLabel.attributedText];
+    NSRange percentRange = [_percentageLabel.text rangeOfString:@"%"];
+    // percent sign(%) only small sizing
+    [text addAttribute:NSFontAttributeName
+                 value:[UIFont boldSystemFontOfSize:9]
+                 range:percentRange];
+    [_percentageLabel setAttributedText:text];
 }
 
 - (void)animateProgress:(CADisplayLink *)displayLink
