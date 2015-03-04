@@ -34,5 +34,9 @@ typedef enum {
 
 - (instancetype)initWithIdentifier:(NSString *)identifier;
 
+- (void)setFrame:(CGRect)frame;
+
 - (void)replay:(Playmode)mode;
+
+- (BOOL)isPlaying;
 @end

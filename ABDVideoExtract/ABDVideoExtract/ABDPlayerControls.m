@@ -39,7 +39,7 @@ const static int kPadding = 10;
     if (self) {
         _playerViewController = playerViewController;
         [self setup];
-//        [self setupEndingView];
+        [self setupEndingView];
     }
     return self;
 }
@@ -101,15 +101,15 @@ const static int kPadding = 10;
 - (void)layoutSubviews {
     [super layoutSubviews];
 
-    CGRect screenBound = [[UIScreen mainScreen] bounds];
-    self.frame = screenBound;   // update frame of view.
-    [self adjustEndingView:screenBound];    // update endingView.
+    self.frame = _playerViewController.view.frame;   // update frame of view.
+    [self adjustEndingView:self.frame];    // update endingView.
 
     // update bottomBar.
+    self.bottomBar.frame = CGRectMake(0, _playerViewController.view.frame.size.height - kHeightOfBottomBar, _playerViewController.view.frame.size.width, kHeightOfBottomBar);
     if (self.isShowing) {
-        self.bottomBar.frame = CGRectMake(0, screenBound.size.height - kHeightOfBottomBar, screenBound.size.width, kHeightOfBottomBar);
+        self.bottomBar.alpha = 1.0f;
     } else {
-        self.bottomBar.frame = CGRectMake(0, screenBound.size.height, screenBound.size.width, kHeightOfBottomBar);
+        self.bottomBar.alpha = 0.0f;
     }
     _remainTimeLabel.frame = CGRectMake(_bottomBar.frame.size.width - kWidthOfRemainLabel - kPadding, kHeightOfBottomBar/2 - kHeightOfRemainLabel/2 , kWidthOfRemainLabel, kHeightOfRemainLabel);
     _extractSlider.frame = CGRectMake(0, 0, _bottomBar.frame.size.width, _bottomBar.frame.size.height);
@@ -123,7 +123,11 @@ const static int kPadding = 10;
 
 #pragma mark - touch events
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self manageControlShowing];
+}
+
+- (void)manageControlShowing {
     self.isShowing ? [self hideControls:nil] : [self showControls:nil];
 }
 
@@ -146,7 +150,7 @@ const static int kPadding = 10;
     if (!self.isShowing) {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideControls:) object:nil];
         [UIView animateWithDuration:0.3 delay:0.0 options:0 animations:^{
-            self.bottomBar.frame = CGRectMake(self.frame.origin.x, self.frame.size.height - kHeightOfBottomBar, self.bottomBar.frame.size.width, self.bottomBar.frame.size.height);
+            self.bottomBar.alpha = 1.0f;
         } completion:^(BOOL finished) {
             _showing = YES;
             if (completion)
@@ -163,7 +167,7 @@ const static int kPadding = 10;
     if (self.isShowing) {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideControls:) object:nil];
         [UIView animateWithDuration:0.3 delay:0.0 options:0 animations:^{
-            self.bottomBar.frame = CGRectMake(self.frame.origin.x, self.frame.size.height, self.bottomBar.frame.size.width, self.bottomBar.frame.size.height);
+            self.bottomBar.alpha = 0.0f;
         } completion:^(BOOL finished) {
             _showing = NO;
             if (completion)

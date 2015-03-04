@@ -12,5 +12,5 @@
 @interface Utility : NSObject
 
 + (NSString *)secondsToMMSS:(double)seconds;
-
++ (NSTimeInterval)mmssToSeconds:(NSString *)mmss;
 @end

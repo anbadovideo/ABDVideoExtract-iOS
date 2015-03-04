@@ -37,8 +37,9 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
 
-    CGRect screenBound = [[UIScreen mainScreen] bounds];
-    self.frame = screenBound;
+    // Todo : 전체화면일 때와 테이블뷰에서 나타날 때 구분 필요.
+//    CGRect screenBound = [[UIScreen mainScreen] bounds];
+//    self.frame = screenBound;
 }
 
 @end

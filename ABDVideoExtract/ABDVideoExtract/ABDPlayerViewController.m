@@ -13,6 +13,7 @@
 #import "XCDYouTubeClient.h"
 #import "ExtractSection.h"
 #import "ABDExtractSlider.h"
+#import "Utility.h"
 
 @interface ABDPlayerViewController ()
 @property (nonatomic, strong) NSURL *streamURL;
@@ -47,21 +48,14 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     [self initSliderTimer];
     [self syncSlider];
 
-    _sectionCounter = 0;
-
-    if (_identifier == nil) {
-        // example video.
-        _identifier = [NSString stringWithFormat:@"HHrRLnQeScA"];
-    }
+    // playbackView initializing.
+    _playbackView = [[ABDPlaybackView alloc] init];
+    _playbackView.frame = self.view.frame;
+    [self.view addSubview:_playbackView];
 
     if (_extractSections == nil) {
-        ExtractSection *section1 = [[ExtractSection alloc] initWithStartTime:305.0f endTime:422.0f];
-        ExtractSection *section2 = [[ExtractSection alloc] initWithStartTime:436.0f endTime:448.0f];
-        ExtractSection *section3 = [[ExtractSection alloc] initWithStartTime:493.0f endTime:517.0f];
-        ExtractSection *section4 = [[ExtractSection alloc] initWithStartTime:523.0f endTime:533.0f];
-        ExtractSection *section5 = [[ExtractSection alloc] initWithStartTime:571.0f endTime:594.0f];
-        ExtractSection *section6 = [[ExtractSection alloc] initWithStartTime:758.0f endTime:769.0f];
-        NSArray *sections = @[section1, section2, section3, section4, section5, section6];
+        ExtractSection *section1 = [[ExtractSection alloc] initWithStartTime:[Utility mmssToSeconds:@"00:00"] endTime:[Utility mmssToSeconds:@"00:57"]];
+        NSArray *sections = @[section1, ];
 
         NSInteger ekisuDuration = 0;
         for (ExtractSection *extractSection in sections) {
@@ -71,11 +65,6 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
         _extractDuration = ekisuDuration;   // 총 엑기스 시간 변수 설정.
         _extractSections = sections;
     }
-
-    // playbackView initializing.
-    _playbackView = [[ABDPlaybackView alloc] init];
-    _playbackView.frame = self.view.frame;
-    [self.view addSubview:_playbackView];
 
     // playerControl initializing.
     ABDPlayerControls *controls = [[ABDPlayerControls alloc] initWithMoviePlayer:self];
@@ -87,8 +76,49 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     [controls setExtractSlider:slider];
     [self setControls:controls];
 
-    NSString *videoIdentifier = _identifier; // A 11 characters YouTube video identifier
-    [[XCDYouTubeClient defaultClient] getVideoWithIdentifier:videoIdentifier completionHandler:^(XCDYouTubeVideo *video, NSError *error) {
+    _sectionCounter = 0;    // 엑기스 구간 순차 재생을 위한 카운터
+    if (_identifier == nil) {
+        // example video.
+        _identifier = [NSString stringWithFormat:@"Bpck7y0vRQE"];
+    }
+    [self setIdentifier:_identifier];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)setControls:(ABDPlayerControls *)controls {
+    if (_controls != controls) {
+        _controls = controls;
+        _controls.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        [self.view addSubview:_controls];
+    }
+}
+
+- (void)setFrame:(CGRect)frame {
+    // 플레이어 뷰의 프레임과 동시에 playbackView의 frame도 함께 조정
+    self.view.frame = frame;
+    self.playbackView.frame = frame;
+    [self.controls setNeedsLayout]; // 플레이어 뷰의 frame에 맞게 controls도 위치 재조정.
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+
+    self.playbackView.frame = self.view.frame;  // 플레이어 뷰의 frame에 맞게 playbackView도 위치 재조정.
+    [self.controls setNeedsLayout]; // 플레이어 뷰의 frame에 맞게 controls도 위치 재조정.
+}
+
+
+#pragma mark Asset URL
+
+- (void)setIdentifier:(NSString *)identifier {
+    if (identifier == nil || [identifier isEqualToString:@""])
+        return;
+
+    _identifier = identifier;
+    [[XCDYouTubeClient defaultClient] getVideoWithIdentifier:_identifier completionHandler:^(XCDYouTubeVideo *video, NSError *error) {
         if (video) {
             // set video duration for expression of ekisu
             _controls.extractSlider.duration = video.duration;
@@ -104,20 +134,6 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
         }
     }];
 }
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)setControls:(ABDPlayerControls *)controls {
-    if (_controls != controls) {
-        _controls = controls;
-        _controls.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-        [self.view addSubview:_controls];
-    }
-}
-
-#pragma mark Asset URL
 
 - (void)setURL:(NSURL*)URL {
     if (_streamURL != URL)
@@ -340,6 +356,11 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     }
     [self.player play];
 }
+
+- (BOOL)isPlaying {
+    return self.player.rate > 0 && !self.player.error;
+}
+
 @end
 
 @implementation ABDPlayerViewController (Player)
@@ -404,7 +425,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
                 /* Once the AVPlayerItem becomes ready to play, i.e.
                  [playerItem status] == AVPlayerItemStatusReadyToPlay,
                  its duration can be fetched from the item. */
-
+                [_controls hideEndingView:YES];
                 [self initSliderTimer];
                 [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_MSEC)];
                 [self.player play];
