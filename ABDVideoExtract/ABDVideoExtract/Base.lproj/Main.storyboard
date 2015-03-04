@@ -57,10 +57,20 @@
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="edG-H0-UjV" userLabel="View - Concentration Image">
                                                     <rect key="frame" x="533" y="358" width="47" height="72"/>
-                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="66N-iB-fnW" userLabel="View - Progress View" customClass="ABDEkisuProgressView">
+                                                            <rect key="frame" x="0.0" y="0.0" width="47" height="72"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="66N-iB-fnW" secondAttribute="trailing" id="04Q-Kj-sAb"/>
+                                                        <constraint firstItem="66N-iB-fnW" firstAttribute="top" secondItem="edG-H0-UjV" secondAttribute="top" id="4AU-dg-7Po"/>
+                                                        <constraint firstItem="66N-iB-fnW" firstAttribute="leading" secondItem="edG-H0-UjV" secondAttribute="leading" id="I2r-2W-uY3"/>
                                                         <constraint firstAttribute="height" constant="72" id="IkT-TC-lI9"/>
                                                         <constraint firstAttribute="width" constant="47" id="WrH-q2-Un7"/>
+                                                        <constraint firstAttribute="bottom" secondItem="66N-iB-fnW" secondAttribute="bottom" id="lEp-tw-ija"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -83,6 +93,7 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="ekisuProgressView" destination="66N-iB-fnW" id="sY7-5I-wrV"/>
                                             <outlet property="ekisuRateView" destination="edG-H0-UjV" id="nrI-yO-svS"/>
                                             <outlet property="ekisuThumbView" destination="dRu-6e-vib" id="JO0-ps-cFa"/>
                                             <outlet property="ekisuThumbnailImageView" destination="Wck-4H-FHa" id="YDu-Gu-9s4"/>

@@ -9,21 +9,44 @@
 #import "ViewController.h"
 #import "ABDPlayerViewController.h"
 #import "ABDPlayerControls.h"
+#import "ABDEkisuProgressView.h"
 
 @interface ABDEkisuCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIView *ekisuThumbView;
 @property (nonatomic, strong) IBOutlet UIImageView *ekisuThumbnailImageView;
 @property (nonatomic, strong) IBOutlet UILabel *ekisuTitleLabel;
 @property (nonatomic, strong) IBOutlet UIView *ekisuRateView;
+@property (nonatomic, strong) IBOutlet ABDEkisuProgressView *ekisuProgressView;
 @end
 
 @implementation ABDEkisuCell
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self initUI];
     }
     return self;
+}
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        // Initialization code
+        [self initUI];
+    }
+    return self;
+}
+
+- (void)awakeFromNib {
+    // Initialization code
+    [self initUI];
+}
+
+- (void)initUI {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+
+    [_ekisuProgressView setProgressImage:[UIImage imageNamed:@"progressBg.png"]];
+    _ekisuProgressView.drawGreyscaleBackground = YES;
 }
 
 - (void)layoutSubviews
@@ -85,6 +108,8 @@
     ABDEkisuCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer forIndexPath:indexPath];
 
     [cell.ekisuThumbnailImageView setImage:[UIImage imageNamed:@"slider_active@2x.png"]];
+    [cell.ekisuProgressView setProgress:random() % 100 * 0.01 animated:YES];
+
     return cell;
 }
 
