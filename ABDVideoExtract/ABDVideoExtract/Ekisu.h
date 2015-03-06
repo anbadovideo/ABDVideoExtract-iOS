@@ -19,4 +19,5 @@
 @property (nonatomic, strong, readonly) NSDate *created;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (NSArray *)parseSectionString:(NSString *)sectionString;
 @end

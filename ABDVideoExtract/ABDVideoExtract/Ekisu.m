@@ -8,6 +8,8 @@
 
 #import "Ekisu.h"
 #import "Video.h"
+#import "ExtractSection.h"
+#import "Utility.h"
 
 @implementation Ekisu
 
@@ -18,14 +20,28 @@
         _video = [[Video alloc] initFromDictionary:dictionary[@"video"]];
         _title = dictionary[@"title"];
         _thumbnail = dictionary[@"thumbnail"];
-        _sections = dictionary[@"section"];
+        _sections = [self parseSectionString:dictionary[@"section"]];
 
-        if ([dictionary[@"last_updated"] isKindOfClass:[NSDate class]]) {
-            _created = dictionary[@"last_updated"];
+        if ([dictionary[@"created"] isKindOfClass:[NSDate class]]) {
+            _created = dictionary[@"created"];
+        } else {
+            NSDateFormatter *dateFormatter = [Utility dateFormatter];
+            NSString *lastUpdatedString = dictionary[@"created"];
+            _created = [dateFormatter dateFromString:lastUpdatedString];
         }
     }
-
     return self;
+}
+
+- (NSArray *)parseSectionString:(NSString *)sectionString {
+    NSMutableArray *sections = [NSMutableArray new];
+    NSArray *separatedStrings = [sectionString componentsSeparatedByString:@", "];
+    for (NSString *aSectionString in separatedStrings) {
+        NSArray *ekisuTimes = [aSectionString componentsSeparatedByString:@":"];
+        ExtractSection *extractSection = [ExtractSection extractSectionWithStartTime:[ekisuTimes[0] floatValue] endTime:[ekisuTimes[1] floatValue]];
+        [sections addObject:extractSection];
+    }
+    return sections;
 }
 
 @end
