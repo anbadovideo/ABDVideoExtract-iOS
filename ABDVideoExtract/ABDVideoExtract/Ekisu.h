@@ -18,4 +18,5 @@
 @property (nonatomic, strong, readonly) NSArray *sections;
 @property (nonatomic, strong, readonly) NSDate *created;
 
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 @end

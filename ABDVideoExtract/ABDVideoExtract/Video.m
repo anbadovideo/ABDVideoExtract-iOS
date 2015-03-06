@@ -9,5 +9,19 @@
 #import "Video.h"
 
 @implementation Video
+- (instancetype)initFromDictionary:(NSDictionary *)dictionary {
+    self = [super init];
+    if (self) {
+        _id = dictionary[@"id"];
+        _identifier = dictionary[@"identifier"];
+        _provider = dictionary[@"provider"];
+        _title = dictionary[@"title"];
+        _thumbnail = dictionary[@"thumbnail"];
+        _viewCount = dictionary[@"view_count"];
+        _duration = dictionary[@"duration"];
+    }
+    return self;
+}
+
 
 @end
