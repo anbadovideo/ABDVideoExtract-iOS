@@ -21,6 +21,7 @@
         _title = dictionary[@"title"];
         _thumbnail = dictionary[@"thumbnail"];
         _sections = [self parseSectionString:dictionary[@"section"]];
+        _duration = dictionary[@"duration"];
 
         if ([dictionary[@"created"] isKindOfClass:[NSDate class]]) {
             _created = dictionary[@"created"];

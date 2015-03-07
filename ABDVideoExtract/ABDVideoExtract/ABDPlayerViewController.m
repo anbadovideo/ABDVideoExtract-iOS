@@ -68,7 +68,6 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
     // playerControl initializing.
     ABDPlayerControls *controls = [[ABDPlayerControls alloc] initWithMoviePlayer:self];
-    [controls setExtractSections:_extractSections];
 
     // slider initializing.
     ABDExtractSlider *slider = [[ABDExtractSlider alloc] init];
@@ -110,6 +109,14 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     [self.controls setNeedsLayout]; // 플레이어 뷰의 frame에 맞게 controls도 위치 재조정.
 }
 
+#pragma mark Set Properties
+
+- (void)setEkisuDuration:(NSTimeInterval)duration ExtractSections:(NSArray *)extractSections {
+    _extractDuration = duration;
+    _extractSections = extractSections;
+    self.controls.extractSlider.duration = duration;
+    self.controls.extractSlider.extractSections = extractSections;
+}
 
 #pragma mark Asset URL
 

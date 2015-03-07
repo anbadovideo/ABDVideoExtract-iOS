@@ -36,6 +36,8 @@ typedef enum {
 
 - (void)setFrame:(CGRect)frame;
 
+- (void)setEkisuDuration:(NSTimeInterval)duration ExtractSections:(NSArray *)extractSections;
+
 - (void)replay:(Playmode)mode;
 
 - (BOOL)isPlaying;
