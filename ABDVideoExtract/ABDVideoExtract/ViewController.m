@@ -10,13 +10,18 @@
 #import "ABDPlayerViewController.h"
 #import "ABDPlayerControls.h"
 #import "ABDEkisuProgressView.h"
+#import "AppDelegate.h"
+#import "Ekisu.h"
+#import "Video.h"
+#import "UIImageView+AFNetworking.h"
+#import <AFNetworking/AFNetworking.h>
 
 @interface ABDEkisuCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UIView *ekisuThumbView;
-@property (nonatomic, strong) IBOutlet UIImageView *ekisuThumbnailImageView;
-@property (nonatomic, strong) IBOutlet UILabel *ekisuTitleLabel;
-@property (nonatomic, strong) IBOutlet UIView *ekisuRateView;
-@property (nonatomic, strong) IBOutlet ABDEkisuProgressView *ekisuProgressView;
+@property(strong, nonatomic) IBOutlet UIView *ekisuThumbView;
+@property(nonatomic, strong) IBOutlet UIImageView *ekisuThumbnailImageView;
+@property(nonatomic, strong) IBOutlet UILabel *ekisuTitleLabel;
+@property(nonatomic, strong) IBOutlet UIView *ekisuRateView;
+@property(nonatomic, strong) IBOutlet ABDEkisuProgressView *ekisuProgressView;
 @end
 
 @implementation ABDEkisuCell
@@ -49,8 +54,7 @@
     _ekisuProgressView.drawGreyscaleBackground = YES;
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
 
     [self.contentView updateConstraintsIfNeeded];
@@ -62,7 +66,7 @@
 @end
 
 @interface ViewController ()
-@property (nonatomic, strong) ABDPlayerViewController *playerViewController;
+@property(nonatomic, strong) ABDPlayerViewController *playerViewController;
 @end
 
 @implementation ViewController
@@ -70,11 +74,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    _ekisus = [[NSMutableArray alloc] init];
 
-    _ekisus = @[@"s0UjELAUMjE", @"1oDAuUx3m6U"];
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    NSString *urlString = [NSString stringWithFormat:@"%@/ekisus/", appDelegate.serverURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", responseObject);
+        for (NSDictionary *ekisuDictionary in responseObject[@"results"]) {
+            Ekisu *ekisu = [[Ekisu alloc] initWithDictionary:ekisuDictionary];
+            [_ekisus addObject:ekisu];
+        }
+        [self.tableView reloadData];
+    }    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Load Ekisus"
+                                                            message:[error localizedDescription]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }];
 
     _playerViewController = [[ABDPlayerViewController alloc] init];     // playerViewController initializing.
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,16 +103,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
     // Do view manipulation here.
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 #pragma mark - TableView DataSource
 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewAutomaticDimension;
 }
 
@@ -107,7 +126,9 @@
     static NSString *cellIdentifer = @"ABDEkisuCell";
     ABDEkisuCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer forIndexPath:indexPath];
 
-    [cell.ekisuThumbnailImageView setImage:[UIImage imageNamed:@"slider_active@2x.png"]];
+    Ekisu *ekisu = _ekisus[(NSUInteger) [indexPath row]];
+    [cell.ekisuThumbnailImageView setImageWithURL:[NSURL URLWithString:ekisu.thumbnail] placeholderImage:nil];
+    [cell.ekisuTitleLabel setText:ekisu.title];
     [cell.ekisuProgressView setProgress:random() % 100 * 0.01 animated:YES];
 
     return cell;
@@ -118,7 +139,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    NSString *videoIdentifier = _ekisus[(NSUInteger) [indexPath row]];
+    Ekisu *ekisu = _ekisus[(NSUInteger) [indexPath row]];
+    NSString *videoIdentifier = ekisu.video.identifier;
     if ([_playerViewController isPlaying] && [videoIdentifier isEqualToString:[_playerViewController identifier]]) {
         [_playerViewController.controls manageControlShowing];  // control panel showing
     } else {
