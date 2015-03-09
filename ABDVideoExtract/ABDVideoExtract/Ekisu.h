@@ -11,7 +11,7 @@
 @class Video;
 
 @interface Ekisu : NSObject
-@property (nonatomic, strong, readonly) NSNumber *id;
+@property (nonatomic, strong, readonly) NSString *ekisuId;
 @property (nonatomic, strong, readonly) Video *video;
 @property (nonatomic, strong, readonly) NSString *title;
 @property (nonatomic, strong, readonly) NSString *thumbnail;

@@ -14,6 +14,8 @@
 #import "ExtractSection.h"
 #import "ABDExtractSlider.h"
 #import "Utility.h"
+#import "Ekisu.h"
+#import "Video.h"
 
 @interface ABDPlayerViewController ()
 @property (nonatomic, strong) NSURL *streamURL;
@@ -111,11 +113,20 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
 #pragma mark Set Properties
 
-- (void)setEkisuDuration:(NSTimeInterval)duration ExtractSections:(NSArray *)extractSections {
-    _extractDuration = duration;
+- (void)setEkisu:(Ekisu *)ekisu {
+    _ekisu = ekisu;
+    [self setIdentifier:ekisu.video.identifier];
+    [self setExtractSections:ekisu.sections];
+    [self setExtractDuration:[ekisu.duration floatValue]];
+}
+
+- (void)setExtractSections:(NSArray *)extractSections {
     _extractSections = extractSections;
-    self.controls.extractSlider.duration = duration;
     self.controls.extractSlider.extractSections = extractSections;
+}
+
+- (void)setDuration:(NSTimeInterval)duration {
+    _controls.extractSlider.duration = duration;
 }
 
 #pragma mark Asset URL
@@ -127,8 +138,8 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     _identifier = identifier;
     [[XCDYouTubeClient defaultClient] getVideoWithIdentifier:_identifier completionHandler:^(XCDYouTubeVideo *video, NSError *error) {
         if (video) {
-            // set video duration for expression of ekisu
-            _controls.extractSlider.duration = video.duration;
+            // set video duration for expression of ekisu-spread.
+            [self setDuration:video.duration];
 
             NSDictionary *streamURLs = video.streamURLs;
             NSURL *URL = streamURLs[@(XCDYouTubeVideoQualityHD720)] ?: streamURLs[@(XCDYouTubeVideoQualityMedium360)] ?: streamURLs[@(XCDYouTubeVideoQualitySmall240)];
@@ -320,6 +331,12 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     }
 }
 
+#pragma mark - ekisu checking methods
+
+- (void)initEkisuSectionChecker {
+    _sectionCounter = 0;
+}
+
 - (void)checkExtractSection:(NSTimeInterval)time {
     if (_sectionCounter == -1)
         // if counter is -1, not ekisu play mode. but all play mode.
@@ -434,6 +451,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
                  its duration can be fetched from the item. */
                 [_controls hideEndingView:YES];
                 [self initSliderTimer];
+                [self initEkisuSectionChecker];
                 [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_MSEC)];
                 [self.player play];
                 [self.controls showControls:nil];

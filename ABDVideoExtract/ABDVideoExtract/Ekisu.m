@@ -16,7 +16,7 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
-        _id = dictionary[@"id"];
+        _ekisuId = [dictionary[@"id"] stringValue];
         _video = [[Video alloc] initFromDictionary:dictionary[@"video"]];
         _title = dictionary[@"title"];
         _thumbnail = dictionary[@"thumbnail"];

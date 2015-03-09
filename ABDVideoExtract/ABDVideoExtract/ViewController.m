@@ -203,14 +203,12 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     Ekisu *ekisu = _ekisus[(NSUInteger) [indexPath row]];
-    NSString *videoIdentifier = ekisu.video.identifier;
-    if ([_playerViewController isPlaying] && [videoIdentifier isEqualToString:[_playerViewController identifier]]) {
+    if ([_playerViewController isPlaying] && [ekisu.ekisuId isEqualToString:_playerViewController.ekisu.ekisuId]) {
         [_playerViewController.controls manageControlShowing];  // control panel showing
     } else {
         [_playerViewController.player pause];
 
-        [_playerViewController setEkisuDuration:[ekisu.duration doubleValue] ExtractSections:ekisu.sections];   // set duration and sections of Ekisu
-        [_playerViewController setIdentifier:videoIdentifier]; // 해당 인덱스의 영상id 변경
+        [_playerViewController setEkisu:ekisu];
         ABDEkisuCell *cell = (ABDEkisuCell *) [self.tableView cellForRowAtIndexPath:indexPath];
         [_playerViewController setFrame:cell.ekisuThumbView.bounds];    // 해당 셀의 위치에 맞게 플레이어 뷰의 프레임을 조정
         [cell.ekisuThumbView addSubview:_playerViewController.view];

@@ -10,8 +10,8 @@
 
 @interface Video : NSObject
 
-@property (nonatomic, strong, readonly) NSString *id;
-@property (nonatomic, strong, readonly) NSString *identifier;
+@property (nonatomic, strong, readonly) NSString *videoId;           // video id of server
+@property (nonatomic, strong, readonly) NSString *identifier;   // video identifier
 @property (nonatomic, strong, readonly) NSString *provider;
 @property (nonatomic, strong, readonly) NSString *title;
 @property (nonatomic, strong, readonly) NSString *thumbnail;

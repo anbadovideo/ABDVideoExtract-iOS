@@ -12,7 +12,7 @@
 - (instancetype)initFromDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
-        _id = dictionary[@"id"];
+        _videoId = [dictionary[@"id"] stringValue];
         _identifier = dictionary[@"identifier"];
         _provider = dictionary[@"provider"];
         _title = dictionary[@"title"];
