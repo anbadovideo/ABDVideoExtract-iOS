@@ -67,14 +67,27 @@
 
 @interface ViewController ()
 @property(nonatomic, strong) ABDPlayerViewController *playerViewController;
+@property(nonatomic, strong) UIRefreshControl *refreshControl;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    _refreshControl = [[UIRefreshControl alloc] init];
+    [_refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:_refreshControl];
+
     // Do any additional setup after loading the view, typically from a nib.
     _ekisus = [[NSMutableArray alloc] init];
+    [self loadData];
+
+    _playerViewController = [[ABDPlayerViewController alloc] init];     // playerViewController initializing.
+}
+
+- (void)loadData {
+    [_ekisus removeAllObjects]; // remove all data;
 
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     NSString *urlString = [NSString stringWithFormat:@"%@/ekisus/", appDelegate.serverURL];
@@ -86,6 +99,9 @@
             [_ekisus addObject:ekisu];
         }
         [self.tableView reloadData];
+        if ([_refreshControl isRefreshing]) {
+            [_refreshControl endRefreshing];
+        }
     }    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Load Ekisus"
                                                             message:[error localizedDescription]
@@ -94,8 +110,6 @@
                                                   otherButtonTitles:nil];
         [alertView show];
     }];
-
-    _playerViewController = [[ABDPlayerViewController alloc] init];     // playerViewController initializing.
 }
 
 - (void)didReceiveMemoryWarning {
