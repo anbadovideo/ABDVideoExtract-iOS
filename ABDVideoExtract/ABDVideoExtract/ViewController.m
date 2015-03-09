@@ -14,7 +14,10 @@
 #import "Ekisu.h"
 #import "Video.h"
 #import "UIImageView+AFNetworking.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 #import <AFNetworking/AFNetworking.h>
+#import <QuartzCore/QuartzCore.h>
+
 
 @interface ABDEkisuCell : UITableViewCell
 @property(strong, nonatomic) IBOutlet UIView *ekisuThumbView;
@@ -68,6 +71,7 @@
 @interface ViewController ()
 @property(nonatomic, strong) ABDPlayerViewController *playerViewController;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
+@property(nonatomic, assign) int currentPage;
 @end
 
 @implementation ViewController
@@ -75,33 +79,63 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    _playerViewController = [[ABDPlayerViewController alloc] init];     // playerViewController initializing.
+
+    _currentPage = 1;   // initial page is 1
+    _ekisus = [[NSMutableArray alloc] init];
+
     _refreshControl = [[UIRefreshControl alloc] init];
-    [_refreshControl addTarget:self action:@selector(loadData) forControlEvents:UIControlEventValueChanged];
+    [_refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:_refreshControl];
 
-    // Do any additional setup after loading the view, typically from a nib.
-    _ekisus = [[NSMutableArray alloc] init];
-    [self loadData];
+    [self loadDataFromServer];
 
-    _playerViewController = [[ABDPlayerViewController alloc] init];     // playerViewController initializing.
+    __weak typeof(self)weakSelf = self;
+//    // refresh new data when pull the table list
+//    [self.tableView addPullToRefreshWithActionHandler:^{
+//        [self refreshData];
+//
+//        // once refresh, allow the infinite scroll again
+//        weakSelf.tableView.showsInfiniteScrolling = YES;
+//    }];
+
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf loadDataFromServer];
+    }];
 }
 
-- (void)loadData {
-    [_ekisus removeAllObjects]; // remove all data;
+- (void)refreshData {
+    _currentPage = 1;
+    [_ekisus removeAllObjects];
+    [self.tableView reloadData];
+    [self loadDataFromServer];
+}
 
+- (void)loadDataFromServer {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    NSString *urlString = [NSString stringWithFormat:@"%@/ekisus/", appDelegate.serverURL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/ekisus/?page=%d", appDelegate.serverURL, _currentPage];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
+        if ([responseObject[@"results"] count] == 0) {
+            self.tableView.showsInfiniteScrolling = NO;
+            return;
+        }
+
+        _currentPage++;
+        int currentRow = [_ekisus count];
+
         for (NSDictionary *ekisuDictionary in responseObject[@"results"]) {
             Ekisu *ekisu = [[Ekisu alloc] initWithDictionary:ekisuDictionary];
             [_ekisus addObject:ekisu];
         }
-        [self.tableView reloadData];
-        if ([_refreshControl isRefreshing]) {
-            [_refreshControl endRefreshing];
-        }
+//        [self.tableView reloadData];
+        [self reloadTableView:currentRow];
+
+        // stop scrolling or refreshing
+        [_refreshControl endRefreshing];
+        [self.tableView.infiniteScrollingView stopAnimating];
+
     }    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Load Ekisus"
                                                             message:[error localizedDescription]
@@ -110,6 +144,18 @@
                                                   otherButtonTitles:nil];
         [alertView show];
     }];
+}
+
+- (void)reloadTableView:(int)startingRow {
+    // the last row after added new items
+    int endingRow = [_ekisus count];
+
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    for (; startingRow < endingRow; startingRow++) {
+        [indexPaths addObject:[NSIndexPath indexPathForRow:startingRow inSection:0]];
+    }
+
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)didReceiveMemoryWarning {
