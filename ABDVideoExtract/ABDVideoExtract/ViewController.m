@@ -71,7 +71,7 @@
 @interface ViewController ()
 @property(nonatomic, strong) ABDPlayerViewController *playerViewController;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
-@property(nonatomic, assign) int currentPage;
+@property(nonatomic, strong) NSString *requestURLString;
 @end
 
 @implementation ViewController
@@ -79,9 +79,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self initURLString];
+
     _playerViewController = [[ABDPlayerViewController alloc] init];     // playerViewController initializing.
 
-    _currentPage = 1;   // initial page is 1
     _ekisus = [[NSMutableArray alloc] init];
 
     _refreshControl = [[UIRefreshControl alloc] init];
@@ -90,46 +91,53 @@
 
     [self loadDataFromServer];
 
+    // tableView paging.
     __weak typeof(self)weakSelf = self;
-//    // refresh new data when pull the table list
-//    [self.tableView addPullToRefreshWithActionHandler:^{
-//        [self refreshData];
-//
-//        // once refresh, allow the infinite scroll again
-//        weakSelf.tableView.showsInfiniteScrolling = YES;
-//    }];
-
     [self.tableView addInfiniteScrollingWithActionHandler:^{
         [weakSelf loadDataFromServer];
     }];
 }
 
 - (void)refreshData {
-    _currentPage = 1;
+    [self initURLString];
     [_ekisus removeAllObjects];
     [self.tableView reloadData];
     [self loadDataFromServer];
 }
 
-- (void)loadDataFromServer {
+- (void)initURLString {
+    // set URL to initial request URL
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    NSString *urlString = [NSString stringWithFormat:@"%@/ekisus/?page=%d", appDelegate.serverURL, _currentPage];
+    _requestURLString = [NSString stringWithFormat:@"%@/ekisus/", appDelegate.serverURL];
+}
+
+- (void)loadDataFromServer {
+    if (_requestURLString == nil) {
+        // invalid request
+        [self.tableView.infiniteScrollingView stopAnimating];
+        return;
+    }
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:_requestURLString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
         if ([responseObject[@"results"] count] == 0) {
             self.tableView.showsInfiniteScrolling = NO;
             return;
         }
 
-        _currentPage++;
+        if (responseObject[@"next"] != [NSNull null]) {
+            _requestURLString = responseObject[@"next"];
+        } else {
+            _requestURLString = nil;
+        }
+
         int currentRow = [_ekisus count];
 
         for (NSDictionary *ekisuDictionary in responseObject[@"results"]) {
             Ekisu *ekisu = [[Ekisu alloc] initWithDictionary:ekisuDictionary];
             [_ekisus addObject:ekisu];
         }
-//        [self.tableView reloadData];
         [self reloadTableView:currentRow];
 
         // stop scrolling or refreshing
@@ -143,6 +151,8 @@
                                                   cancelButtonTitle:@"Ok"
                                                   otherButtonTitles:nil];
         [alertView show];
+        [_refreshControl endRefreshing];
+        self.tableView.showsInfiniteScrolling = NO;
     }];
 }
 
@@ -155,7 +165,7 @@
         [indexPaths addObject:[NSIndexPath indexPathForRow:startingRow inSection:0]];
     }
 
-    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationBottom];
 }
 
 - (void)didReceiveMemoryWarning {
