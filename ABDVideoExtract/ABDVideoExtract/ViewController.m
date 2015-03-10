@@ -17,7 +17,7 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import <AFNetworking/AFNetworking.h>
 #import <QuartzCore/QuartzCore.h>
-
+#import <CCMPopup/CCMPopupSegue.h>
 
 @interface ABDEkisuCell : UITableViewCell
 @property(strong, nonatomic) IBOutlet UIView *ekisuThumbView;
@@ -67,6 +67,9 @@
     [self.ekisuTitleLabel sizeToFit];
 }
 @end
+
+
+static const int kWidthOfPopupView = 300;
 
 @interface ViewController ()
 @property(nonatomic, strong) ABDPlayerViewController *playerViewController;
@@ -186,6 +189,20 @@
     // Do view manipulation here.
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
+
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    [super prepareForSegue:segue sender:sender];
+    if ([segue isKindOfClass:[CCMPopupSegue class]]){
+        CCMPopupSegue *popupSegue = (CCMPopupSegue *)segue;
+        popupSegue.destinationBounds = CGRectMake(self.view.frame.size.width/2 - kWidthOfPopupView/2 , self.view.frame.size.height/2 - kWidthOfPopupView/2, kWidthOfPopupView, kWidthOfPopupView);
+        popupSegue.backgroundViewAlpha = 1.0f;
+        popupSegue.backgroundViewColor = [UIColor colorWithWhite:0.1 alpha:0.7];
+        popupSegue.dismissableByTouchingBackground = YES;
+    }
+}
+
 
 #pragma mark - TableView DataSource
 
