@@ -76,6 +76,15 @@
 
 @implementation ViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.24 green:0.68 blue:0.85 alpha:1];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : [UIFont boldSystemFontOfSize:17]};
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 

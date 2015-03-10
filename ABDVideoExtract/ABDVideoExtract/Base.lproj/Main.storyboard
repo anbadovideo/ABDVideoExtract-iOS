@@ -5,7 +5,7 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--오늘의 엑기스-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
@@ -115,7 +115,7 @@
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="4Ve-7K-Zcs" secondAttribute="bottom" id="xNs-M4-Hrs"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="iLy-wq-dV6"/>
+                    <navigationItem key="navigationItem" title="오늘의 엑기스" id="iLy-wq-dV6"/>
                     <connections>
                         <outlet property="tableView" destination="4Ve-7K-Zcs" id="4dg-a2-1b0"/>
                     </connections>
