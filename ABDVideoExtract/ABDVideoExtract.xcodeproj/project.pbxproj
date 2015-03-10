@@ -24,6 +24,8 @@
 		7772229CF85E509617B60DAB /* ABDExtractSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 777224EB1B0C458AC2423CF0 /* ABDExtractSlider.m */; };
 		777227875D7B095B5DDCE276 /* ExtractSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772267CEB501E29A49C8FC7 /* ExtractSection.m */; };
 		777229FADE567FA52EC634A6 /* ABDEkisuProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777221649B64504AFFB9EBAF /* ABDEkisuProgressView.m */; };
+		77722A4C959236B75369D8DC /* Ekisu.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722F6A80BDE4417B35EF9B /* Ekisu.m */; };
+		77722B751C560653DC1B62C9 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722ECB929ADAB13CF41451 /* Video.m */; };
 		77722E1C6757CA840EDD768A /* ABDPlaybackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722D79972462C08E0CF93C /* ABDPlaybackView.m */; };
 		77722EDEFEF592E1238603FF /* ABDPlayerControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722589955D461E8EE4F7F7 /* ABDPlayerControls.m */; };
 		77722F54027E30E92EEF59E5 /* ABDPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772254FA99B63169523E033 /* ABDPlayerViewController.m */; };
@@ -63,6 +65,7 @@
 		50F14C761127AA8BCD082E3B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		77722022BAA09760E74C1E0D /* ABDExtractSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDExtractSlider.h; sourceTree = "<group>"; };
 		7772208354F438CE6D1DBD4E /* ABDPlayerControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDPlayerControls.h; sourceTree = "<group>"; };
+		777220DFFFBDDCDEFCA79A8A /* Ekisu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ekisu.h; sourceTree = "<group>"; };
 		777221649B64504AFFB9EBAF /* ABDEkisuProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDEkisuProgressView.m; sourceTree = "<group>"; };
 		777222CA363D93E8DD57617C /* ABDPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDPlayerViewController.h; sourceTree = "<group>"; };
 		77722301481BD5B9A169DC48 /* ABDEkisuProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDEkisuProgressView.h; sourceTree = "<group>"; };
@@ -75,6 +78,9 @@
 		77722A6037AD17B224A5087B /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		77722B16FAADF6BB6DA25D6E /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		77722D79972462C08E0CF93C /* ABDPlaybackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDPlaybackView.m; sourceTree = "<group>"; };
+		77722ECB929ADAB13CF41451 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
+		77722F6A80BDE4417B35EF9B /* Ekisu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ekisu.m; sourceTree = "<group>"; };
+		77722FCC6FC238CAFF06899C /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
 		AC6009DC0E13367AC920E021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D78DA377083B18294D2CE893 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -197,6 +203,10 @@
 			children = (
 				777223394EC4D7CDD41EAC48 /* ExtractSection.h */,
 				7772267CEB501E29A49C8FC7 /* ExtractSection.m */,
+				777220DFFFBDDCDEFCA79A8A /* Ekisu.h */,
+				77722F6A80BDE4417B35EF9B /* Ekisu.m */,
+				77722FCC6FC238CAFF06899C /* Video.h */,
+				77722ECB929ADAB13CF41451 /* Video.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -395,6 +405,8 @@
 				77722EDEFEF592E1238603FF /* ABDPlayerControls.m in Sources */,
 				777221018833D82F25E327F8 /* Utility.m in Sources */,
 				777229FADE567FA52EC634A6 /* ABDEkisuProgressView.m in Sources */,
+				77722A4C959236B75369D8DC /* Ekisu.m in Sources */,
+				77722B751C560653DC1B62C9 /* Video.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,13 +10,21 @@
 #import "ABDPlayerViewController.h"
 #import "ABDPlayerControls.h"
 #import "ABDEkisuProgressView.h"
+#import "AppDelegate.h"
+#import "Ekisu.h"
+#import "Video.h"
+#import "UIImageView+AFNetworking.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
+#import <AFNetworking/AFNetworking.h>
+#import <QuartzCore/QuartzCore.h>
+
 
 @interface ABDEkisuCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UIView *ekisuThumbView;
-@property (nonatomic, strong) IBOutlet UIImageView *ekisuThumbnailImageView;
-@property (nonatomic, strong) IBOutlet UILabel *ekisuTitleLabel;
-@property (nonatomic, strong) IBOutlet UIView *ekisuRateView;
-@property (nonatomic, strong) IBOutlet ABDEkisuProgressView *ekisuProgressView;
+@property(strong, nonatomic) IBOutlet UIView *ekisuThumbView;
+@property(nonatomic, strong) IBOutlet UIImageView *ekisuThumbnailImageView;
+@property(nonatomic, strong) IBOutlet UILabel *ekisuTitleLabel;
+@property(nonatomic, strong) IBOutlet UIView *ekisuRateView;
+@property(nonatomic, strong) IBOutlet ABDEkisuProgressView *ekisuProgressView;
 @end
 
 @implementation ABDEkisuCell
@@ -49,8 +57,7 @@
     _ekisuProgressView.drawGreyscaleBackground = YES;
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
 
     [self.contentView updateConstraintsIfNeeded];
@@ -62,19 +69,103 @@
 @end
 
 @interface ViewController ()
-@property (nonatomic, strong) ABDPlayerViewController *playerViewController;
+@property(nonatomic, strong) ABDPlayerViewController *playerViewController;
+@property(nonatomic, strong) UIRefreshControl *refreshControl;
+@property(nonatomic, strong) NSString *requestURLString;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
 
-    _ekisus = @[@"s0UjELAUMjE", @"1oDAuUx3m6U"];
+    [self initURLString];
 
     _playerViewController = [[ABDPlayerViewController alloc] init];     // playerViewController initializing.
 
+    _ekisus = [[NSMutableArray alloc] init];
+
+    _refreshControl = [[UIRefreshControl alloc] init];
+    [_refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:_refreshControl];
+
+    [self loadDataFromServer];
+
+    // tableView paging.
+    __weak typeof(self)weakSelf = self;
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf loadDataFromServer];
+    }];
+}
+
+- (void)refreshData {
+    [self initURLString];
+    [_ekisus removeAllObjects];
+    [self.tableView reloadData];
+    [self loadDataFromServer];
+}
+
+- (void)initURLString {
+    // set URL to initial request URL
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    _requestURLString = [NSString stringWithFormat:@"%@/ekisus/", appDelegate.serverURL];
+}
+
+- (void)loadDataFromServer {
+    if (_requestURLString == nil) {
+        // invalid request
+        [self.tableView.infiniteScrollingView stopAnimating];
+        return;
+    }
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:_requestURLString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", responseObject);
+        if ([responseObject[@"results"] count] == 0) {
+            self.tableView.showsInfiniteScrolling = NO;
+            return;
+        }
+
+        if (responseObject[@"next"] != [NSNull null]) {
+            _requestURLString = responseObject[@"next"];
+        } else {
+            _requestURLString = nil;
+        }
+
+        int currentRow = [_ekisus count];
+
+        for (NSDictionary *ekisuDictionary in responseObject[@"results"]) {
+            Ekisu *ekisu = [[Ekisu alloc] initWithDictionary:ekisuDictionary];
+            [_ekisus addObject:ekisu];
+        }
+        [self reloadTableView:currentRow];
+
+        // stop scrolling or refreshing
+        [_refreshControl endRefreshing];
+        [self.tableView.infiniteScrollingView stopAnimating];
+
+    }    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Load Ekisus"
+                                                            message:[error localizedDescription]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+        [_refreshControl endRefreshing];
+        self.tableView.showsInfiniteScrolling = NO;
+    }];
+}
+
+- (void)reloadTableView:(int)startingRow {
+    // the last row after added new items
+    int endingRow = [_ekisus count];
+
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    for (; startingRow < endingRow; startingRow++) {
+        [indexPaths addObject:[NSIndexPath indexPathForRow:startingRow inSection:0]];
+    }
+
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationBottom];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,16 +173,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
     // Do view manipulation here.
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 #pragma mark - TableView DataSource
 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewAutomaticDimension;
 }
 
@@ -107,8 +196,13 @@
     static NSString *cellIdentifer = @"ABDEkisuCell";
     ABDEkisuCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer forIndexPath:indexPath];
 
-    [cell.ekisuThumbnailImageView setImage:[UIImage imageNamed:@"slider_active@2x.png"]];
-    [cell.ekisuProgressView setProgress:random() % 100 * 0.01 animated:YES];
+    Ekisu *ekisu = _ekisus[(NSUInteger) [indexPath row]];
+    [cell.ekisuThumbnailImageView setImageWithURL:[NSURL URLWithString:ekisu.thumbnail] placeholderImage:nil];
+    [cell.ekisuTitleLabel setText:ekisu.title];
+
+    // calculate ratio of ekisu
+    CGFloat progress = [ekisu.duration floatValue] / [ekisu.video.duration floatValue];
+    [cell.ekisuProgressView setProgress:progress animated:YES];
 
     return cell;
 }
@@ -118,13 +212,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    NSString *videoIdentifier = _ekisus[(NSUInteger) [indexPath row]];
-    if ([_playerViewController isPlaying] && [videoIdentifier isEqualToString:[_playerViewController identifier]]) {
+    Ekisu *ekisu = _ekisus[(NSUInteger) [indexPath row]];
+    if ([_playerViewController isPlaying] && [ekisu.ekisuId isEqualToString:_playerViewController.ekisu.ekisuId]) {
         [_playerViewController.controls manageControlShowing];  // control panel showing
     } else {
         [_playerViewController.player pause];
 
-        [_playerViewController setIdentifier:videoIdentifier]; // 해당 인덱스의 영상id 변경
+        [_playerViewController setEkisu:ekisu];
         ABDEkisuCell *cell = (ABDEkisuCell *) [self.tableView cellForRowAtIndexPath:indexPath];
         [_playerViewController setFrame:cell.ekisuThumbView.bounds];    // 해당 셀의 위치에 맞게 플레이어 뷰의 프레임을 조정
         [cell.ekisuThumbView addSubview:_playerViewController.view];

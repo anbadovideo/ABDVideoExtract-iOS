@@ -26,5 +26,15 @@
     return seconds;
 }
 
++ (NSDateFormatter *)dateFormatter {
+    NSDateFormatter *_dateFormatter;
+    if (!_dateFormatter) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"];
+        [_dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    }
+
+    return _dateFormatter;
+}
 
 @end

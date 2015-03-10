@@ -13,4 +13,6 @@
 
 + (NSString *)secondsToMMSS:(double)seconds;
 + (NSTimeInterval)mmssToSeconds:(NSString *)mmss;
+
++ (NSDateFormatter *)dateFormatter;
 @end

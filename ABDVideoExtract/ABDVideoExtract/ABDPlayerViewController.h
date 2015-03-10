@@ -17,11 +17,13 @@ typedef enum {
 @class AVPlayer;
 @class ABDPlaybackView;
 @class ABDPlayerControls;
+@class Ekisu;
 
 @interface ABDPlayerViewController : UIViewController {
     id timeObserver;
     NSInteger _sectionCounter;   // for check playing extract section.
 }
+@property (nonatomic, strong, setter=setEkisu:, getter=ekisu) Ekisu *ekisu;
 @property (nonatomic, strong) NSString* identifier; // video id
 @property (nonatomic, strong, setter=setPlayer:, getter=player) AVPlayer *player;
 @property (strong) AVPlayerItem *playerItem;
