@@ -15,6 +15,7 @@
 #import "Video.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "ABDIngredientView.h"
 #import <AFNetworking/AFNetworking.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CCMPopup/CCMPopupSegue.h>
@@ -24,6 +25,7 @@
 @property(nonatomic, strong) IBOutlet UIImageView *ekisuThumbnailImageView;
 @property(nonatomic, strong) IBOutlet UILabel *ekisuTitleLabel;
 @property(nonatomic, strong) IBOutlet UIView *ekisuRateView;
+@property(nonatomic, strong) IBOutlet UIButton *ekisuRateButton;
 @property(nonatomic, strong) IBOutlet ABDEkisuProgressView *ekisuProgressView;
 @end
 
@@ -196,10 +198,13 @@ static const int kWidthOfPopupView = 300;
     [super prepareForSegue:segue sender:sender];
     if ([segue isKindOfClass:[CCMPopupSegue class]]){
         CCMPopupSegue *popupSegue = (CCMPopupSegue *)segue;
-        popupSegue.destinationBounds = CGRectMake(self.view.frame.size.width/2 - kWidthOfPopupView/2 , self.view.frame.size.height/2 - kWidthOfPopupView/2, kWidthOfPopupView, kWidthOfPopupView);
+        popupSegue.destinationBounds = CGRectMake(0, 0, 300, 280);
         popupSegue.backgroundViewAlpha = 1.0f;
         popupSegue.backgroundViewColor = [UIColor colorWithWhite:0.1 alpha:0.7];
         popupSegue.dismissableByTouchingBackground = YES;
+
+        Ekisu *ekisu = _ekisus[[(UIButton *)sender tag]];
+        [[segue destinationViewController] setEkisu:ekisu];
     }
 }
 
@@ -229,6 +234,7 @@ static const int kWidthOfPopupView = 300;
     // calculate ratio of ekisu
     CGFloat progress = [ekisu.duration floatValue] / [ekisu.video.duration floatValue];
     [cell.ekisuProgressView setProgress:progress animated:YES];
+    [cell.ekisuRateButton setTag:[indexPath row]];  // set tag of button to indexPath row.
 
     return cell;
 }
