@@ -58,7 +58,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="edG-H0-UjV" userLabel="View - Concentration Image">
                                                     <rect key="frame" x="533" y="358" width="47" height="72"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="66N-iB-fnW" userLabel="View - Progress View" customClass="ABDEkisuProgressView">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="66N-iB-fnW" userLabel="View - Progress View" customClass="ABDEkisuRateView">
                                                             <rect key="frame" x="0.0" y="0.0" width="47" height="72"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LPQ-zM-Rvl">
@@ -110,9 +110,9 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="ekisuProgressView" destination="66N-iB-fnW" id="sY7-5I-wrV"/>
+                                            <outlet property="ekisuRateView" destination="66N-iB-fnW" id="sY7-5I-wrV"/>
                                             <outlet property="ekisuRateButton" destination="LPQ-zM-Rvl" id="M5u-nM-GVy"/>
-                                            <outlet property="ekisuRateView" destination="edG-H0-UjV" id="nrI-yO-svS"/>
+                                            <outlet property="ekisuRateContainerView" destination="edG-H0-UjV" id="nrI-yO-svS"/>
                                             <outlet property="ekisuThumbView" destination="dRu-6e-vib" id="JO0-ps-cFa"/>
                                             <outlet property="ekisuThumbnailImageView" destination="Wck-4H-FHa" id="YDu-Gu-9s4"/>
                                             <outlet property="ekisuTitleLabel" destination="5fd-up-2JO" id="75P-EP-PSD"/>

@@ -22,11 +22,11 @@
 		04E3AFC31A81E865002DBB4D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E3AFC21A81E865002DBB4D /* AVFoundation.framework */; };
 		777221018833D82F25E327F8 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722B16FAADF6BB6DA25D6E /* Utility.m */; };
 		7772229CF85E509617B60DAB /* ABDExtractSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 777224EB1B0C458AC2423CF0 /* ABDExtractSlider.m */; };
-		777225C416BF23FBC8379D99 /* ABDIngredientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777221BB4BBFA3D833420727 /* ABDIngredientView.m */; };
 		777227875D7B095B5DDCE276 /* ExtractSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772267CEB501E29A49C8FC7 /* ExtractSection.m */; };
-		777229FADE567FA52EC634A6 /* ABDEkisuProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777221649B64504AFFB9EBAF /* ABDEkisuProgressView.m */; };
+		777229FADE567FA52EC634A6 /* ABDEkisuRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777221649B64504AFFB9EBAF /* ABDEkisuRateView.m */; };
 		77722A4C959236B75369D8DC /* Ekisu.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722F6A80BDE4417B35EF9B /* Ekisu.m */; };
 		77722B751C560653DC1B62C9 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722ECB929ADAB13CF41451 /* Video.m */; };
+		77722C4FF452AF758F9BBB1C /* ABDIngredientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772295DE7BD976A62574D0A /* ABDIngredientView.m */; };
 		77722E1C6757CA840EDD768A /* ABDPlaybackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722D79972462C08E0CF93C /* ABDPlaybackView.m */; };
 		77722EDEFEF592E1238603FF /* ABDPlayerControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722589955D461E8EE4F7F7 /* ABDPlayerControls.m */; };
 		77722F54027E30E92EEF59E5 /* ABDPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772254FA99B63169523E033 /* ABDPlayerViewController.m */; };
@@ -67,17 +67,17 @@
 		77722022BAA09760E74C1E0D /* ABDExtractSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDExtractSlider.h; sourceTree = "<group>"; };
 		7772208354F438CE6D1DBD4E /* ABDPlayerControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDPlayerControls.h; sourceTree = "<group>"; };
 		777220DFFFBDDCDEFCA79A8A /* Ekisu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ekisu.h; sourceTree = "<group>"; };
-		777221649B64504AFFB9EBAF /* ABDEkisuProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDEkisuProgressView.m; sourceTree = "<group>"; };
-		777221BB4BBFA3D833420727 /* ABDIngredientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDIngredientView.m; sourceTree = "<group>"; };
+		777221649B64504AFFB9EBAF /* ABDEkisuRateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDEkisuRateView.m; sourceTree = "<group>"; };
 		777222CA363D93E8DD57617C /* ABDPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDPlayerViewController.h; sourceTree = "<group>"; };
-		77722301481BD5B9A169DC48 /* ABDEkisuProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDEkisuProgressView.h; sourceTree = "<group>"; };
+		77722301481BD5B9A169DC48 /* ABDEkisuRateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDEkisuRateView.h; sourceTree = "<group>"; };
 		777223394EC4D7CDD41EAC48 /* ExtractSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtractSection.h; sourceTree = "<group>"; };
+		777224D35CDE6CB0D277DE60 /* ABDIngredientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDIngredientView.h; sourceTree = "<group>"; };
 		777224EB1B0C458AC2423CF0 /* ABDExtractSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDExtractSlider.m; sourceTree = "<group>"; };
 		7772254FA99B63169523E033 /* ABDPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDPlayerViewController.m; sourceTree = "<group>"; };
 		77722589955D461E8EE4F7F7 /* ABDPlayerControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDPlayerControls.m; sourceTree = "<group>"; };
-		777226732878423994BCD996 /* ABDIngredientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDIngredientView.h; sourceTree = "<group>"; };
 		7772267CEB501E29A49C8FC7 /* ExtractSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtractSection.m; sourceTree = "<group>"; };
 		7772285A43C6E2ACC5BA0A18 /* ABDPlaybackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDPlaybackView.h; sourceTree = "<group>"; };
+		7772295DE7BD976A62574D0A /* ABDIngredientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDIngredientView.m; sourceTree = "<group>"; };
 		77722A6037AD17B224A5087B /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		77722B16FAADF6BB6DA25D6E /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		77722D79972462C08E0CF93C /* ABDPlaybackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDPlaybackView.m; sourceTree = "<group>"; };
@@ -116,7 +116,6 @@
 				0466D2571A77596600092D08 /* Products */,
 				07C7E37EA06CFBDFCF5D0966 /* Pods */,
 				C4FC5D47B386172ED7EFE1C5 /* Frameworks */,
-				7772205002A92E2B3FD818BE /* ABDIngredientView */,
 			);
 			sourceTree = "<group>";
 		};
@@ -143,7 +142,8 @@
 				777228438658165C982A143F /* ABDVideoPlayerController */,
 				7772245463F68C96AEC5967B /* Models */,
 				7772209E4F718C6C97894D9D /* Utilities */,
-				777229EF4E655C06CBD0A021 /* ABDEkisuProgressView */,
+				777229EF4E655C06CBD0A021 /* ABDEkisuRateView */,
+				77722A46D4F95D68FF4FA4C7 /* ABDIngredientView */,
 			);
 			path = ABDVideoExtract;
 			sourceTree = "<group>";
@@ -193,15 +193,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		7772205002A92E2B3FD818BE /* ABDIngredientView */ = {
-			isa = PBXGroup;
-			children = (
-				777226732878423994BCD996 /* ABDIngredientView.h */,
-				777221BB4BBFA3D833420727 /* ABDIngredientView.m */,
-			);
-			name = ABDIngredientView;
-			sourceTree = "<group>";
-		};
 		7772209E4F718C6C97894D9D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,13 +230,22 @@
 			name = ABDVideoPlayerController;
 			sourceTree = "<group>";
 		};
-		777229EF4E655C06CBD0A021 /* ABDEkisuProgressView */ = {
+		777229EF4E655C06CBD0A021 /* ABDEkisuRateView */ = {
 			isa = PBXGroup;
 			children = (
-				77722301481BD5B9A169DC48 /* ABDEkisuProgressView.h */,
-				777221649B64504AFFB9EBAF /* ABDEkisuProgressView.m */,
+				77722301481BD5B9A169DC48 /* ABDEkisuRateView.h */,
+				777221649B64504AFFB9EBAF /* ABDEkisuRateView.m */,
 			);
-			name = ABDEkisuProgressView;
+			name = ABDEkisuRateView;
+			sourceTree = "<group>";
+		};
+		77722A46D4F95D68FF4FA4C7 /* ABDIngredientView */ = {
+			isa = PBXGroup;
+			children = (
+				7772295DE7BD976A62574D0A /* ABDIngredientView.m */,
+				777224D35CDE6CB0D277DE60 /* ABDIngredientView.h */,
+			);
+			name = ABDIngredientView;
 			sourceTree = "<group>";
 		};
 		77722FD62A986BB3B5FF2D49 /* extractSliderAssets */ = {
@@ -417,10 +417,10 @@
 				77722F54027E30E92EEF59E5 /* ABDPlayerViewController.m in Sources */,
 				77722EDEFEF592E1238603FF /* ABDPlayerControls.m in Sources */,
 				777221018833D82F25E327F8 /* Utility.m in Sources */,
-				777229FADE567FA52EC634A6 /* ABDEkisuProgressView.m in Sources */,
+				777229FADE567FA52EC634A6 /* ABDEkisuRateView.m in Sources */,
 				77722A4C959236B75369D8DC /* Ekisu.m in Sources */,
 				77722B751C560653DC1B62C9 /* Video.m in Sources */,
-				777225C416BF23FBC8379D99 /* ABDIngredientView.m in Sources */,
+				77722C4FF452AF758F9BBB1C /* ABDIngredientView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

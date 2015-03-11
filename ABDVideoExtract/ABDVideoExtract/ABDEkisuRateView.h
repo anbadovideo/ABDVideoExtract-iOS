@@ -8,7 +8,7 @@
 
 #include <UIKit/UIKit.h>
 
-@interface ABDEkisuProgressView : UIView
+@interface ABDEkisuRateView : UIView
 
 /**@name Properties*/
 /**Wether or not the progress view is indeterminate.*/

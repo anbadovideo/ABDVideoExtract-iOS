@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 anbado video. All rights reserved.
 //
 
-#import "ABDEkisuProgressView.h"
+#import "ABDEkisuRateView.h"
 
 static const int kWidthOfLabel = 40;
 static const int kHeightOfLabel = 24;
 
-@interface ABDEkisuProgressView ()
+@interface ABDEkisuRateView ()
 /**The start progress for the progress animation.*/
 @property (nonatomic, assign) CGFloat animationFromValue;
 /**The end progress for the progress animation.*/
@@ -28,7 +28,7 @@ static const int kHeightOfLabel = 24;
 @property (nonatomic, strong) UILabel *percentageLabel;
 @end
 
-@implementation ABDEkisuProgressView
+@implementation ABDEkisuRateView
 
 - (id)init
 {

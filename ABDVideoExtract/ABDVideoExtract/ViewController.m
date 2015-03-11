@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "ABDPlayerViewController.h"
 #import "ABDPlayerControls.h"
-#import "ABDEkisuProgressView.h"
+#import "ABDEkisuRateView.h"
 #import "AppDelegate.h"
 #import "Ekisu.h"
 #import "Video.h"
@@ -24,9 +24,9 @@
 @property(strong, nonatomic) IBOutlet UIView *ekisuThumbView;
 @property(nonatomic, strong) IBOutlet UIImageView *ekisuThumbnailImageView;
 @property(nonatomic, strong) IBOutlet UILabel *ekisuTitleLabel;
-@property(nonatomic, strong) IBOutlet UIView *ekisuRateView;
+@property(nonatomic, strong) IBOutlet UIView *ekisuRateContainerView;
+@property(nonatomic, strong) IBOutlet ABDEkisuRateView *ekisuRateView;
 @property(nonatomic, strong) IBOutlet UIButton *ekisuRateButton;
-@property(nonatomic, strong) IBOutlet ABDEkisuProgressView *ekisuProgressView;
 @end
 
 @implementation ABDEkisuCell
@@ -55,8 +55,8 @@
 - (void)initUI {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    [_ekisuProgressView setProgressImage:[UIImage imageNamed:@"progressBg.png"]];
-    _ekisuProgressView.drawGreyscaleBackground = YES;
+    [_ekisuRateView setProgressImage:[UIImage imageNamed:@"progressBg.png"]];
+    _ekisuRateView.drawGreyscaleBackground = YES;
 }
 
 - (void)layoutSubviews {
@@ -233,7 +233,7 @@ static const int kWidthOfPopupView = 300;
 
     // calculate ratio of ekisu
     CGFloat progress = [ekisu.duration floatValue] / [ekisu.video.duration floatValue];
-    [cell.ekisuProgressView setProgress:progress animated:YES];
+    [cell.ekisuRateView setProgress:progress animated:YES];
     [cell.ekisuRateButton setTag:[indexPath row]];  // set tag of button to indexPath row.
 
     return cell;
