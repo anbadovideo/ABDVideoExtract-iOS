@@ -10,6 +10,6 @@
 
 @class Ekisu;
 
-@interface ABDIngredientView : UIViewController
+@interface ABDEkisuIngredientView : UIViewController
 @property (nonatomic, strong) Ekisu *ekisu;
 @end

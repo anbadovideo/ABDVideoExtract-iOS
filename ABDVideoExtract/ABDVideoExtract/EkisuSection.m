@@ -6,11 +6,11 @@
 //  Copyright (c) 2015 anbado video. All rights reserved.
 //
 
-#import "ExtractSection.h"
+#import "EkisuSection.h"
 
-@implementation ExtractSection
-+ (ExtractSection *)extractSectionWithStartTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime {
-    ExtractSection *extractSection = [[ExtractSection alloc] initWithStartTime:startTime endTime:endTime];
+@implementation EkisuSection
++ (EkisuSection *)extractSectionWithStartTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime {
+    EkisuSection *extractSection = [[EkisuSection alloc] initWithStartTime:startTime endTime:endTime];
     return extractSection;
 }
 

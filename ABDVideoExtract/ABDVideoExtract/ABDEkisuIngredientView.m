@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 anbado video. All rights reserved.
 //
 
-#import "ABDIngredientView.h"
+#import "ABDEkisuIngredientView.h"
 #import "UIImageView+AFNetworking.h"
 #import "Ekisu.h"
 #import "Video.h"
 
-@interface ABDIngredientView ()
+@interface ABDEkisuIngredientView ()
 @property (strong, nonatomic) IBOutlet UILabel *rateLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *videoImageView;
 @property (strong, nonatomic) IBOutlet UILabel *videoTitleLabel;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation ABDIngredientView
+@implementation ABDEkisuIngredientView
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];

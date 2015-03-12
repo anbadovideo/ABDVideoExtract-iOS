@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class ABDExtractSlider;
+@class ABDEkisuSlider;
 @class ABDPlayerViewController;
 
 @interface ABDPlayerControls : UIView
 
-@property (nonatomic, strong) ABDExtractSlider *extractSlider;
+@property (nonatomic, strong) ABDEkisuSlider *extractSlider;
 
 - (id)initWithMoviePlayer:(ABDPlayerViewController *)moviePlayer;
 

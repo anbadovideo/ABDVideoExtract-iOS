@@ -15,7 +15,7 @@
 #import "Video.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
-#import "ABDIngredientView.h"
+#import "ABDEkisuIngredientView.h"
 #import <AFNetworking/AFNetworking.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CCMPopup/CCMPopupSegue.h>

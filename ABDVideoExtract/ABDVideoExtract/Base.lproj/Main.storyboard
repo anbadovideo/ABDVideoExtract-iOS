@@ -110,9 +110,9 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="ekisuRateView" destination="66N-iB-fnW" id="sY7-5I-wrV"/>
                                             <outlet property="ekisuRateButton" destination="LPQ-zM-Rvl" id="M5u-nM-GVy"/>
                                             <outlet property="ekisuRateContainerView" destination="edG-H0-UjV" id="nrI-yO-svS"/>
+                                            <outlet property="ekisuRateView" destination="66N-iB-fnW" id="sY7-5I-wrV"/>
                                             <outlet property="ekisuThumbView" destination="dRu-6e-vib" id="JO0-ps-cFa"/>
                                             <outlet property="ekisuThumbnailImageView" destination="Wck-4H-FHa" id="YDu-Gu-9s4"/>
                                             <outlet property="ekisuTitleLabel" destination="5fd-up-2JO" id="75P-EP-PSD"/>
@@ -145,7 +145,7 @@
         <!--Ingredient View-->
         <scene sceneID="C8i-o3-9wy">
             <objects>
-                <viewController id="oRC-zD-Om0" customClass="ABDIngredientView" sceneMemberID="viewController">
+                <viewController id="oRC-zD-Om0" customClass="ABDEkisuIngredientView" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wS7-nO-dnL"/>
                         <viewControllerLayoutGuide type="bottom" id="mo6-E4-4DV"/>
@@ -171,16 +171,16 @@
                                         </constraints>
                                     </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Waterdrop" translatesAutoresizingMaskIntoConstraints="NO" id="JUI-7R-0k2">
-                                        <rect key="frame" x="209" y="8" width="16" height="24"/>
+                                        <rect key="frame" x="204" y="8" width="16" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="584-pw-rVc"/>
                                             <constraint firstAttribute="width" constant="16" id="ukn-rw-z9B"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="whP-gI-Ebh">
-                                        <rect key="frame" x="229" y="12" width="55" height="20"/>
+                                        <rect key="frame" x="224" y="12" width="60" height="20"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="55" id="bBd-Ih-BzP"/>
+                                            <constraint firstAttribute="width" constant="60" id="bBd-Ih-BzP"/>
                                             <constraint firstAttribute="height" constant="20" id="k1Z-ak-0TJ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
@@ -216,7 +216,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="농축률" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mhy-DY-6tf">
-                                        <rect key="frame" x="156" y="14" width="45" height="20"/>
+                                        <rect key="frame" x="151" y="14" width="45" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="45" id="bwg-ll-IDE"/>
                                             <constraint firstAttribute="height" constant="20" id="tQx-Ag-myr"/>
