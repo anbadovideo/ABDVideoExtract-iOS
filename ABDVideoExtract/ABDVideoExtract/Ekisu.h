@@ -21,4 +21,6 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (NSArray *)parseSectionString:(NSString *)sectionString;
+
+- (float)concentrationRate; // concentrationRate of Ekisu.
 @end

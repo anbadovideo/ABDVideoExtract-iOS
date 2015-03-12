@@ -15,7 +15,7 @@
 #import "Video.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
-#import "ABDEkisuIngredientView.h"
+#import "ABDEkisuIngredientViewController.h"
 #import <AFNetworking/AFNetworking.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CCMPopup/CCMPopupSegue.h>
@@ -69,9 +69,6 @@
     [self.ekisuTitleLabel sizeToFit];
 }
 @end
-
-
-static const int kWidthOfPopupView = 300;
 
 @interface ViewController ()
 @property(nonatomic, strong) ABDPlayerViewController *playerViewController;
@@ -198,7 +195,7 @@ static const int kWidthOfPopupView = 300;
     [super prepareForSegue:segue sender:sender];
     if ([segue isKindOfClass:[CCMPopupSegue class]]){
         CCMPopupSegue *popupSegue = (CCMPopupSegue *)segue;
-        popupSegue.destinationBounds = CGRectMake(0, 0, 300, 280);
+        popupSegue.destinationBounds = CGRectMake(0, 0, 320, 292);
         popupSegue.backgroundViewAlpha = 1.0f;
         popupSegue.backgroundViewColor = [UIColor colorWithWhite:0.1 alpha:0.7];
         popupSegue.dismissableByTouchingBackground = YES;
@@ -231,9 +228,8 @@ static const int kWidthOfPopupView = 300;
     [cell.ekisuThumbnailImageView setImageWithURL:[NSURL URLWithString:ekisu.thumbnail] placeholderImage:nil];
     [cell.ekisuTitleLabel setText:ekisu.title];
 
-    // calculate ratio of ekisu
-    CGFloat progress = [ekisu.duration floatValue] / [ekisu.video.duration floatValue];
-    [cell.ekisuRateView setProgress:progress animated:YES];
+    // calculate rate of ekisu
+    [cell.ekisuRateView setProgress:ekisu.concentrationRate animated:YES];
     [cell.ekisuRateButton setTag:[indexPath row]];  // set tag of button to indexPath row.
 
     return cell;

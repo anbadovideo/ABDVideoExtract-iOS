@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 anbado video. All rights reserved.
 //
 
-#import "ABDEkisuIngredientView.h"
+#import "ABDEkisuIngredientViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "Ekisu.h"
 #import "Video.h"
 #import "ABDEkisuSlider.h"
 
-@interface ABDEkisuIngredientView ()
+@interface ABDEkisuIngredientViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *rateLabel;
 @property (strong, nonatomic) IBOutlet UIView *ingredientView;
 @property (strong, nonatomic) IBOutlet UIImageView *videoImageView;
@@ -21,12 +21,10 @@
 
 @end
 
-@implementation ABDEkisuIngredientView
+@implementation ABDEkisuIngredientViewController
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.view.layer.cornerRadius = 15;
-    self.view.layer.masksToBounds = NO;
 }
 
 
@@ -43,6 +41,9 @@
     [_videoImageView setImageWithURL:[NSURL URLWithString:_ekisu.video.thumbnail] placeholderImage:nil];
     [_videoURLLabel setText:[NSString stringWithFormat:@"http://youtu.be/%@", _ekisu.video.identifier]];
     [_videoTitleLabel setText:_ekisu.video.title];
+
+    [_rateLabel setText:[NSString stringWithFormat:@"%d%%", (int) (_ekisu.concentrationRate * 100)]];
+    [_rateLabel sizeToFit];
 }
 
 @end

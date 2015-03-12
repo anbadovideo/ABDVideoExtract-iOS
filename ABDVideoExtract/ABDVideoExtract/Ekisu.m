@@ -45,4 +45,9 @@
     return sections;
 }
 
+- (float)concentrationRate {
+    return 1 - ( [_duration floatValue] / [_video.duration floatValue]);
+}
+
+
 @end
