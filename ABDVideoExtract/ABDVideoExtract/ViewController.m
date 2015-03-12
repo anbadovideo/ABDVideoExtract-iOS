@@ -13,9 +13,9 @@
 #import "AppDelegate.h"
 #import "Ekisu.h"
 #import "Video.h"
-#import "UIImageView+AFNetworking.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "ABDEkisuIngredientViewController.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #import <AFNetworking/AFNetworking.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CCMPopup/CCMPopupSegue.h>
@@ -225,7 +225,7 @@
     ABDEkisuCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifer forIndexPath:indexPath];
 
     Ekisu *ekisu = _ekisus[(NSUInteger) [indexPath row]];
-    [cell.ekisuThumbnailImageView setImageWithURL:[NSURL URLWithString:ekisu.thumbnail] placeholderImage:nil];
+    [cell.ekisuThumbnailImageView setImageWithURL:[NSURL URLWithString:ekisu.thumbnail] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [cell.ekisuTitleLabel setText:ekisu.title];
 
     // calculate rate of ekisu

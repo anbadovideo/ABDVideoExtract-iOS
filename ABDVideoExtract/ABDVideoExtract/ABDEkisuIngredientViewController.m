@@ -11,6 +11,7 @@
 #import "Ekisu.h"
 #import "Video.h"
 #import "ABDEkisuSlider.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 @interface ABDEkisuIngredientViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *rateLabel;
@@ -38,7 +39,7 @@
     ekisuSlider.userInteractionEnabled = NO;
     [_ingredientView addSubview:ekisuSlider];
 
-    [_videoImageView setImageWithURL:[NSURL URLWithString:_ekisu.video.thumbnail] placeholderImage:nil];
+    [_videoImageView setImageWithURL:[NSURL URLWithString:_ekisu.video.thumbnail] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [_videoURLLabel setText:[NSString stringWithFormat:@"http://youtu.be/%@", _ekisu.video.identifier]];
     [_videoTitleLabel setText:_ekisu.video.title];
 
