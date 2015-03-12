@@ -25,6 +25,14 @@ const int kHeightOfSlider = 44;
     return self;
 }
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self constructSlider];
+    }
+    return self;
+}
+
 - (instancetype)initWithDuration:(NSTimeInterval)duration extractSections:(NSArray *)extractSections {
     self = [super init];
     if (self) {
@@ -47,6 +55,7 @@ const int kHeightOfSlider = 44;
 
     [self setThumbImage:[UIImage imageNamed:@"slider_thumb.png"] forState:UIControlStateNormal];
 }
+
 
 - (void)setDuration:(NSTimeInterval)duration {
     _duration = duration;
