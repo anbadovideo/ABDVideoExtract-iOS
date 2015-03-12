@@ -15,7 +15,7 @@
 #import "Video.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
-#import "ABDEkisuIngredientView.h"
+#import "ABDEkisuIngredientViewController.h"
 #import <AFNetworking/AFNetworking.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CCMPopup/CCMPopupSegue.h>
@@ -231,9 +231,8 @@ static const int kWidthOfPopupView = 300;
     [cell.ekisuThumbnailImageView setImageWithURL:[NSURL URLWithString:ekisu.thumbnail] placeholderImage:nil];
     [cell.ekisuTitleLabel setText:ekisu.title];
 
-    // calculate ratio of ekisu
-    CGFloat progress = [ekisu.duration floatValue] / [ekisu.video.duration floatValue];
-    [cell.ekisuRateView setProgress:progress animated:YES];
+    // calculate rate of ekisu
+    [cell.ekisuRateView setProgress:ekisu.concentrationRate animated:YES];
     [cell.ekisuRateButton setTag:[indexPath row]];  // set tag of button to indexPath row.
 
     return cell;
