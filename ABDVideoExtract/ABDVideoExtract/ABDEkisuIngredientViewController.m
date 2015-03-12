@@ -25,8 +25,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.view.layer.cornerRadius = 15;
-    self.view.layer.masksToBounds = NO;
 }
 
 

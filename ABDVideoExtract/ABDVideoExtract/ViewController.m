@@ -70,9 +70,6 @@
 }
 @end
 
-
-static const int kWidthOfPopupView = 300;
-
 @interface ViewController ()
 @property(nonatomic, strong) ABDPlayerViewController *playerViewController;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
@@ -198,7 +195,7 @@ static const int kWidthOfPopupView = 300;
     [super prepareForSegue:segue sender:sender];
     if ([segue isKindOfClass:[CCMPopupSegue class]]){
         CCMPopupSegue *popupSegue = (CCMPopupSegue *)segue;
-        popupSegue.destinationBounds = CGRectMake(0, 0, 300, 280);
+        popupSegue.destinationBounds = CGRectMake(0, 0, 320, 292);
         popupSegue.backgroundViewAlpha = 1.0f;
         popupSegue.backgroundViewColor = [UIColor colorWithWhite:0.1 alpha:0.7];
         popupSegue.dismissableByTouchingBackground = YES;
