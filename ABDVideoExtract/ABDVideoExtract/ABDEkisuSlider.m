@@ -6,19 +6,27 @@
 //  Copyright (c) 2015 anbado video. All rights reserved.
 //
 
-#import "ABDExtractSlider.h"
-#import "ExtractSection.h"
+#import "ABDEkisuSlider.h"
+#import "EkisuSection.h"
 
 const int kHeightOfSlider = 44;
 
-@interface ABDExtractSlider ()
+@interface ABDEkisuSlider ()
 @property (nonatomic, strong) NSArray *markPositions;
 @end
 
-@implementation ABDExtractSlider
+@implementation ABDEkisuSlider
 
 - (id)init {
     self = [super init];
+    if (self) {
+        [self constructSlider];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
     if (self) {
         [self constructSlider];
     }
@@ -29,7 +37,7 @@ const int kHeightOfSlider = 44;
     self = [super init];
     if (self) {
         _duration = duration;
-        _extractSections = extractSections;
+        _ekisuSections = extractSections;
         [self constructSlider];
     }
     return self;
@@ -48,14 +56,15 @@ const int kHeightOfSlider = 44;
     [self setThumbImage:[UIImage imageNamed:@"slider_thumb.png"] forState:UIControlStateNormal];
 }
 
+
 - (void)setDuration:(NSTimeInterval)duration {
     _duration = duration;
     [self setNeedsDisplay];
 }
 
-- (void)setExtractSections:(NSArray *)extractSections {
+- (void)setEkisuSections:(NSArray *)ekisuSections {
     // Todo : duration이 0이면 exception 처리.
-    _extractSections = extractSections;
+    _ekisuSections = ekisuSections;
     [self setNeedsDisplay];
 }
 
@@ -96,10 +105,10 @@ const int kHeightOfSlider = 44;
 
     // Set trips on selected side
     [selectedSide drawAtPoint:CGPointMake(0,0)];
-    for (int i = 0; i < [_extractSections count]; i++) {
+    for (int i = 0; i < [_ekisuSections count]; i++) {
         CGContextSetLineWidth(context, kHeightOfSlider);
-        float startPosition = (float)([_extractSections[i] startTime] / _duration) * self.frame.size.width;
-        float endPosition = (float)([_extractSections[i] endTime] / _duration) * self.frame.size.width;
+        float startPosition = (float)([_ekisuSections[i] startTime] / _duration) * self.frame.size.width;
+        float endPosition = (float)([_ekisuSections[i] endTime] / _duration) * self.frame.size.width;
         CGContextMoveToPoint(context, startPosition, CGRectGetHeight(innerRect)/2);
         CGContextAddLineToPoint(context, endPosition, CGRectGetHeight(innerRect)/2);
         CGContextSetStrokeColorWithColor(context, [[UIColor colorWithRed:0.24 green:0.68 blue:0.85 alpha:1.0f] CGColor]);
@@ -109,10 +118,10 @@ const int kHeightOfSlider = 44;
 
     // Set trips on unselected side
     [unselectedSide drawAtPoint:CGPointMake(0,0)];
-    for (int i = 0; i < [_extractSections count]; i++) {
+    for (int i = 0; i < [_ekisuSections count]; i++) {
         CGContextSetLineWidth(context, kHeightOfSlider);
-        float startPosition = (float)([_extractSections[i] startTime] / _duration) * self.frame.size.width;
-        float endPosition = (float)([_extractSections[i] endTime] / _duration) * self.frame.size.width;
+        float startPosition = (float)([_ekisuSections[i] startTime] / _duration) * self.frame.size.width;
+        float endPosition = (float)([_ekisuSections[i] endTime] / _duration) * self.frame.size.width;
         CGContextMoveToPoint(context, startPosition, CGRectGetHeight(innerRect)/2);
         CGContextAddLineToPoint(context, endPosition, CGRectGetHeight(innerRect)/2);
         CGContextSetStrokeColorWithColor(context, [[UIColor colorWithRed:0.24 green:0.68 blue:0.85 alpha:0.5f] CGColor]);

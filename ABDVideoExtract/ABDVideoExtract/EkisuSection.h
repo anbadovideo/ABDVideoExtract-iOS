@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ExtractSection : NSObject
+@interface EkisuSection : NSObject
 @property (nonatomic) NSTimeInterval startTime;
 @property (nonatomic) NSTimeInterval endTime;
 
-+ (ExtractSection *)extractSectionWithStartTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime;
++ (EkisuSection *)extractSectionWithStartTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime;
 
 - (instancetype)initWithStartTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime;
 - (NSTimeInterval)duration;

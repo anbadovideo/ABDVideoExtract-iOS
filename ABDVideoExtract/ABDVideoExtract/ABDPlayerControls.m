@@ -7,7 +7,7 @@
 //
 
 #import "ABDPlayerControls.h"
-#import "ABDExtractSlider.h"
+#import "ABDEkisuSlider.h"
 #import "ABDPlayerViewController.h"
 #import "Utility.h"
 
@@ -90,7 +90,7 @@ const static int kPadding = 10;
     _replayEkisuButton.frame = CGRectMake(_endingView.frame.size.width * 2 / 3 - 100/2, _endingView.frame.size.height * 2 / 5 - 100/2, 100, 100);
 }
 
-- (void)setExtractSlider:(ABDExtractSlider *)extractSlider {
+- (void)setExtractSlider:(ABDEkisuSlider *)extractSlider {
     if (_extractSlider != extractSlider) {
         _extractSlider = extractSlider;
         [_bottomBar addSubview:_extractSlider];

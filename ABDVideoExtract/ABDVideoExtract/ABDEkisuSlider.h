@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class ExtractSection;
+@class EkisuSection;
 
-@interface ABDExtractSlider : UISlider
-@property (nonatomic) NSTimeInterval duration;
-@property (nonatomic, strong) NSArray *extractSections;
+@interface ABDEkisuSlider : UISlider
+@property (nonatomic) NSTimeInterval duration;  // entire duration of video, not ekisu duration.
+@property (nonatomic, strong) NSArray *ekisuSections;
 
 - (instancetype)initWithDuration:(NSTimeInterval)duration extractSections:(NSArray *)extractSections;
 @end

@@ -9,22 +9,24 @@
 #import "ViewController.h"
 #import "ABDPlayerViewController.h"
 #import "ABDPlayerControls.h"
-#import "ABDEkisuProgressView.h"
+#import "ABDEkisuRateView.h"
 #import "AppDelegate.h"
 #import "Ekisu.h"
 #import "Video.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
+#import "ABDEkisuIngredientView.h"
 #import <AFNetworking/AFNetworking.h>
 #import <QuartzCore/QuartzCore.h>
-
+#import <CCMPopup/CCMPopupSegue.h>
 
 @interface ABDEkisuCell : UITableViewCell
 @property(strong, nonatomic) IBOutlet UIView *ekisuThumbView;
 @property(nonatomic, strong) IBOutlet UIImageView *ekisuThumbnailImageView;
 @property(nonatomic, strong) IBOutlet UILabel *ekisuTitleLabel;
-@property(nonatomic, strong) IBOutlet UIView *ekisuRateView;
-@property(nonatomic, strong) IBOutlet ABDEkisuProgressView *ekisuProgressView;
+@property(nonatomic, strong) IBOutlet UIView *ekisuRateContainerView;
+@property(nonatomic, strong) IBOutlet ABDEkisuRateView *ekisuRateView;
+@property(nonatomic, strong) IBOutlet UIButton *ekisuRateButton;
 @end
 
 @implementation ABDEkisuCell
@@ -53,8 +55,8 @@
 - (void)initUI {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    [_ekisuProgressView setProgressImage:[UIImage imageNamed:@"progressBg.png"]];
-    _ekisuProgressView.drawGreyscaleBackground = YES;
+    [_ekisuRateView setProgressImage:[UIImage imageNamed:@"progressBg.png"]];
+    _ekisuRateView.drawGreyscaleBackground = YES;
 }
 
 - (void)layoutSubviews {
@@ -67,6 +69,9 @@
     [self.ekisuTitleLabel sizeToFit];
 }
 @end
+
+
+static const int kWidthOfPopupView = 300;
 
 @interface ViewController ()
 @property(nonatomic, strong) ABDPlayerViewController *playerViewController;
@@ -187,6 +192,23 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    [super prepareForSegue:segue sender:sender];
+    if ([segue isKindOfClass:[CCMPopupSegue class]]){
+        CCMPopupSegue *popupSegue = (CCMPopupSegue *)segue;
+        popupSegue.destinationBounds = CGRectMake(0, 0, 300, 280);
+        popupSegue.backgroundViewAlpha = 1.0f;
+        popupSegue.backgroundViewColor = [UIColor colorWithWhite:0.1 alpha:0.7];
+        popupSegue.dismissableByTouchingBackground = YES;
+
+        Ekisu *ekisu = _ekisus[[(UIButton *)sender tag]];
+        [[segue destinationViewController] setEkisu:ekisu];
+    }
+}
+
+
 #pragma mark - TableView DataSource
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -211,7 +233,8 @@
 
     // calculate ratio of ekisu
     CGFloat progress = [ekisu.duration floatValue] / [ekisu.video.duration floatValue];
-    [cell.ekisuProgressView setProgress:progress animated:YES];
+    [cell.ekisuRateView setProgress:progress animated:YES];
+    [cell.ekisuRateButton setTag:[indexPath row]];  // set tag of button to indexPath row.
 
     return cell;
 }

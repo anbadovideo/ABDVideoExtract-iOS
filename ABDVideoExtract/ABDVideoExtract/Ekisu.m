@@ -8,7 +8,7 @@
 
 #import "Ekisu.h"
 #import "Video.h"
-#import "ExtractSection.h"
+#import "EkisuSection.h"
 #import "Utility.h"
 
 @implementation Ekisu
@@ -39,7 +39,7 @@
     NSArray *separatedStrings = [sectionString componentsSeparatedByString:@", "];
     for (NSString *aSectionString in separatedStrings) {
         NSArray *ekisuTimes = [aSectionString componentsSeparatedByString:@":"];
-        ExtractSection *extractSection = [ExtractSection extractSectionWithStartTime:[ekisuTimes[0] floatValue] endTime:[ekisuTimes[1] floatValue]];
+        EkisuSection *extractSection = [EkisuSection extractSectionWithStartTime:[ekisuTimes[0] floatValue] endTime:[ekisuTimes[1] floatValue]];
         [sections addObject:extractSection];
     }
     return sections;

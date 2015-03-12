@@ -11,8 +11,8 @@
 #import "ABDPlayerControls.h"
 #import "XCDYouTubeVideo.h"
 #import "XCDYouTubeClient.h"
-#import "ExtractSection.h"
-#import "ABDExtractSlider.h"
+#import "EkisuSection.h"
+#import "ABDEkisuSlider.h"
 #import "Utility.h"
 #import "Ekisu.h"
 #import "Video.h"
@@ -56,11 +56,11 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     [self.view addSubview:_playbackView];
 
     if (_extractSections == nil) {
-        ExtractSection *section1 = [[ExtractSection alloc] initWithStartTime:[Utility mmssToSeconds:@"00:00"] endTime:[Utility mmssToSeconds:@"00:57"]];
+        EkisuSection *section1 = [[EkisuSection alloc] initWithStartTime:[Utility mmssToSeconds:@"00:00"] endTime:[Utility mmssToSeconds:@"00:57"]];
         NSArray *sections = @[section1, ];
 
         NSInteger ekisuDuration = 0;
-        for (ExtractSection *extractSection in sections) {
+        for (EkisuSection *extractSection in sections) {
             ekisuDuration += [extractSection duration];
         }
         NSLog(@"ekisu duration %d", ekisuDuration);
@@ -72,8 +72,8 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     ABDPlayerControls *controls = [[ABDPlayerControls alloc] initWithMoviePlayer:self];
 
     // slider initializing.
-    ABDExtractSlider *slider = [[ABDExtractSlider alloc] init];
-    [slider setExtractSections:_extractSections];
+    ABDEkisuSlider *slider = [[ABDEkisuSlider alloc] init];
+    [slider setEkisuSections:_extractSections];
     [controls setExtractSlider:slider];
     [self setControls:controls];
 
@@ -122,7 +122,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
 - (void)setExtractSections:(NSArray *)extractSections {
     _extractSections = extractSections;
-    self.controls.extractSlider.extractSections = extractSections;
+    self.controls.extractSlider.ekisuSections = extractSections;
 }
 
 - (void)setDuration:(NSTimeInterval)duration {
@@ -359,8 +359,8 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
         // 엑기스 구간 재생 중일 때
         NSTimeInterval remainExtractDuration = _extractDuration;    // 현재 남은 엑기스 재생시간을 위한 변수 선언 및 초기화
         for (int i=0; i<_sectionCounter; i++)
-            remainExtractDuration -= [(ExtractSection *)_extractSections[i] duration];  // 현재 재생 중인 엑기스 구간 이전의 엑기스 구간의 duration들을 모두 뺀다.
-        [_controls setRemainTime:remainExtractDuration - (currentTimeInterval -[(ExtractSection *)_extractSections[_sectionCounter] startTime])];
+            remainExtractDuration -= [(EkisuSection *)_extractSections[i] duration];  // 현재 재생 중인 엑기스 구간 이전의 엑기스 구간의 duration들을 모두 뺀다.
+        [_controls setRemainTime:remainExtractDuration - (currentTimeInterval -[(EkisuSection *)_extractSections[_sectionCounter] startTime])];
         // 해당 엑기스 구간의 재생 시점에서 시작 시간을 뺀 시간(해당 엑기스에서 재생 된 시간)을 앞선 변수에서 뺀 시간(=남은 엑기스 재생 시간)을 설정.
     }
 }
