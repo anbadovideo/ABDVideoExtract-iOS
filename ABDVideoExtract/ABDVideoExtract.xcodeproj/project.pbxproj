@@ -18,6 +18,7 @@
 		046F7C181A7A01C300084B94 /* slider_deactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F7C141A7A01C300084B94 /* slider_deactive@2x.png */; };
 		046F7C191A7A01C300084B94 /* slider_section_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F7C151A7A01C300084B94 /* slider_section_active@2x.png */; };
 		046F7C1A1A7A01C300084B94 /* slider_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046F7C161A7A01C300084B94 /* slider_thumb@2x.png */; };
+		048FF2611AB2FA3F00A6DD63 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 048FF2601AB2FA3F00A6DD63 /* InfoPlist.strings */; };
 		049E81A01AA6CEA200AA5EC2 /* progressBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 049E819F1AA6CEA200AA5EC2 /* progressBg.png */; };
 		04E3AFC31A81E865002DBB4D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E3AFC21A81E865002DBB4D /* AVFoundation.framework */; };
 		777221018833D82F25E327F8 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722B16FAADF6BB6DA25D6E /* Utility.m */; };
@@ -61,6 +62,7 @@
 		046F7C141A7A01C300084B94 /* slider_deactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_deactive@2x.png"; sourceTree = "<group>"; };
 		046F7C151A7A01C300084B94 /* slider_section_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_section_active@2x.png"; sourceTree = "<group>"; };
 		046F7C161A7A01C300084B94 /* slider_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_thumb@2x.png"; sourceTree = "<group>"; };
+		048FF2601AB2FA3F00A6DD63 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		049E819F1AA6CEA200AA5EC2 /* progressBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressBg.png; sourceTree = "<group>"; };
 		04E3AFC21A81E865002DBB4D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		50F14C761127AA8BCD082E3B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				0466D25A1A77596600092D08 /* Info.plist */,
 				0466D25B1A77596600092D08 /* main.m */,
 				77722FD62A986BB3B5FF2D49 /* extractSliderAssets */,
+				048FF2601AB2FA3F00A6DD63 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				046F7C191A7A01C300084B94 /* slider_section_active@2x.png in Resources */,
 				046F7C171A7A01C300084B94 /* slider_active@2x.png in Resources */,
 				046F7C181A7A01C300084B94 /* slider_deactive@2x.png in Resources */,
+				048FF2611AB2FA3F00A6DD63 /* InfoPlist.strings in Resources */,
 				049E81A01AA6CEA200AA5EC2 /* progressBg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

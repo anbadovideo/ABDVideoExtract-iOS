@@ -84,6 +84,11 @@
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.24 green:0.68 blue:0.85 alpha:1];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : [UIFont boldSystemFontOfSize:17]};
+
+    // show App Intro
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"ShowingIntro"] == NO) {
+        [self showIntro];
+    }
 }
 
 
@@ -188,6 +193,43 @@
     // Do view manipulation here.
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
+
+#pragma mark - Intro
+
+- (void)showIntro {
+    EAIntroPage *page1 = [EAIntroPage page];
+    page1.title = @"재밌는 영상, 이제 엑기스만 보세요.";
+    page1.titleColor = [UIColor colorWithWhite:0.3 alpha:1.0f];
+    page1.desc = @"재밌는 영상들을 볼 시간이 없는 바쁜 현대인들을 위해\n 직접 엄선하여 화제의 영상을 엑기스만 짜서 보여드립니다.\n엑기스만 보고 여러분의 시간을 절약하세요!";
+    page1.descColor = [UIColor colorWithWhite:0.3 alpha:1.0f];
+    page1.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"page1"]];
+
+    EAIntroPage *page2 = [EAIntroPage page];
+    page2.title = @"푸시를 허용해주세요.";
+    page2.titleColor = [UIColor colorWithWhite:0.3 alpha:1.0f];
+    page2.desc = @"여러분들에게 재밌는 엑기스들을 매일 배달해 드려요.\n귀찮게 하지 않을거예요.";
+    page2.descColor = [UIColor colorWithWhite:0.3 alpha:1.0f];
+    page2.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"page2"]];
+
+    EAIntroView *intro = [[EAIntroView alloc] initWithFrame:self.navigationController.view.bounds andPages:@[page1,page2]];
+    intro.backgroundColor = [UIColor whiteColor];
+    [intro setShowSkipButtonOnlyOnLastPage:YES];
+    [intro setDelegate:self];
+
+    [intro showInView:self.navigationController.view animateDuration:0.3];
+}
+
+- (void)introDidFinish:(EAIntroView *)introView {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"ShowingIntro"];
+
+    // intro 끝난 이후에 푸시 등록 요청.
+    UIApplication *application = [UIApplication sharedApplication];
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert) categories:nil];
+        [application registerUserNotificationSettings:settings];
+    }
+}
+
 
 #pragma mark - Segue
 
