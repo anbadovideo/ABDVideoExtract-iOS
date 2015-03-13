@@ -73,12 +73,15 @@
     [manager POST:[NSString stringWithFormat:@"%@/devices/", _serverURL] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Register error"
-                                                            message:[error localizedDescription]
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"NO"
-                                                  otherButtonTitles:@"Retry", nil];
-        [alertView show];
+        if (operation.response.statusCode != 400) {
+            // 400 에러는 중복된 데이터 등록 시에 발생이므로 예외
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Register error"
+                                                                message:[error localizedDescription]
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"NO"
+                                                      otherButtonTitles:@"Retry", nil];
+            [alertView show];
+        }
     }];
 }
 
