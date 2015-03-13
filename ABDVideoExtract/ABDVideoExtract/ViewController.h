@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <EAIntroView/EAIntroView.h>
 
-@interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, EAIntroDelegate>
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *ekisus;
 @end

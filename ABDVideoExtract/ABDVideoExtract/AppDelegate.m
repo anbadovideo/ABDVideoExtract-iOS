@@ -20,12 +20,6 @@
     // Override point for customization after application launch.
     _serverURL = @"https://stormy-crag-2618.herokuapp.com";
 
-    // Todo : Walkthrough 통해서 받도록 해줘야 됨.
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert) categories:nil];
-        [application registerUserNotificationSettings:settings];
-    }
-
     return YES;
 }
 
