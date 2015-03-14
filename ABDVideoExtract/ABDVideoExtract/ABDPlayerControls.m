@@ -126,6 +126,9 @@ const static int kPadding = 10;
     _extractSlider.frame = CGRectMake(0, 0, _bottomBar.frame.size.width, _bottomBar.frame.size.height);
     // update drawing section of ekisu for new frame
     [_extractSlider setNeedsDisplay];
+
+    // controlPlaying button state renew
+    [self controlPlaying:_playButton];
 }
 
 - (void)setRemainTime:(NSTimeInterval)time {
