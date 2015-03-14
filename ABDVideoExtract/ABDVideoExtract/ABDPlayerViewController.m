@@ -17,12 +17,16 @@
 #import "Ekisu.h"
 #import "Video.h"
 #import "MBProgressHUD.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
 
 @interface ABDPlayerViewController ()
 @property (nonatomic, strong) MBProgressHUD *loadingView;
 @property (nonatomic, strong) NSURL *streamURL;
 - (void)initSliderTimer;
 - (void)syncSlider;
+
+- (void)trackingEvent:(NSString *)action label:(NSString *)label;
 @end
 
 @interface ABDPlayerViewController (Player)
@@ -75,6 +79,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.screenName = @"PlayerViewController";
 }
 
 - (void)setControls:(ABDPlayerControls *)controls {
@@ -364,11 +369,15 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 - (void)replay:(Playmode)mode {
     switch (mode) {
         case PlaymodeEkisu: {
+            [self trackingEvent:@"button_press" label:@"ekisu_replay"];
+
             _sectionCounter = 0;
             [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_MSEC)];
             break;
         }
         case PlaymodeAll: {
+            [self trackingEvent:@"button_press" label:@"entire_replay"];
+
             _sectionCounter = -1;
             [self.player seekToTime:CMTimeMakeWithSeconds(0, NSEC_PER_MSEC)];
             break;
@@ -511,4 +520,14 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     }
 }
 
+#pragma mark - Google Analytics Method
+
+- (void)trackingEvent:(NSString *)action label:(NSString *)label {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:self.screenName];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                          action:action
+                                                           label:label
+                                                           value:nil] build]];
+}
 @end

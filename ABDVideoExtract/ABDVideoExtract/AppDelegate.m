@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AFNetworking.h"
+#import "GAI.h"
 
 @interface AppDelegate ()
 
@@ -19,6 +20,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     _serverURL = @"https://stormy-crag-2618.herokuapp.com";
+
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    [GAI sharedInstance].dispatchInterval = 20;
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelError];
+    [[GAI sharedInstance] trackerWithTrackingId:@"UA-45579903-4"];
 
     return YES;
 }
