@@ -41,4 +41,6 @@ typedef enum {
 - (void)replay:(Playmode)mode;
 
 - (BOOL)isPlaying;
+
+- (void)showPlayerView:(BOOL)show;
 @end

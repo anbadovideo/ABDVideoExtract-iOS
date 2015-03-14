@@ -46,12 +46,21 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="600" height="338"/>
                                                             <color key="backgroundColor" red="0.32549019610000002" green="0.32549019610000002" blue="0.32549019610000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="2u5-IZ-Xs2">
+                                                            <rect key="frame" x="550" y="8" width="42" height="42"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="42" id="0bq-Lr-Vjs"/>
+                                                                <constraint firstAttribute="width" constant="42" id="QJB-eb-trM"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="Wck-4H-FHa" secondAttribute="trailing" id="8N0-rC-urg"/>
+                                                        <constraint firstItem="2u5-IZ-Xs2" firstAttribute="top" secondItem="dRu-6e-vib" secondAttribute="top" constant="8" id="Bzl-f1-Mpt"/>
                                                         <constraint firstItem="Wck-4H-FHa" firstAttribute="top" secondItem="dRu-6e-vib" secondAttribute="top" id="Esz-cr-LTb"/>
                                                         <constraint firstAttribute="width" secondItem="dRu-6e-vib" secondAttribute="height" multiplier="300:169" id="NA2-6n-fgM"/>
+                                                        <constraint firstAttribute="trailing" secondItem="2u5-IZ-Xs2" secondAttribute="trailing" constant="8" id="Urz-nQ-R54"/>
                                                         <constraint firstItem="Wck-4H-FHa" firstAttribute="leading" secondItem="dRu-6e-vib" secondAttribute="leading" id="lPz-Lz-IpK"/>
                                                         <constraint firstAttribute="bottom" secondItem="Wck-4H-FHa" secondAttribute="bottom" id="qc1-c5-6Dv"/>
                                                     </constraints>
@@ -117,6 +126,7 @@
                                             <outlet property="ekisuThumbView" destination="dRu-6e-vib" id="JO0-ps-cFa"/>
                                             <outlet property="ekisuThumbnailImageView" destination="Wck-4H-FHa" id="YDu-Gu-9s4"/>
                                             <outlet property="ekisuTitleLabel" destination="5fd-up-2JO" id="75P-EP-PSD"/>
+                                            <outlet property="playableImageView" destination="2u5-IZ-Xs2" id="qQO-jQ-A78"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -395,5 +405,6 @@
     </scenes>
     <resources>
         <image name="Waterdrop" width="47" height="72"/>
+        <image name="play" width="42" height="42"/>
     </resources>
 </document>

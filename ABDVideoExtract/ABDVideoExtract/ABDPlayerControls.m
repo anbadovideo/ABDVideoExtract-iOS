@@ -14,6 +14,7 @@
 const static int kHeightOfBottomBar = 44;
 const static int kWidthOfRemainLabel = 42;
 const static int kHeightOfRemainLabel = 21;
+const static int kSizeOfPlayButton = 42;
 const static int kPadding = 10;
 
 @interface ABDPlayerControls ()
@@ -21,7 +22,7 @@ const static int kPadding = 10;
 
 @property (nonatomic, getter = isShowing) BOOL showing;
 
-@property (nonatomic, strong) NSTimer *durationTimer;
+@property (nonatomic, strong) UIButton *playButton;
 
 @property (nonatomic, strong) UIView *bottomBar;
 @property (nonatomic, strong) UILabel *remainTimeLabel;
@@ -49,6 +50,15 @@ const static int kPadding = 10;
     _bottomBar.backgroundColor = [UIColor clearColor];
     [self addSubview:_bottomBar];
 
+    _playButton = [[UIButton alloc] init];
+    _playButton.layer.shadowOffset = CGSizeMake(0, 0);
+    _playButton.layer.shadowRadius = 2;
+    _playButton.layer.shadowOpacity = 0.8f;
+    [_playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+    [_playButton addTarget:self action:@selector(controlPlaying:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_playButton];
+    _playButton.alpha = 0.0f;
+
     _remainTimeLabel = [[UILabel alloc] init];
     _remainTimeLabel.textColor = [UIColor whiteColor];
     _remainTimeLabel.font = [UIFont boldSystemFontOfSize:11.f];
@@ -56,7 +66,6 @@ const static int kPadding = 10;
     [_bottomBar addSubview:_remainTimeLabel];
     [_bottomBar bringSubviewToFront:_remainTimeLabel];
 }
-
 
 - (void)setupEndingView {
     _endingView = [[UIView alloc] initWithFrame:self.frame];
@@ -84,8 +93,10 @@ const static int kPadding = 10;
     [_endingView setHidden:YES];
 }
 
+
 - (void)adjustEndingView:(CGRect)frame {
     _endingView.frame = frame;
+    _playButton.frame = CGRectMake(frame.size.width/2 - kSizeOfPlayButton/2, frame.size.height/2 - kSizeOfPlayButton/2, kSizeOfPlayButton, kSizeOfPlayButton);
     _playAllButton.frame = CGRectMake(_endingView.frame.size.width / 3 - 100/2, _endingView.frame.size.height * 2 / 5 - 100/2, 100, 100);
     _replayEkisuButton.frame = CGRectMake(_endingView.frame.size.width * 2 / 3 - 100/2, _endingView.frame.size.height * 2 / 5 - 100/2, 100, 100);
 }
@@ -115,6 +126,9 @@ const static int kPadding = 10;
     _extractSlider.frame = CGRectMake(0, 0, _bottomBar.frame.size.width, _bottomBar.frame.size.height);
     // update drawing section of ekisu for new frame
     [_extractSlider setNeedsDisplay];
+
+    // controlPlaying button state renew
+    [self controlPlaying:_playButton];
 }
 
 - (void)setRemainTime:(NSTimeInterval)time {
@@ -122,6 +136,16 @@ const static int kPadding = 10;
 }
 
 #pragma mark - touch events
+
+- (void)controlPlaying:(UIButton *)controlPlaying {
+    if ([_playerViewController isPlaying]) {
+        [_playerViewController.player pause];
+        [controlPlaying setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+    } else {
+        [_playerViewController.player play];
+        [controlPlaying setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+    }
+}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self manageControlShowing];
@@ -151,6 +175,7 @@ const static int kPadding = 10;
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideControls:) object:nil];
         [UIView animateWithDuration:0.3 delay:0.0 options:0 animations:^{
             self.bottomBar.alpha = 1.0f;
+            self.playButton.alpha = 1.0f;
         } completion:^(BOOL finished) {
             _showing = YES;
             if (completion)
@@ -168,6 +193,7 @@ const static int kPadding = 10;
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideControls:) object:nil];
         [UIView animateWithDuration:0.3 delay:0.0 options:0 animations:^{
             self.bottomBar.alpha = 0.0f;
+            self.playButton.alpha = 0.0f;
         } completion:^(BOOL finished) {
             _showing = NO;
             if (completion)
