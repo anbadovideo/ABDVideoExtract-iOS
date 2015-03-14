@@ -16,8 +16,10 @@
 #import "Utility.h"
 #import "Ekisu.h"
 #import "Video.h"
+#import "MBProgressHUD.h"
 
 @interface ABDPlayerViewController ()
+@property (nonatomic, strong) MBProgressHUD *loadingView;
 @property (nonatomic, strong) NSURL *streamURL;
 - (void)initSliderTimer;
 - (void)syncSlider;
@@ -54,6 +56,10 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     _playbackView = [[ABDPlaybackView alloc] init];
     _playbackView.frame = self.view.frame;
     [self.view addSubview:_playbackView];
+
+    _loadingView = [[MBProgressHUD alloc] init];
+    _loadingView.color = [UIColor clearColor];
+    [self.view addSubview:_loadingView];
 
     if (_extractSections == nil) {
         EkisuSection *section1 = [[EkisuSection alloc] initWithStartTime:[Utility mmssToSeconds:@"00:00"] endTime:[Utility mmssToSeconds:@"00:57"]];
@@ -172,6 +178,8 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
                     dispatch_async( dispatch_get_main_queue(),
                             ^{
                                 /* IMPORTANT: Must dispatch to main queue in order to operate on the AVPlayer and AVPlayerItem. */
+//                                [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                                [_loadingView show:YES];
                                 [self prepareToPlayAsset:asset withKeys:requestedKeys];
                             });
                 }];
@@ -449,6 +457,14 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
                 /* Once the AVPlayerItem becomes ready to play, i.e.
                  [playerItem status] == AVPlayerItemStatusReadyToPlay,
                  its duration can be fetched from the item. */
+//                dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+//                    // Do something...
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//                    });
+//                });
+                [_loadingView hide:YES];
+
                 [_controls hideEndingView:YES];
                 [self initSliderTimer];
                 [self initEkisuSectionChecker];

@@ -16,12 +16,14 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "ABDEkisuIngredientViewController.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
+#import "MBProgressHUD.h"
 #import <AFNetworking/AFNetworking.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CCMPopup/CCMPopupSegue.h>
 
 @interface ABDEkisuCell : UITableViewCell
-@property(strong, nonatomic) IBOutlet UIView *ekisuThumbView;
+@property(nonatomic, strong) IBOutlet UIImageView *playableImageView;
+@property(nonatomic, strong) IBOutlet UIView *ekisuThumbView;
 @property(nonatomic, strong) IBOutlet UIImageView *ekisuThumbnailImageView;
 @property(nonatomic, strong) IBOutlet UILabel *ekisuTitleLabel;
 @property(nonatomic, strong) IBOutlet UIView *ekisuRateContainerView;
@@ -73,6 +75,7 @@
 @interface ViewController ()
 @property(nonatomic, strong) ABDPlayerViewController *playerViewController;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
+@property(nonatomic, strong) MBProgressHUD *loadingView;
 @property(nonatomic, strong) NSString *requestURLString;
 @end
 
@@ -94,6 +97,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    _loadingView = [[MBProgressHUD alloc] initWithFrame:self.tableView.frame];
+    _loadingView.color = [UIColor colorWithWhite:0.4 alpha:1.0f];
+    [self.tableView addSubview:_loadingView];
 
     [self initURLString];
 
@@ -134,9 +141,12 @@
         return;
     }
 
+    [_loadingView show:YES];
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:_requestURLString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
+//        NSLog(@"%@", responseObject);
+        [_loadingView hide:YES];
         if ([responseObject[@"results"] count] == 0) {
             self.tableView.showsInfiniteScrolling = NO;
             return;
