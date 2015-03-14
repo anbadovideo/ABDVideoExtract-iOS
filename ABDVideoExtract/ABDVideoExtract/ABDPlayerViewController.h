@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "GAI.h"
 
 typedef enum {
     PlaymodeEkisu,
@@ -19,7 +20,7 @@ typedef enum {
 @class ABDPlayerControls;
 @class Ekisu;
 
-@interface ABDPlayerViewController : UIViewController {
+@interface ABDPlayerViewController : GAITrackedViewController {
     id timeObserver;
     NSInteger _sectionCounter;   // for check playing extract section.
 }

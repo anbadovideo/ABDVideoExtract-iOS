@@ -20,6 +20,9 @@
 #import <AFNetworking/AFNetworking.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CCMPopup/CCMPopupSegue.h>
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 
 @interface ABDEkisuCell : UITableViewCell
 @property(nonatomic, strong) IBOutlet UIImageView *playableImageView;
@@ -83,6 +86,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.screenName = @"EkisuViewController";
 
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.24 green:0.68 blue:0.85 alpha:1];
@@ -202,6 +206,7 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
     // Do view manipulation here.
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    NSLog(@"rotation");
 }
 
 #pragma mark - Intro
@@ -246,6 +251,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     [super prepareForSegue:segue sender:sender];
     if ([segue isKindOfClass:[CCMPopupSegue class]]){
+        [self trackingEvent:@"button_press" label:@"ekisuRate_show"];
+
         CCMPopupSegue *popupSegue = (CCMPopupSegue *)segue;
         popupSegue.destinationBounds = CGRectMake(0, 0, 320, 292);
         popupSegue.backgroundViewAlpha = 1.0f;
@@ -296,6 +303,8 @@
     if ([_playerViewController isPlaying] && [ekisu.ekisuId isEqualToString:_playerViewController.ekisu.ekisuId]) {
         [_playerViewController.controls manageControlShowing];  // control panel showing
     } else {
+        [self trackingEvent:@"cell_press" label:@"newVideo_watch"];
+
         [_playerViewController.player pause];
         [_playerViewController.view removeFromSuperview];
 
@@ -313,5 +322,14 @@
 
 }
 
+#pragma mark - Google Analytics Method
 
+- (void)trackingEvent:(NSString *)action label:(NSString *)label {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:self.screenName];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                          action:action
+                                                           label:label
+                                                           value:nil] build]];
+}
 @end
