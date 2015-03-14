@@ -47,7 +47,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self.view setBackgroundColor:[UIColor blackColor]];
+    [self.view setBackgroundColor:[UIColor clearColor]];
 
     [self initSliderTimer];
     [self syncSlider];
@@ -61,19 +61,6 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     _loadingView.color = [UIColor clearColor];
     [self.view addSubview:_loadingView];
 
-    if (_extractSections == nil) {
-        EkisuSection *section1 = [[EkisuSection alloc] initWithStartTime:[Utility mmssToSeconds:@"00:00"] endTime:[Utility mmssToSeconds:@"00:57"]];
-        NSArray *sections = @[section1, ];
-
-        NSInteger ekisuDuration = 0;
-        for (EkisuSection *extractSection in sections) {
-            ekisuDuration += [extractSection duration];
-        }
-        NSLog(@"ekisu duration %d", ekisuDuration);
-        _extractDuration = ekisuDuration;   // 총 엑기스 시간 변수 설정.
-        _extractSections = sections;
-    }
-
     // playerControl initializing.
     ABDPlayerControls *controls = [[ABDPlayerControls alloc] initWithMoviePlayer:self];
 
@@ -84,11 +71,6 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     [self setControls:controls];
 
     _sectionCounter = 0;    // 엑기스 구간 순차 재생을 위한 카운터
-    if (_identifier == nil) {
-        // example video.
-        _identifier = [NSString stringWithFormat:@"Bpck7y0vRQE"];
-    }
-    [self setIdentifier:_identifier];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -115,6 +97,12 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
     self.playbackView.frame = self.view.frame;  // 플레이어 뷰의 frame에 맞게 playbackView도 위치 재조정.
     [self.controls setNeedsLayout]; // 플레이어 뷰의 frame에 맞게 controls도 위치 재조정.
+}
+
+- (void)showPlayerView:(BOOL)show {
+    // 로딩 전에 기존에 재생 되던 비디오 화면을 숨기기 위한 메서드.
+    _playbackView.alpha = show;
+    _controls.alpha = show;
 }
 
 #pragma mark Set Properties
@@ -463,6 +451,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 //                        [MBProgressHUD hideHUDForView:self.view animated:YES];
 //                    });
 //                });
+                [self showPlayerView:YES];   // 재생 준비되면 보이기.
                 [_loadingView hide:YES];
 
                 [_controls hideEndingView:YES];

@@ -297,12 +297,15 @@
         [_playerViewController.controls manageControlShowing];  // control panel showing
     } else {
         [_playerViewController.player pause];
+        [_playerViewController.view removeFromSuperview];
 
         [_playerViewController setEkisu:ekisu];
         ABDEkisuCell *cell = (ABDEkisuCell *) [self.tableView cellForRowAtIndexPath:indexPath];
         [_playerViewController setFrame:cell.ekisuThumbView.bounds];    // 해당 셀의 위치에 맞게 플레이어 뷰의 프레임을 조정
         [cell.ekisuThumbView addSubview:_playerViewController.view];
         [_playerViewController.view becomeFirstResponder];              // 동영상 플레이어가 가장 이벤트처리를 먼저하도록 수정
+
+        [_playerViewController showPlayerView:NO]; // 재생 준비 전까지 숨김.
     }
 }
 
