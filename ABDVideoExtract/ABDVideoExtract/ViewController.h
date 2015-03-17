@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <EAIntroView/EAIntroView.h>
+#import "GAITrackedViewController.h"
 
-@interface ViewController : UIViewController
-
-
+@interface ViewController : GAITrackedViewController <UITableViewDelegate, UITableViewDataSource, EAIntroDelegate>
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *ekisus;
 @end
 
