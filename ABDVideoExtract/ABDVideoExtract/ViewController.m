@@ -318,8 +318,14 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // remove player view.
+    ABDEkisuCell *ekisuCell = (ABDEkisuCell *)cell;
+    if (ekisuCell.ekisuThumbView == [_playerViewController.view superview]) {
+        // 사라지는 셀 위에 현재 재생 중인 플레이어의 뷰가 존재하면
+        [_playerViewController.player pause];
+        [_playerViewController.view removeFromSuperview];
+    }
 }
 
 #pragma mark - Google Analytics Method
