@@ -145,6 +145,8 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     if (identifier == nil || [identifier isEqualToString:@""])
         return;
 
+    [_loadingView show:YES];    // showing loading view.
+
     _identifier = identifier;
     [[XCDYouTubeClient defaultClient] getVideoWithIdentifier:_identifier completionHandler:^(XCDYouTubeVideo *video, NSError *error) {
         if (video) {
@@ -182,8 +184,6 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
                     dispatch_async( dispatch_get_main_queue(),
                             ^{
                                 /* IMPORTANT: Must dispatch to main queue in order to operate on the AVPlayer and AVPlayerItem. */
-//                                [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                                [_loadingView show:YES];
                                 [self prepareToPlayAsset:asset withKeys:requestedKeys];
                             });
                 }];
