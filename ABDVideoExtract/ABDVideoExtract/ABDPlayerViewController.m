@@ -32,6 +32,7 @@
 @interface ABDPlayerViewController (Player)
 - (CMTime)playerItemDuration;
 - (void)removePlayerTimeObserver;
+- (void)registerPlayerTimeObserver;
 @end
 
 static void *ABDPlayerViewControllerRateObservationContext = &ABDPlayerViewControllerRateObservationContext;
@@ -80,6 +81,16 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.screenName = @"PlayerViewController";
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self removePlayerTimeObserver];
+    [self.player pause];
+    [self initEkisuSectionChecker];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:AVPlayerItemDidPlayToEndTimeNotification
+                                                  object:self.playerItem];
 }
 
 - (void)setControls:(ABDPlayerControls *)controls {
@@ -285,23 +296,17 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 #pragma mark - Movie timeline slider control
 
 -(void)initSliderTimer {
-    double interval = .1f;
+    CMTime interval = CMTimeMake(33, 2000); // 60 fps
 
     CMTime playerDuration = [self playerItemDuration];
     if (CMTIME_IS_INVALID(playerDuration))
     {
         return;
     }
-    double duration = CMTimeGetSeconds(playerDuration);
-    if (isfinite(duration))
-    {
-        CGFloat width = CGRectGetWidth([_controls.extractSlider bounds]);
-        interval = 0.5f * duration / width;
-    }
 
     /* Update the scrubber during normal playback. */
     __weak ABDPlayerViewController *weakSelf = self;
-    timeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(interval, NSEC_PER_MSEC)
+    timeObserver = [self.player addPeriodicTimeObserverForInterval:interval
                                                                queue:NULL /* If you pass NULL, the main queue is used. */
                                                           usingBlock:^(CMTime time)
                                                           {
@@ -349,13 +354,15 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
         [self.player pause];
         [_controls hideEndingView:NO];
     } else if ([_extractSections[_sectionCounter] endTime] < currentTimeInterval && currentTimeInterval < [_extractSections[_sectionCounter+1] startTime]) {
-        [UIView animateWithDuration:0.5f animations:^{
-            // 이전 섹션의 endTime과 다음 섹션의 startTime 사이일 때 ; 즉, skip해야하는 timeline일 때
-            [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[_sectionCounter+1] startTime], NSEC_PER_MSEC)];
-            _sectionCounter++;
-            NSLog(@"%d", _sectionCounter);
-        } completion:^(BOOL finished) {
-        }];
+        // remove player time observer.
+        [self removePlayerTimeObserver];
+
+        // 이전 섹션의 endTime과 다음 섹션의 startTime 사이일 때 ; 즉, skip해야하는 timeline일 때
+        [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[_sectionCounter+1] startTime], NSEC_PER_SEC)];
+        _sectionCounter++;
+
+        // re-register player time observer.
+        [self registerPlayerTimeObserver];
     } else {
         // 엑기스 구간 재생 중일 때
         NSTimeInterval remainExtractDuration = _extractDuration;    // 현재 남은 엑기스 재생시간을 위한 변수 선언 및 초기화
@@ -372,14 +379,14 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
             [self trackingEvent:@"button_press" label:@"ekisu_replay"];
 
             _sectionCounter = 0;
-            [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_MSEC)];
+            [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_SEC)];
             break;
         }
         case PlaymodeAll: {
             [self trackingEvent:@"button_press" label:@"entire_replay"];
 
             _sectionCounter = -1;
-            [self.player seekToTime:CMTimeMakeWithSeconds(0, NSEC_PER_MSEC)];
+            [self.player seekToTime:CMTimeMakeWithSeconds(0, NSEC_PER_SEC)];
             break;
         };
     }
@@ -388,6 +395,17 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
 - (BOOL)isPlaying {
     return self.player.rate > 0 && !self.player.error;
+}
+
+#pragma mark - Google Analytics Method
+
+- (void)trackingEvent:(NSString *)action label:(NSString *)label {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:self.screenName];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                          action:action
+                                                           label:label
+                                                           value:nil] build]];
 }
 
 @end
@@ -426,6 +444,30 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     }
 }
 
+- (void)registerPlayerTimeObserver {
+    if (!timeObserver)
+    {
+        CMTime playerDuration = [self playerItemDuration];
+        if (CMTIME_IS_INVALID(playerDuration))
+        {
+            return;
+        }
+
+        double duration = CMTimeGetSeconds(playerDuration);
+        if (isfinite(duration))
+        {
+            CMTime interval = CMTimeMake(33, 2000); // 60 fps
+            __weak ABDPlayerViewController *weakSelf = self;
+            timeObserver = [self.player addPeriodicTimeObserverForInterval:interval
+                                                                     queue:NULL
+                                                                usingBlock:^(CMTime time)
+                                                                {
+                                                                    [weakSelf syncSlider];
+                                                                }];
+        }
+    }
+}
+
 #pragma mark - Key Value Observing Methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -454,19 +496,13 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
                 /* Once the AVPlayerItem becomes ready to play, i.e.
                  [playerItem status] == AVPlayerItemStatusReadyToPlay,
                  its duration can be fetched from the item. */
-//                dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-//                    // Do something...
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        [MBProgressHUD hideHUDForView:self.view animated:YES];
-//                    });
-//                });
                 [self showPlayerView:YES];   // 재생 준비되면 보이기.
                 [_loadingView hide:YES];
 
                 [_controls hideEndingView:YES];
                 [self initSliderTimer];
                 [self initEkisuSectionChecker];
-                [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_MSEC)];
+                [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[0] startTime], NSEC_PER_SEC)];
                 [self.player play];
                 [self.controls showControls:nil];
 //                [self enableScrubber];
@@ -518,16 +554,5 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
-}
-
-#pragma mark - Google Analytics Method
-
-- (void)trackingEvent:(NSString *)action label:(NSString *)label {
-    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker set:kGAIScreenName value:self.screenName];
-    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
-                                                          action:action
-                                                           label:label
-                                                           value:nil] build]];
 }
 @end
