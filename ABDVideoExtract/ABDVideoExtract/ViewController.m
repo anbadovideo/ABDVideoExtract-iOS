@@ -207,6 +207,16 @@
     // Do view manipulation here.
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     NSLog(@"rotation");
+    [coordinator animateAlongsideTransition:^(id <UIViewControllerTransitionCoordinatorContext> context) {
+
+    } completion:^(id <UIViewControllerTransitionCoordinatorContext> context) {
+        if(UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+            [self.tableView setContentOffset:CGPointMake(0.0, self.tableView.contentSize.height - self.tableView.bounds.size.height - self.navigationController.navigationBar.frame.size.height)
+                           animated:NO];
+        } else {
+        }
+        [self.tableView scrollToRowAtIndexPath:[self indexPathForCurrentPlaying] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }];
 }
 
 #pragma mark - Intro
@@ -326,6 +336,16 @@
         [_playerViewController.player pause];
         [_playerViewController.view removeFromSuperview];
     }
+}
+
+- (NSIndexPath *)indexPathForCurrentPlaying {
+    // 현재 재생 중인 플레이어의 indexPath를 반환.
+    for (int i=0; i< [_ekisus count]; i++) {
+        if ([[_ekisus[i] ekisuId] isEqualToString:_playerViewController.ekisu.ekisuId]) {
+           return [NSIndexPath indexPathForRow:i inSection:0];
+        }
+    }
+    return [NSIndexPath indexPathForRow:0 inSection:0];
 }
 
 #pragma mark - Google Analytics Method
