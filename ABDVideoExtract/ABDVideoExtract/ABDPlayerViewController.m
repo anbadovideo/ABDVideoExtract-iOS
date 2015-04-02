@@ -60,7 +60,6 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     // playbackView initializing.
     _playbackView = [[ABDPlaybackView alloc] init];
     _playbackView.frame = self.view.frame;
-    [self.view addSubview:_playbackView];
 
     _loadingView = [[MBProgressHUD alloc] init];
     _loadingView.color = [UIColor clearColor];
@@ -91,6 +90,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:AVPlayerItemDidPlayToEndTimeNotification
                                                   object:self.playerItem];
+    [self.playbackView.layer removeFromSuperlayer];
 }
 
 - (void)setControls:(ABDPlayerControls *)controls {
@@ -540,6 +540,9 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
         {
             /* Set the AVPlayer for which the player layer displays visual output. */
             [self.playbackView setPlayer:self.player];
+
+            // 영상이 준비 되면 제일 아래 layer에 playback 레이어를 추가한다.
+            [self.view.layer insertSublayer:self.playbackView.layer atIndex:0];
 
 //            [self setViewDisplayName];
 
