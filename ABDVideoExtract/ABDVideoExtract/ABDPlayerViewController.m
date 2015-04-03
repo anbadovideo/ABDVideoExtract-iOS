@@ -287,7 +287,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 		 */
         [self.player replaceCurrentItemWithPlayerItem:self.playerItem];
 
-//        [self syncPlayPauseButtons];
+        [self.controls syncPlayPauseButton];
     }
 
     [self.controls.extractSlider setValue:0.0];
@@ -490,7 +490,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     /* AVPlayerItem "status" property value observer. */
     if (context == ABDPlayerViewControllerStatusObservationContext)
     {
-//        [self syncPlayPauseButtons];
+        [self.controls syncPlayPauseButton];
 
         AVPlayerItemStatus status = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
         switch (status)
@@ -537,7 +537,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
         /* AVPlayer "rate" property value observer. */
     else if (context == ABDPlayerViewControllerRateObservationContext)
     {
-//        [self syncPlayPauseButtons];
+        [self.controls syncPlayPauseButton];
     }
     /* AVPlayer "currentItem" property observer.
         Called when the AVPlayer replaceCurrentItemWithPlayerItem:
@@ -566,7 +566,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
              fit the video within the layer’s bounds. */
             [self.playbackView setVideoFillMode:AVLayerVideoGravityResizeAspect];
 
-//            [self syncPlayPauseButtons];
+            [self.controls syncPlayPauseButton];
         }
     }
     else

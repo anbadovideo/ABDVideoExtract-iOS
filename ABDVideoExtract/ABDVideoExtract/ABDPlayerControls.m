@@ -190,10 +190,16 @@ const static int kPadding = 10;
 - (void)controlPlaying:(UIButton *)controlPlaying {
     if ([_playerViewController isPlaying]) {
         [_playerViewController.player pause];
-        [controlPlaying setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
     } else {
         [_playerViewController.player play];
-        [controlPlaying setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+    }
+}
+
+- (void)syncPlayPauseButton {
+    if ([_playerViewController isPlaying]) {
+        [_playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+    } else {
+        [_playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
     }
 }
 
