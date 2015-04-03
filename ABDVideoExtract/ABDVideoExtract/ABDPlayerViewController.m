@@ -13,7 +13,6 @@
 #import "XCDYouTubeClient.h"
 #import "EkisuSection.h"
 #import "ABDEkisuSlider.h"
-#import "Utility.h"
 #import "Ekisu.h"
 #import "Video.h"
 #import "MBProgressHUD.h"
@@ -70,6 +69,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
     // slider initializing.
     ABDEkisuSlider *slider = [[ABDEkisuSlider alloc] init];
+    slider.userInteractionEnabled = NO;
     [slider setEkisuSections:_extractSections];
     [controls setExtractSlider:slider];
     [self setControls:controls];

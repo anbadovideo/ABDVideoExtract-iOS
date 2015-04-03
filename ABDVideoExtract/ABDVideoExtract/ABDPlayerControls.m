@@ -23,6 +23,7 @@ const static int kPadding = 10;
 @property (nonatomic, getter = isShowing) BOOL showing;
 
 @property (nonatomic, strong) UIButton *playButton;
+@property (nonatomic, strong) UIImageView *skipImageView;
 
 @property (nonatomic, strong) UIView *bottomBar;
 @property (nonatomic, strong) UILabel *remainTimeLabel;
@@ -59,12 +60,33 @@ const static int kPadding = 10;
     [self addSubview:_playButton];
     _playButton.alpha = 0.0f;
 
+    _skipImageView = [[UIImageView alloc] initWithFrame:_playButton.frame];
+//    _skipImageView.layer.shadowOffset = CGSizeMake(0, 0);
+//    _skipImageView.layer.shadowRadius = 2;
+//    _skipImageView.layer.shadowOpacity = 0.8f;
+    [_skipImageView setImage:[UIImage imageNamed:@"skipForward"]];
+    [self addSubview:_skipImageView];
+    _skipImageView.alpha = 0.0f;
+
     _remainTimeLabel = [[UILabel alloc] init];
     _remainTimeLabel.textColor = [UIColor whiteColor];
     _remainTimeLabel.font = [UIFont boldSystemFontOfSize:11.f];
     _remainTimeLabel.textAlignment = NSTextAlignmentRight;
     [_bottomBar addSubview:_remainTimeLabel];
     [_bottomBar bringSubviewToFront:_remainTimeLabel];
+
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:(@selector(manageControlShowing))];
+    [self addGestureRecognizer:tapGestureRecognizer];
+
+    UISwipeGestureRecognizer*swipeToRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    swipeToRightRecognizer.delegate = self;
+    [swipeToRightRecognizer setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self addGestureRecognizer:swipeToRightRecognizer];
+
+    UISwipeGestureRecognizer*swipeToLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    swipeToLeftRecognizer.delegate = self;
+    [swipeToLeftRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self addGestureRecognizer:swipeToLeftRecognizer];
 }
 
 - (void)setupEndingView {
@@ -97,6 +119,7 @@ const static int kPadding = 10;
 - (void)adjustEndingView:(CGRect)frame {
     _endingView.frame = frame;
     _playButton.frame = CGRectMake(frame.size.width/2 - kSizeOfPlayButton/2, frame.size.height/2 - kSizeOfPlayButton/2, kSizeOfPlayButton, kSizeOfPlayButton);
+    _skipImageView.frame = CGRectMake(frame.size.width/2 - kSizeOfPlayButton/2, frame.size.height/2 - kSizeOfPlayButton/2, kSizeOfPlayButton, kSizeOfPlayButton);
     _playAllButton.frame = CGRectMake(_endingView.frame.size.width / 3 - 100/2, _endingView.frame.size.height * 2 / 5 - 100/2, 100, 100);
     _replayEkisuButton.frame = CGRectMake(_endingView.frame.size.width * 2 / 3 - 100/2, _endingView.frame.size.height * 2 / 5 - 100/2, 100, 100);
 }
@@ -135,6 +158,33 @@ const static int kPadding = 10;
     _remainTimeLabel.text = [Utility secondsToMMSS:time];
 }
 
+#pragma mark handle swipe action
+
+- (void)handleSwipe:(UISwipeGestureRecognizer *)gestureRecognizer {
+    UISwipeGestureRecognizerDirection direction = [gestureRecognizer direction];
+    if (direction == UISwipeGestureRecognizerDirectionLeft) {
+        [UIView animateWithDuration:0.5f animations:
+                ^{
+                    _skipImageView.alpha = 1.0f;
+                    _skipImageView.image = [UIImage imageNamed:@"skipBackward"];
+                } completion:
+                ^(BOOL finished)
+                {
+                    _skipImageView.alpha = 0.0f;
+                }];
+    } else if (direction == UISwipeGestureRecognizerDirectionRight) {
+        [UIView animateWithDuration:0.5f animations:
+                ^{
+                    _skipImageView.alpha = 1.0f;
+                    _skipImageView.image = [UIImage imageNamed:@"skipForward"];
+                } completion:
+                ^(BOOL finished)
+                {
+                    _skipImageView.alpha = 0.0f;
+                }];
+    }
+}
+
 #pragma mark - touch events
 
 - (void)controlPlaying:(UIButton *)controlPlaying {
@@ -145,10 +195,6 @@ const static int kPadding = 10;
         [_playerViewController.player play];
         [controlPlaying setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
     }
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self manageControlShowing];
 }
 
 - (void)manageControlShowing {
