@@ -61,9 +61,9 @@ const static int kPadding = 10;
     _playButton.alpha = 0.0f;
 
     _skipImageView = [[UIImageView alloc] initWithFrame:_playButton.frame];
-//    _skipImageView.layer.shadowOffset = CGSizeMake(0, 0);
-//    _skipImageView.layer.shadowRadius = 2;
-//    _skipImageView.layer.shadowOpacity = 0.8f;
+    _skipImageView.layer.shadowOffset = CGSizeMake(0, 0);
+    _skipImageView.layer.shadowRadius = 2;
+    _skipImageView.layer.shadowOpacity = 0.8f;
     [_skipImageView setImage:[UIImage imageNamed:@"skipForward"]];
     [self addSubview:_skipImageView];
     _skipImageView.alpha = 0.0f;
@@ -78,15 +78,13 @@ const static int kPadding = 10;
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:(@selector(manageControlShowing))];
     [self addGestureRecognizer:tapGestureRecognizer];
 
-    UISwipeGestureRecognizer*swipeToRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    swipeToRightRecognizer.delegate = self;
-    [swipeToRightRecognizer setDirection:UISwipeGestureRecognizerDirectionRight];
-    [self addGestureRecognizer:swipeToRightRecognizer];
+    UISwipeGestureRecognizer*swipeLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    [swipeLeftRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self addGestureRecognizer:swipeLeftRecognizer];
 
-    UISwipeGestureRecognizer*swipeToLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    swipeToLeftRecognizer.delegate = self;
-    [swipeToLeftRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [self addGestureRecognizer:swipeToLeftRecognizer];
+    UISwipeGestureRecognizer*swipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    [swipeRightRecognizer setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self addGestureRecognizer:swipeRightRecognizer];
 }
 
 - (void)setupEndingView {
@@ -166,21 +164,23 @@ const static int kPadding = 10;
         [UIView animateWithDuration:0.5f animations:
                 ^{
                     _skipImageView.alpha = 1.0f;
-                    _skipImageView.image = [UIImage imageNamed:@"skipBackward"];
-                } completion:
-                ^(BOOL finished)
-                {
-                    _skipImageView.alpha = 0.0f;
-                }];
-    } else if (direction == UISwipeGestureRecognizerDirectionRight) {
-        [UIView animateWithDuration:0.5f animations:
-                ^{
-                    _skipImageView.alpha = 1.0f;
                     _skipImageView.image = [UIImage imageNamed:@"skipForward"];
                 } completion:
                 ^(BOOL finished)
                 {
                     _skipImageView.alpha = 0.0f;
+                    [_playerViewController skipForwardEkisuSection:YES];
+                }];
+    } else if (direction == UISwipeGestureRecognizerDirectionRight) {
+        [UIView animateWithDuration:0.5f animations:
+                ^{
+                    _skipImageView.alpha = 1.0f;
+                    _skipImageView.image = [UIImage imageNamed:@"skipBackward"];
+                } completion:
+                ^(BOOL finished)
+                {
+                    _skipImageView.alpha = 0.0f;
+                    [_playerViewController skipForwardEkisuSection:NO];
                 }];
     }
 }

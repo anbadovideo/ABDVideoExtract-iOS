@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "skipBackward.png"
+      "filename" : "skipForward.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "skipBackward@2x.png"
+      "filename" : "skipForward@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "skipBackward@3x.png"
+      "filename" : "skipForward@3x.png"
     }
   ],
   "info" : {

@@ -373,6 +373,22 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     }
 }
 
+- (void)skipForwardEkisuSection:(BOOL)isForward {
+    if (isForward) {
+        // skip forward.
+        if (_sectionCounter < [_ekisu.sections count]-1) {
+            _sectionCounter++;
+        }
+    } else {
+        // skip backward.
+        if (_sectionCounter > 0) {
+            // reduce count of section counter except first section.
+            _sectionCounter--;
+        }
+    }
+    [self.player seekToTime:CMTimeMakeWithSeconds([_extractSections[_sectionCounter] startTime], NSEC_PER_SEC)];
+}
+
 - (void)replay:(Playmode)mode {
     switch (mode) {
         case PlaymodeEkisu: {
