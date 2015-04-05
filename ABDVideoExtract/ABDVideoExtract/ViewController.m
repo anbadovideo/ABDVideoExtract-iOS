@@ -298,7 +298,7 @@
     [cell.ekisuTitleLabel setText:ekisu.title];
 
     // calculate rate of ekisu
-    [cell.ekisuRateView setProgress:ekisu.concentrationRate animated:YES];
+    [cell.ekisuRateView setProgress:ekisu.concentrationRate animated:NO];
     [cell.ekisuRateButton setTag:[indexPath row]];  // set tag of button to indexPath row.
 
     return cell;
