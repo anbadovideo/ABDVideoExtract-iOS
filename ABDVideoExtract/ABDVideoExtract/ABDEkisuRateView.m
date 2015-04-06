@@ -109,8 +109,6 @@ static const int kHeightOfLabel = 24;
 #pragma mark Actions
 
 - (void)setProgress:(CGFloat)progress animated:(BOOL)animated {
-    _progress = progress;
-
     [self setPercent:progress];
 
     if (animated == NO) {
@@ -119,6 +117,7 @@ static const int kHeightOfLabel = 24;
             [_displayLink invalidate];
             _displayLink = nil;
         }
+        self.progress = progress;
         [self setNeedsDisplay];
     } else {
         _animationStartTime = CACurrentMediaTime();
@@ -162,7 +161,7 @@ static const int kHeightOfLabel = 24;
         }
 
         //Set progress
-        [self setProgress:_animationFromValue + dt * (_animationToValue - _animationFromValue) animated:YES];
+        self.progress = _animationFromValue + dt * (_animationToValue - _animationFromValue);
         [self setNeedsDisplay];
 
     });

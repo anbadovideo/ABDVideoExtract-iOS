@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 #import "GAI.h"
+#import "iVersion.h"
 
 @interface AppDelegate ()
 
@@ -16,6 +17,13 @@
 
 @implementation AppDelegate
 
++ (void)initialize
+{
+    /* To show the alertView if the app has new update. */
+    [iVersion sharedInstance].applicationBundleID = @"com.anbado.ABDVideoExtract";
+    [iVersion sharedInstance].appStoreID = 976898570;
+    [iVersion sharedInstance].appStoreCountry = @"KR";
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.

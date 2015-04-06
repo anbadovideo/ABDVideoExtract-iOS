@@ -39,6 +39,8 @@ typedef enum {
 
 - (void)setFrame:(CGRect)frame;
 
+- (void)skipForwardEkisuSection:(BOOL)isForward;
+
 - (void)replay:(Playmode)mode;
 
 - (BOOL)isPlaying;

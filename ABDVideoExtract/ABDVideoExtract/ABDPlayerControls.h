@@ -24,5 +24,7 @@
 
 - (void)setRemainTime:(NSTimeInterval)time;
 
+- (void)syncPlayPauseButton;
+
 - (void)manageControlShowing;
 @end
