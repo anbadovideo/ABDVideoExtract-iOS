@@ -1,0 +1,43 @@
+//
+//  TeamSelectViewController.m
+//  ABDVideoExtract
+//
+//  Created by Seung-won Kim on 4/13/15.
+//  Copyright (c) 2015 anbado video. All rights reserved.
+//
+
+#import "TeamSelectViewController.h"
+
+@interface TeamCell : UITableViewCell
+@property (strong, nonatomic) IBOutlet UIImageView *logoImageView;
+@property (strong, nonatomic) IBOutlet UILabel *teamNameLabel;
+
+@end
+
+@implementation TeamCell
+
+@end
+
+@implementation TeamSelectViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end
