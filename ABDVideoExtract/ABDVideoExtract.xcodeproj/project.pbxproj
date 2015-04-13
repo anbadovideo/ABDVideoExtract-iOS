@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		042E03AC1ADB639C00E008E4 /* TeamSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E03AB1ADB639C00E008E4 /* TeamSelectViewController.m */; };
+		042E03AC1ADB639C00E008E4 /* MenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E03AB1ADB639C00E008E4 /* MenuTableViewController.m */; };
 		0466D25C1A77596600092D08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0466D25B1A77596600092D08 /* main.m */; };
 		0466D25F1A77596600092D08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0466D25E1A77596600092D08 /* AppDelegate.m */; };
-		0466D2621A77596600092D08 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0466D2611A77596600092D08 /* ViewController.m */; };
+		0466D2621A77596600092D08 /* EkisuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0466D2611A77596600092D08 /* EkisuViewController.m */; };
 		0466D2651A77596600092D08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0466D2631A77596600092D08 /* Main.storyboard */; };
 		0466D2671A77596600092D08 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0466D2661A77596600092D08 /* Images.xcassets */; };
 		0466D26A1A77596600092D08 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0466D2681A77596600092D08 /* LaunchScreen.xib */; };
@@ -46,15 +46,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		042E03AA1ADB639C00E008E4 /* TeamSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamSelectViewController.h; sourceTree = "<group>"; };
-		042E03AB1ADB639C00E008E4 /* TeamSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamSelectViewController.m; sourceTree = "<group>"; };
+		042E03AA1ADB639C00E008E4 /* MenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewController.h; sourceTree = "<group>"; };
+		042E03AB1ADB639C00E008E4 /* MenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewController.m; sourceTree = "<group>"; };
 		0466D2561A77596600092D08 /* ABDVideoExtract.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABDVideoExtract.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0466D25A1A77596600092D08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0466D25B1A77596600092D08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0466D25D1A77596600092D08 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0466D25E1A77596600092D08 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		0466D2601A77596600092D08 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		0466D2611A77596600092D08 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		0466D2601A77596600092D08 /* EkisuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EkisuViewController.h; sourceTree = "<group>"; };
+		0466D2611A77596600092D08 /* EkisuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EkisuViewController.m; sourceTree = "<group>"; };
 		0466D2641A77596600092D08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0466D2661A77596600092D08 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0466D2691A77596600092D08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -138,10 +138,10 @@
 			children = (
 				0466D25D1A77596600092D08 /* AppDelegate.h */,
 				0466D25E1A77596600092D08 /* AppDelegate.m */,
-				0466D2601A77596600092D08 /* ViewController.h */,
-				0466D2611A77596600092D08 /* ViewController.m */,
-				042E03AA1ADB639C00E008E4 /* TeamSelectViewController.h */,
-				042E03AB1ADB639C00E008E4 /* TeamSelectViewController.m */,
+				0466D2601A77596600092D08 /* EkisuViewController.h */,
+				0466D2611A77596600092D08 /* EkisuViewController.m */,
+				042E03AA1ADB639C00E008E4 /* MenuTableViewController.h */,
+				042E03AB1ADB639C00E008E4 /* MenuTableViewController.m */,
 				0466D2631A77596600092D08 /* Main.storyboard */,
 				0466D2661A77596600092D08 /* Images.xcassets */,
 				0466D2681A77596600092D08 /* LaunchScreen.xib */,
@@ -417,7 +417,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0466D2621A77596600092D08 /* ViewController.m in Sources */,
+				0466D2621A77596600092D08 /* EkisuViewController.m in Sources */,
 				0466D25F1A77596600092D08 /* AppDelegate.m in Sources */,
 				0466D25C1A77596600092D08 /* main.m in Sources */,
 				777227875D7B095B5DDCE276 /* EkisuSection.m in Sources */,
@@ -426,7 +426,7 @@
 				77722F54027E30E92EEF59E5 /* ABDPlayerViewController.m in Sources */,
 				77722EDEFEF592E1238603FF /* ABDPlayerControls.m in Sources */,
 				777221018833D82F25E327F8 /* Utility.m in Sources */,
-				042E03AC1ADB639C00E008E4 /* TeamSelectViewController.m in Sources */,
+				042E03AC1ADB639C00E008E4 /* MenuTableViewController.m in Sources */,
 				777229FADE567FA52EC634A6 /* ABDEkisuRateView.m in Sources */,
 				77722A4C959236B75369D8DC /* Ekisu.m in Sources */,
 				77722B751C560653DC1B62C9 /* Video.m in Sources */,

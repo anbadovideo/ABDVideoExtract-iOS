@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <EAIntroView/EAIntroView.h>
 #import "GAITrackedViewController.h"
+#import "SlideNavigationController.h"
 
-@interface ViewController : GAITrackedViewController <UITableViewDelegate, UITableViewDataSource, EAIntroDelegate>
+@interface EkisuViewController : GAITrackedViewController <UITableViewDelegate, UITableViewDataSource, EAIntroDelegate, SlideNavigationControllerDelegate>
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *ekisus;
 @end

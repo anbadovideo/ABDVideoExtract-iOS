@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TeamSelectViewController : UIViewController
+@interface MenuTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

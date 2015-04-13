@@ -6,23 +6,15 @@
 //  Copyright (c) 2015 anbado video. All rights reserved.
 //
 
-#import "TeamSelectViewController.h"
+#import "MenuTableViewController.h"
 
-@interface TeamCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UIImageView *logoImageView;
-@property (strong, nonatomic) IBOutlet UILabel *teamNameLabel;
-
-@end
-
-@implementation TeamCell
-
-@end
-
-@implementation TeamSelectViewController
+@implementation MenuTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,6 +22,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+}
 /*
 #pragma mark - Navigation
 

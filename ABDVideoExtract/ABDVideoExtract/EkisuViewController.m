@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 anbado video. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "EkisuViewController.h"
 #import "ABDPlayerViewController.h"
 #import "ABDPlayerControls.h"
 #import "ABDEkisuRateView.h"
@@ -75,14 +75,14 @@
 }
 @end
 
-@interface ViewController ()
+@interface EkisuViewController ()
 @property(nonatomic, strong) ABDPlayerViewController *playerViewController;
 @property(nonatomic, strong) UIRefreshControl *refreshControl;
 @property(nonatomic, strong) MBProgressHUD *loadingView;
 @property(nonatomic, strong) NSString *requestURLString;
 @end
 
-@implementation ViewController
+@implementation EkisuViewController
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -217,6 +217,13 @@
         }
         [self.tableView scrollToRowAtIndexPath:[self indexPathForCurrentPlaying] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }];
+}
+
+#pragma mark - Slide Navigation Delegate
+
+- (BOOL)slideNavigationControllerShouldDisplayLeftMenu
+{
+    return YES;
 }
 
 #pragma mark - Intro
