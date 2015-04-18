@@ -9,14 +9,13 @@
 #import "ABDPlayerViewController.h"
 #import "ABDPlaybackView.h"
 #import "ABDPlayerControls.h"
-#import "XCDYouTubeVideo.h"
-#import "XCDYouTubeClient.h"
 #import "EkisuSection.h"
 #import "ABDEkisuSlider.h"
 #import "Ekisu.h"
 #import "MBProgressHUD.h"
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
+#import <AFNetworking/AFNetworking.h>
 
 @interface ABDPlayerViewController ()
 @property (nonatomic, strong) MBProgressHUD *loadingView;
@@ -38,10 +37,10 @@ static void *ABDPlayerViewControllerStatusObservationContext = &ABDPlayerViewCon
 static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerViewControllerCurrentItemObservationContext;
 
 @implementation ABDPlayerViewController
-- (instancetype)initWithIdentifier:(NSString *)identifier {
+- (instancetype)initWithVideoAddress:(NSString *)videoAddress {
     self = [super init];
     if (self) {
-        _identifier = identifier;
+        _videoAddress = videoAddress;
         _playmode = PlaymodeEkisu;
     }
     return self;
@@ -124,7 +123,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
 - (void)setEkisu:(Ekisu *)ekisu {
     _ekisu = ekisu;
-    [self setIdentifier:ekisu.video];
+    [self setVideoAddress:ekisu.video];
     [self setExtractSections:ekisu.sections];
     [self setExtractDuration:[ekisu.duration floatValue]];
 }
@@ -140,27 +139,25 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
 #pragma mark Asset URL
 
-- (void)setIdentifier:(NSString *)identifier {
-    if (identifier == nil || [identifier isEqualToString:@""])
+- (void)setVideoAddress:(NSString *)videoAddress {
+    if (videoAddress == nil || [videoAddress isEqualToString:@""])
         return;
 
     [_loadingView show:YES];    // showing loading view.
 
-    _identifier = identifier;
-    [[XCDYouTubeClient defaultClient] getVideoWithIdentifier:_identifier completionHandler:^(XCDYouTubeVideo *video, NSError *error) {
-        if (video) {
-            // set video duration for expression of ekisu-spread.
-            [self setDuration:video.duration];
-
-            NSDictionary *streamURLs = video.streamURLs;
-            NSURL *URL = streamURLs[@(XCDYouTubeVideoQualityHD720)] ?: streamURLs[@(XCDYouTubeVideoQualityMedium360)] ?: streamURLs[@(XCDYouTubeVideoQualitySmall240)];
-            // Todo : 나중에 HD 옵션 설정 기능 추가.
-
-            // set streaming URL
+    _videoAddress = videoAddress;
+    NSString *requestURLString = [NSString stringWithFormat:@"http://videos.anbado.com/media?url=%@", videoAddress];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:requestURLString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        for (NSDictionary *mediaDictionary in responseObject[@"media"]) {
+            NSDictionary *streamURLDictionary = mediaDictionary[@"formats"];
+            NSString *streamString = streamURLDictionary[@"720p"] ?: streamURLDictionary[@"480p"] ?: streamURLDictionary[@"360p"] ?: streamURLDictionary[@"240p"] ?: streamURLDictionary[@"144p"];
+            NSURL *URL = [NSURL URLWithString:streamString];
             [self setURL:URL];
-        } else {
-            // Handle error
+            [self setDuration:[mediaDictionary[@"duration"] doubleValue]];
         }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        // handle error
     }];
 }
 

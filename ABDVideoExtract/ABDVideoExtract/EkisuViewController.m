@@ -315,8 +315,7 @@
     [cell.ekisuThumbnailImageView setImageWithURL:[NSURL URLWithString:ekisu.thumbnail] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [cell.ekisuTitleLabel setText:ekisu.title];
 
-    // calculate rate of ekisu
-//    [cell.ekisuRateView setProgress:ekisu.concentrationRate animated:NO];
+    [cell.indexLabel setText:ekisu.index];
     [cell.ekisuRateButton setTag:[indexPath row]];  // set tag of button to indexPath row.
 
     return cell;
