@@ -14,5 +14,8 @@
 @interface EkisuViewController : GAITrackedViewController <UITableViewDelegate, UITableViewDataSource, EAIntroDelegate, SlideNavigationControllerDelegate>
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *ekisus;
+@property (nonatomic, strong) NSString *categoryTitle;
+
+- (void)refreshData;
 @end
 

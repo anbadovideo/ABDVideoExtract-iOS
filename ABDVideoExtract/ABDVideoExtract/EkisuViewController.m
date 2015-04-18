@@ -84,6 +84,15 @@
 
 @implementation EkisuViewController
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // first initializing to "bears"
+        _categoryTitle = [NSString stringWithFormat:@"bears"];
+    }
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.screenName = @"EkisuViewController";
@@ -135,7 +144,8 @@
 - (void)initURLString {
     // set URL to initial request URL
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    _requestURLString = [NSString stringWithFormat:@"%@/ekisus/", appDelegate.serverURL];
+    _requestURLString = [NSString stringWithFormat:@"%@/ekisus/?category__title=%@", appDelegate.serverURL, _categoryTitle];
+    NSLog(@"%@", _requestURLString);
 }
 
 - (void)loadDataFromServer {

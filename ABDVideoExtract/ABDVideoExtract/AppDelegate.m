@@ -29,7 +29,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    _serverURL = @"http://ekisu.anbado.com";
+//    _serverURL = @"http://ekisu.anbado.com";
+    _serverURL = @"http://127.0.0.1:8000";
 
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     [GAI sharedInstance].dispatchInterval = 20;
@@ -41,6 +42,7 @@
     MenuTableViewController *menuViewController = (MenuTableViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:@"MenuTableViewController"];
     [SlideNavigationController sharedInstance].leftMenu = menuViewController;
     [SlideNavigationController sharedInstance].enableShadow = NO;
+    [SlideNavigationController sharedInstance].enableSwipeGesture = NO;
 
     UIButton *button  = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [button setImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
