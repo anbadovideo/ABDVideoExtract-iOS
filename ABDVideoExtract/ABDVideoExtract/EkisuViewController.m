@@ -84,15 +84,6 @@
 
 @implementation EkisuViewController
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        // first initializing to "bears"
-        _categoryTitle = [NSString stringWithFormat:@"bears"];
-    }
-    return self;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.screenName = @"EkisuViewController";
@@ -110,6 +101,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // first initializing to "bears"
+    _categoryTitle = @"bears";
+    NSLog(@"init %@", _categoryTitle);
 
     _loadingView = [[MBProgressHUD alloc] initWithFrame:self.tableView.frame];
     _loadingView.color = [UIColor colorWithWhite:0.4 alpha:1.0f];
@@ -125,6 +119,9 @@
     [_refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:_refreshControl];
 
+    // drawer menu에서 직접 테이블뷰 새로고침을 위한 노티피케이션 등록.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableWithNotification:) name:@"RefreshTable" object:nil];
+
     [self loadDataFromServer];
 
     // tableView paging.
@@ -132,6 +129,11 @@
     [self.tableView addInfiniteScrollingWithActionHandler:^{
         [weakSelf loadDataFromServer];
     }];
+}
+
+- (void)refreshTableWithNotification:(NSNotification *)notification {
+    _categoryTitle = notification.userInfo[@"category__title"];
+    [self refreshData];
 }
 
 - (void)refreshData {
