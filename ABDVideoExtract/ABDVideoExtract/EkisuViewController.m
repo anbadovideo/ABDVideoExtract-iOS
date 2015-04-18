@@ -12,9 +12,7 @@
 #import "ABDEkisuRateView.h"
 #import "AppDelegate.h"
 #import "Ekisu.h"
-#import "Video.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
-#import "ABDEkisuIngredientViewController.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #import "MBProgressHUD.h"
 #import <AFNetworking/AFNetworking.h>
@@ -32,6 +30,7 @@
 @property(nonatomic, strong) IBOutlet UIView *ekisuRateContainerView;
 @property(nonatomic, strong) IBOutlet ABDEkisuRateView *ekisuRateView;
 @property(nonatomic, strong) IBOutlet UIButton *ekisuRateButton;
+@property(nonatomic, strong) IBOutlet UILabel *indexLabel;
 @end
 
 @implementation ABDEkisuCell
@@ -317,7 +316,7 @@
     [cell.ekisuTitleLabel setText:ekisu.title];
 
     // calculate rate of ekisu
-    [cell.ekisuRateView setProgress:ekisu.concentrationRate animated:NO];
+//    [cell.ekisuRateView setProgress:ekisu.concentrationRate animated:NO];
     [cell.ekisuRateButton setTag:[indexPath row]];  // set tag of button to indexPath row.
 
     return cell;

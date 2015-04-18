@@ -14,7 +14,6 @@
 #import "EkisuSection.h"
 #import "ABDEkisuSlider.h"
 #import "Ekisu.h"
-#import "Video.h"
 #import "MBProgressHUD.h"
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
@@ -125,7 +124,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
 - (void)setEkisu:(Ekisu *)ekisu {
     _ekisu = ekisu;
-    [self setIdentifier:ekisu.video.identifier];
+    [self setIdentifier:ekisu.video];
     [self setExtractSections:ekisu.sections];
     [self setExtractDuration:[ekisu.duration floatValue]];
 }
