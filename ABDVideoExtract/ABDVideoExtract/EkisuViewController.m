@@ -27,9 +27,7 @@
 @property(nonatomic, strong) IBOutlet UIView *ekisuThumbView;
 @property(nonatomic, strong) IBOutlet UIImageView *ekisuThumbnailImageView;
 @property(nonatomic, strong) IBOutlet UILabel *ekisuTitleLabel;
-@property(nonatomic, strong) IBOutlet UIView *ekisuRateContainerView;
-@property(nonatomic, strong) IBOutlet ABDEkisuRateView *ekisuRateView;
-@property(nonatomic, strong) IBOutlet UIButton *ekisuRateButton;
+@property(nonatomic, strong) IBOutlet UIButton *shareButton;
 @property(nonatomic, strong) IBOutlet UILabel *indexLabel;
 @end
 
@@ -59,8 +57,11 @@
 - (void)initUI {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    [_ekisuRateView setProgressImage:[UIImage imageNamed:@"progressBg.png"]];
-    _ekisuRateView.drawGreyscaleBackground = YES;
+    self.shareButton.layer.shadowColor = [[UIColor darkGrayColor] CGColor];
+    self.shareButton.layer.shadowOffset = CGSizeMake(0.0, 1.0);
+    self.shareButton.layer.shadowRadius = 0.0;
+    self.shareButton.layer.shadowOpacity = 1.0f;
+    self.shareButton.layer.masksToBounds = NO;
 }
 
 - (void)layoutSubviews {
@@ -316,9 +317,15 @@
     [cell.ekisuTitleLabel setText:ekisu.title];
 
     [cell.indexLabel setText:ekisu.index];
-    [cell.ekisuRateButton setTag:[indexPath row]];  // set tag of button to indexPath row.
+    [cell.shareButton setTag:[indexPath row]];  // set tag of button to indexPath row.
+    [cell.shareButton addTarget:self action:@selector(shareEkisu:) forControlEvents:UIControlEventTouchUpInside];
 
     return cell;
+}
+
+- (void)shareEkisu:(UIButton *)sender {
+    Ekisu *ekisu =_ekisus[(NSUInteger) sender.tag];
+    NSLog(@"%@", ekisu);
 }
 
 #pragma mark - TableView Delegate

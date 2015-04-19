@@ -88,33 +88,17 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="edG-H0-UjV" userLabel="View - Concentration Image">
                                                     <rect key="frame" x="533" y="378" width="47" height="72"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="66N-iB-fnW" userLabel="View - Progress View" customClass="ABDEkisuRateView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="47" height="72"/>
-                                                            <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LPQ-zM-Rvl">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="47" height="72"/>
-                                                                    <state key="normal">
-                                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                                    </state>
-                                                                </button>
-                                                            </subviews>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                            <constraints>
-                                                                <constraint firstItem="LPQ-zM-Rvl" firstAttribute="top" secondItem="66N-iB-fnW" secondAttribute="top" id="JXb-Ox-CbO"/>
-                                                                <constraint firstAttribute="trailing" secondItem="LPQ-zM-Rvl" secondAttribute="trailing" id="Jx0-zj-bIl"/>
-                                                                <constraint firstAttribute="bottom" secondItem="LPQ-zM-Rvl" secondAttribute="bottom" id="K3t-TH-eNA"/>
-                                                                <constraint firstItem="LPQ-zM-Rvl" firstAttribute="leading" secondItem="66N-iB-fnW" secondAttribute="leading" id="T8t-al-Hch"/>
-                                                            </constraints>
-                                                        </view>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LPQ-zM-Rvl">
+                                                            <rect key="frame" x="0.0" y="13" width="47" height="47"/>
+                                                            <state key="normal" image="shareButton">
+                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="66N-iB-fnW" secondAttribute="trailing" id="04Q-Kj-sAb"/>
-                                                        <constraint firstItem="66N-iB-fnW" firstAttribute="top" secondItem="edG-H0-UjV" secondAttribute="top" id="4AU-dg-7Po"/>
-                                                        <constraint firstItem="66N-iB-fnW" firstAttribute="leading" secondItem="edG-H0-UjV" secondAttribute="leading" id="I2r-2W-uY3"/>
                                                         <constraint firstAttribute="height" constant="72" id="IkT-TC-lI9"/>
                                                         <constraint firstAttribute="width" constant="47" id="WrH-q2-Un7"/>
-                                                        <constraint firstAttribute="bottom" secondItem="66N-iB-fnW" secondAttribute="bottom" id="lEp-tw-ija"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -140,14 +124,12 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="ekisuRateButton" destination="LPQ-zM-Rvl" id="M5u-nM-GVy"/>
-                                            <outlet property="ekisuRateContainerView" destination="edG-H0-UjV" id="nrI-yO-svS"/>
-                                            <outlet property="ekisuRateView" destination="66N-iB-fnW" id="sY7-5I-wrV"/>
                                             <outlet property="ekisuThumbView" destination="dRu-6e-vib" id="JO0-ps-cFa"/>
                                             <outlet property="ekisuThumbnailImageView" destination="Wck-4H-FHa" id="YDu-Gu-9s4"/>
                                             <outlet property="ekisuTitleLabel" destination="5fd-up-2JO" id="75P-EP-PSD"/>
                                             <outlet property="indexLabel" destination="QJp-fH-1pb" id="uav-xZ-CHu"/>
                                             <outlet property="playableImageView" destination="2u5-IZ-Xs2" id="qQO-jQ-A78"/>
+                                            <outlet property="shareButton" destination="LPQ-zM-Rvl" id="M5u-nM-GVy"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -548,6 +530,7 @@
         <image name="heroes" width="58" height="36"/>
         <image name="lions" width="58" height="36"/>
         <image name="play" width="42" height="42"/>
+        <image name="shareButton" width="47" height="47"/>
         <image name="tigers" width="58" height="36"/>
         <image name="twins" width="58" height="36"/>
         <image name="wiz" width="58" height="36"/>
