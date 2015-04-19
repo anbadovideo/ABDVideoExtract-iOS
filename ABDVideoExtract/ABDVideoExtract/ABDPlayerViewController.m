@@ -15,7 +15,8 @@
 #import "MBProgressHUD.h"
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
-#import <AFNetworking/AFNetworking.h>
+#import "XCDYouTubeVideo.h"
+#import "XCDYouTubeClient.h"
 
 @interface ABDPlayerViewController ()
 @property (nonatomic, strong) MBProgressHUD *loadingView;
@@ -139,6 +140,21 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
 #pragma mark Asset URL
 
+- (NSString *)extractYoutubeIdFromLink:(NSString *)link {
+
+    NSString *regexString = @"((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)";
+    NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:regexString
+                                                                            options:NSRegularExpressionCaseInsensitive
+                                                                              error:nil];
+
+    NSArray *array = [regExp matchesInString:link options:0 range:NSMakeRange(0,link.length)];
+    if (array.count > 0) {
+        NSTextCheckingResult *result = array.firstObject;
+        return [link substringWithRange:result.range];
+    }
+    return nil;
+}
+
 - (void)setVideoAddress:(NSString *)videoAddress {
     if (videoAddress == nil || [videoAddress isEqualToString:@""])
         return;
@@ -146,18 +162,23 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
     [_loadingView show:YES];    // showing loading view.
 
     _videoAddress = videoAddress;
-    NSString *requestURLString = [NSString stringWithFormat:@"http://videos.anbado.com/media?url=%@", videoAddress];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:requestURLString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        for (NSDictionary *mediaDictionary in responseObject[@"media"]) {
-            NSDictionary *streamURLDictionary = mediaDictionary[@"formats"];
-            NSString *streamString = streamURLDictionary[@"720p"] ?: streamURLDictionary[@"480p"] ?: streamURLDictionary[@"360p"] ?: streamURLDictionary[@"240p"] ?: streamURLDictionary[@"144p"];
-            NSURL *URL = [NSURL URLWithString:streamString];
+    NSString *identifier = [self extractYoutubeIdFromLink:_videoAddress];
+    NSLog(@"%@", identifier);
+    [[XCDYouTubeClient defaultClient] getVideoWithIdentifier:identifier completionHandler:^(XCDYouTubeVideo *video, NSError *error) {
+        if (video) {
+            // set video duration for expression of ekisu-spread.
+            [self setDuration:video.duration];
+
+            NSDictionary *streamURLs = video.streamURLs;
+            NSURL *URL = streamURLs[@(XCDYouTubeVideoQualityHD720)] ?: streamURLs[@(XCDYouTubeVideoQualityMedium360)] ?: streamURLs[@(XCDYouTubeVideoQualitySmall240)];
+            // Todo : 나중에 HD 옵션 설정 기능 추가.
+
+            // set streaming URL
             [self setURL:URL];
-            [self setDuration:[mediaDictionary[@"duration"] doubleValue]];
+        } else {
+            // Handle error
+
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        // handle error
     }];
 }
 
