@@ -20,8 +20,21 @@
 	<string>0.9.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakao39b396d1a7bda1209eecf3bf4287b72b</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>900</string>
+	<key>KAKAO_APP_KEY</key>
+	<string>39b396d1a7bda1209eecf3bf4287b72b</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

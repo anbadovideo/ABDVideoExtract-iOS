@@ -17,6 +17,7 @@
 @property (nonatomic, strong, readonly) NSNumber *duration;
 @property (nonatomic, strong, readonly) NSDate *created;
 @property (nonatomic, strong, readonly) NSString *index;
+@property (nonatomic, strong, readonly) NSString *shareLink;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 - (NSArray *)parseSectionString:(NSString *)sectionString;

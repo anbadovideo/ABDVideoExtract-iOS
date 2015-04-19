@@ -22,6 +22,7 @@
         _sections = [self parseSectionString:dictionary[@"section"]];
         _duration = dictionary[@"duration"];
         _index = dictionary[@"index"];
+        _shareLink = dictionary[@"sharelink"];
 
         if ([dictionary[@"created"] isKindOfClass:[NSDate class]]) {
             _created = dictionary[@"created"];

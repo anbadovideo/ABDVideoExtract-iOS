@@ -21,6 +21,7 @@
 #import "GAI.h"
 #import "GAIFields.h"
 #import "GAIDictionaryBuilder.h"
+#import "ABDKakaoActivity.h"
 
 @interface ABDEkisuCell : UITableViewCell
 @property(nonatomic, strong) IBOutlet UIImageView *playableImageView;
@@ -326,6 +327,14 @@
 - (void)shareEkisu:(UIButton *)sender {
     Ekisu *ekisu =_ekisus[(NSUInteger) sender.tag];
     NSLog(@"%@", ekisu);
+
+    ABDKakaoActivity *kakaoActivity = [[ABDKakaoActivity alloc] init];
+    NSString *texttoshare = [NSString stringWithFormat:@"%@ %@, %@", ekisu.index, ekisu.title, ekisu.shareLink];
+    NSURL *url = [NSURL URLWithString:ekisu.thumbnail];
+    NSArray *activityItems = @[texttoshare, url];
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:@[kakaoActivity]];
+    activityVC.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypePrint, UIActivityTypeAddToReadingList];
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 #pragma mark - TableView Delegate
