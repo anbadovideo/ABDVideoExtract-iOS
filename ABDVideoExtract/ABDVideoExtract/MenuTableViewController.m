@@ -41,37 +41,48 @@ const static int kWiz       = 9;
         /* team select menu */
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         EkisuViewController *ekisuViewController = (EkisuViewController *)[storyboard instantiateViewControllerWithIdentifier:@"EkisuViewController"];
+        NSString *categoryFullTitle = [NSString new];
         NSString *categoryTitle = [NSString new];
         switch ([indexPath row]) {
             case kLions:
                 categoryTitle = @"lions";
+                categoryFullTitle = @"삼성라이온스";
                 break;
             case kHeroes:
                 categoryTitle = @"heroes";
+                categoryFullTitle = @"넥센히어로즈";
                 break;
             case kDinos:
                 categoryTitle = @"dinos";
+                categoryFullTitle = @"NC다이노스";
                 break;
             case kTwins:
                 categoryTitle = @"twins";
+                categoryFullTitle = @"LG트윈스";
                 break;
             case kWyverns:
                 categoryTitle = @"wyverns";
+                categoryFullTitle = @"SK와이번스";
                 break;
             case kBears:
                 categoryTitle = @"bears";
+                categoryFullTitle = @"두산베어스";
                 break;
             case kGiants:
                 categoryTitle = @"giants";
+                categoryFullTitle = @"롯데자이언츠";
                 break;
             case kTigers:
                 categoryTitle = @"tigers";
+                categoryFullTitle = @"기아타이거즈";
                 break;
             case kEagles:
                 categoryTitle = @"eagles";
+                categoryFullTitle = @"한화이글스";
                 break;
             case kWiz:
                 categoryTitle = @"wiz";
+                categoryFullTitle = @"kt위즈";
                 break;
             default:
                 break;
@@ -79,7 +90,7 @@ const static int kWiz       = 9;
         [[SlideNavigationController sharedInstance] popToRootAndSwitchToViewController:ekisuViewController
                                                                  withSlideOutAnimation:YES
                                                                          andCompletion:^{
-                                                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshTable" object:nil userInfo:@{@"category__title": categoryTitle}];
+                                                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshTable" object:nil userInfo:@{@"category__title": categoryTitle, @"category__fullTitle": categoryFullTitle}];
                                                                          }];
     }
 }

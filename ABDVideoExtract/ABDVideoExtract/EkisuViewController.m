@@ -133,6 +133,7 @@
 }
 
 - (void)refreshTableWithNotification:(NSNotification *)notification {
+    self.navigationItem.title = notification.userInfo[@"category__fullTitle"];
     _categoryTitle = notification.userInfo[@"category__title"];
     [self refreshData];
 }
