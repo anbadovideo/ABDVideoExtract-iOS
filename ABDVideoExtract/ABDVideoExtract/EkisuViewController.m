@@ -260,6 +260,8 @@
     intro.backgroundColor = [UIColor whiteColor];
     [intro setShowSkipButtonOnlyOnLastPage:YES];
     [intro setDelegate:self];
+    intro.pageControl.pageIndicatorTintColor = [UIColor darkGrayColor];
+    intro.pageControl.currentPageIndicatorTintColor = [UIColor lightGrayColor];
 
     [intro showInView:self.navigationController.view animateDuration:0.3];
 }
