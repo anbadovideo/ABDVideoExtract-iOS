@@ -122,6 +122,8 @@
 
     // drawer menu에서 직접 테이블뷰 새로고침을 위한 노티피케이션 등록.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableWithNotification:) name:@"RefreshTable" object:nil];
+    // drawer menu에서 메일 보내기를 위한 노티피케이션 등록.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMail:) name:@"SendMail" object:nil];
 
     [self loadDataFromServer];
 
@@ -238,6 +240,23 @@
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu
 {
     return YES;
+}
+
+#pragma mark - mail compose
+
+- (void)sendMail:(NSNotification *)notification {
+    MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
+    mail.mailComposeDelegate = self;
+    [mail setSubject:@"영상엑기스에 문의하기"];
+    [mail setMessageBody:[NSString stringWithFormat:@"\n\n개선되길 원하거나 바라는 점 : \n\n\n\n우리팀 엑기스 요청하기(팀명) : "]
+                  isHTML:NO];
+    [mail setToRecipients:@[@"connect@anbado.com"]];
+    [self presentViewController:mail animated:YES completion:nil];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Intro

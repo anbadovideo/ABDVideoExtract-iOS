@@ -37,10 +37,12 @@ const static int kWiz       = 9;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    EkisuViewController *ekisuViewController = (EkisuViewController *)[storyboard instantiateViewControllerWithIdentifier:@"EkisuViewController"];
+
     if ([indexPath section] == 0) {
         /* team select menu */
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        EkisuViewController *ekisuViewController = (EkisuViewController *)[storyboard instantiateViewControllerWithIdentifier:@"EkisuViewController"];
         NSString *categoryFullTitle = [NSString new];
         NSString *categoryTitle = [NSString new];
         switch ([indexPath row]) {
@@ -91,6 +93,12 @@ const static int kWiz       = 9;
                                                                  withSlideOutAnimation:YES
                                                                          andCompletion:^{
                                                                              [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshTable" object:nil userInfo:@{@"category__title": categoryTitle, @"category__fullTitle": categoryFullTitle}];
+                                                                         }];
+    } else {
+        [[SlideNavigationController sharedInstance] popToRootAndSwitchToViewController:ekisuViewController
+                                                                 withSlideOutAnimation:YES
+                                                                         andCompletion:^{
+                                                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"SendMail" object:nil userInfo:nil];
                                                                          }];
     }
 }

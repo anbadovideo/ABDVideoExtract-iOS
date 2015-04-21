@@ -10,6 +10,7 @@
 #import <EAIntroView/EAIntroView.h>
 #import "GAITrackedViewController.h"
 #import "SlideNavigationController.h"
+#import <MessageUI/MessageUI.h>
 
 @interface EkisuViewController : GAITrackedViewController <UITableViewDelegate, UITableViewDataSource, EAIntroDelegate, SlideNavigationControllerDelegate>
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
