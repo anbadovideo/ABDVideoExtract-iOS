@@ -248,7 +248,7 @@
     MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
     mail.mailComposeDelegate = self;
     [mail setSubject:@"영상엑기스에 문의하기"];
-    [mail setMessageBody:[NSString stringWithFormat:@"\n\n개선되길 원하거나 바라는 점 : \n\n\n\n우리팀 엑기스 요청하기(팀명) : "]
+    [mail setMessageBody:[NSString stringWithFormat:@"\n\n개선되길 원하거나 바라는 점 : \n\n\n\n우리팀 엑기스 요청하기(요청이 많이 들어오는 팀을 우선 반영해드릴 예정이에요) : "]
                   isHTML:NO];
     [mail setToRecipients:@[@"connect@anbado.com"]];
     [self presentViewController:mail animated:YES completion:nil];
@@ -329,6 +329,41 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_ekisus count];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if ([_ekisus count] == 0)
+        return tableView.frame.size.height;
+    return 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, tableView.frame.size.height)];
+
+    UIImageView *emptyImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"emptyEkisu"]];
+    emptyImageView.center = CGPointMake(CGRectGetMidX(emptyView.frame), CGRectGetMidY(emptyView.frame) - 100);
+
+    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, emptyImageView.frame.origin.y + emptyImageView.frame.size.height + 30, emptyView.bounds.size.width, 21)];
+    infoLabel.textColor = [UIColor darkGrayColor];
+    infoLabel.text = [NSString stringWithFormat:@"아직 엑기스가 없네요 %@", @"\U0001F625"];
+    infoLabel.font = [UIFont systemFontOfSize:15];
+    infoLabel.textAlignment = NSTextAlignmentCenter;
+
+    UIButton *sendRequestButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMidX(infoLabel.frame) - 120/2, infoLabel.frame.origin.y + infoLabel.frame.size.height + 30, 120, 30)];
+    [sendRequestButton setTitle:@"우리 팀 요청하기" forState:UIControlStateNormal];
+    [sendRequestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [sendRequestButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    sendRequestButton.backgroundColor = [UIColor darkGrayColor];
+    sendRequestButton.layer.cornerRadius = 5;
+    sendRequestButton.titleLabel.font = [UIFont boldSystemFontOfSize:15];
+    sendRequestButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    sendRequestButton.tag = 1;
+    [sendRequestButton addTarget:self action:@selector(sendMail:) forControlEvents:UIControlEventTouchUpInside];
+
+    [emptyView addSubview:infoLabel];
+    [emptyView addSubview:emptyImageView];
+    [emptyView addSubview:sendRequestButton];
+    return emptyView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
