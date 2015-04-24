@@ -10,8 +10,9 @@
 #import <EAIntroView/EAIntroView.h>
 #import "GAITrackedViewController.h"
 #import "SlideNavigationController.h"
+#import <MessageUI/MessageUI.h>
 
-@interface EkisuViewController : GAITrackedViewController <UITableViewDelegate, UITableViewDataSource, EAIntroDelegate, SlideNavigationControllerDelegate>
+@interface EkisuViewController : GAITrackedViewController <UITableViewDelegate, UITableViewDataSource, EAIntroDelegate, SlideNavigationControllerDelegate, MFMailComposeViewControllerDelegate>
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *ekisus;
 @property (nonatomic, strong) NSString *categoryTitle;

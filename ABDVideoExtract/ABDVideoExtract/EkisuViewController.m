@@ -102,13 +102,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // first initializing to "bears"
-    _categoryTitle = @"bears";
-    NSLog(@"init %@", _categoryTitle);
 
     _loadingView = [[MBProgressHUD alloc] initWithFrame:self.tableView.frame];
     _loadingView.color = [UIColor colorWithWhite:0.4 alpha:1.0f];
-    [self.tableView addSubview:_loadingView];
+    [self.view addSubview:_loadingView];
 
     [self initURLString];
 
@@ -122,6 +119,8 @@
 
     // drawer menu에서 직접 테이블뷰 새로고침을 위한 노티피케이션 등록.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableWithNotification:) name:@"RefreshTable" object:nil];
+    // drawer menu에서 메일 보내기를 위한 노티피케이션 등록.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMail:) name:@"SendMail" object:nil];
 
     [self loadDataFromServer];
 
@@ -148,7 +147,11 @@
 - (void)initURLString {
     // set URL to initial request URL
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-    _requestURLString = [NSString stringWithFormat:@"%@/ekisus/?category__title=%@", appDelegate.serverURL, _categoryTitle];
+
+    if (_categoryTitle != nil && ![@"" isEqualToString:_categoryTitle])
+        _requestURLString = [NSString stringWithFormat:@"%@/ekisus/?category__title=%@", appDelegate.serverURL, _categoryTitle];
+    else
+        _requestURLString = [NSString stringWithFormat:@"%@/ekisus/", appDelegate.serverURL];
     NSLog(@"%@", _requestURLString);
 }
 
@@ -240,24 +243,48 @@
     return YES;
 }
 
+#pragma mark - mail compose
+
+- (void)sendMail:(NSNotification *)notification {
+    MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
+    mail.mailComposeDelegate = self;
+    [mail setSubject:@"영상엑기스에 문의하기"];
+    [mail setMessageBody:[NSString stringWithFormat:@"\n\n개선되길 원하거나 바라는 점 : \n\n\n\n우리팀 엑기스 요청하기(요청이 많이 들어오는 팀을 우선 반영해드릴 예정이에요) : "]
+                  isHTML:NO];
+    [mail setToRecipients:@[@"connect@anbado.com"]];
+    [self presentViewController:mail animated:YES completion:nil];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Intro
 
 - (void)showIntro {
     EAIntroPage *page1 = [EAIntroPage page];
-    page1.title = @"재밌는 영상, 이제 엑기스만 보세요.";
+    page1.title = @"야구 하이라이트, 이제 영상엑기스에서 보세요";
     page1.titleColor = [UIColor colorWithWhite:0.3 alpha:1.0f];
-    page1.desc = @"재밌는 영상들을 볼 시간이 없는 바쁜 현대인들을 위해\n 직접 엄선하여 화제의 영상을 엑기스만 짜서 보여드립니다.\n엑기스만 보고 여러분의 시간을 절약하세요!";
+    page1.desc = @"우리팀의 활약상, 네이버 하이라이트만으론 부족할 때,\n 우리팀 팬들 찍은 직관 영상들을 보고플 때,\n 영상엑기스가 팬심을 담아 모아서 보여드립니다.\n ";
     page1.descColor = [UIColor colorWithWhite:0.3 alpha:1.0f];
     page1.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"page1"]];
 
     EAIntroPage *page2 = [EAIntroPage page];
-    page2.title = @"푸시를 허용해주세요.";
+    page2.title = @"팬이라면 깨알같은 장면도 놓칠 수 없는 법";
     page2.titleColor = [UIColor colorWithWhite:0.3 alpha:1.0f];
-    page2.desc = @"여러분들에게 재밌는 엑기스들을 매일 배달해 드려요.\n귀찮게 하지 않을거예요.";
+    page2.desc = @"단순한 경기 내용이 아니라 재밌는 장면도 보세요.\n 아, 간단하게 공유버튼을 통해 친구들에게도 보여줄 수 있어요.";
     page2.descColor = [UIColor colorWithWhite:0.3 alpha:1.0f];
     page2.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"page2"]];
 
-    EAIntroView *intro = [[EAIntroView alloc] initWithFrame:self.navigationController.view.bounds andPages:@[page1,page2]];
+    EAIntroPage *page3 = [EAIntroPage page];
+    page3.title = @"푸시를 허용해주세요.";
+    page3.titleColor = [UIColor colorWithWhite:0.3 alpha:1.0f];
+    page3.desc = @"여러분들에게 팬심 가득한 하이라이트 영상을 매일 배달해 드려요.\n귀찮게 하진 않을거예요.";
+    page3.descColor = [UIColor colorWithWhite:0.3 alpha:1.0f];
+    page3.titleIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"page3"]];
+
+    EAIntroView *intro = [[EAIntroView alloc] initWithFrame:self.navigationController.view.bounds andPages:@[page1,page2,page3]];
     intro.backgroundColor = [UIColor whiteColor];
     [intro setShowSkipButtonOnlyOnLastPage:YES];
     [intro setDelegate:self];
@@ -310,6 +337,41 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_ekisus count];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if ([_ekisus count] == 0)
+        return tableView.frame.size.height;
+    return 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, tableView.frame.size.height)];
+
+    UIImageView *emptyImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"emptyEkisu"]];
+    emptyImageView.center = CGPointMake(CGRectGetMidX(emptyView.frame), CGRectGetMidY(emptyView.frame) - 100);
+
+    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, emptyImageView.frame.origin.y + emptyImageView.frame.size.height + 30, emptyView.bounds.size.width, 21)];
+    infoLabel.textColor = [UIColor darkGrayColor];
+    infoLabel.text = [NSString stringWithFormat:@"아직 엑기스가 없네요 %@", @"\U0001F625"];
+    infoLabel.font = [UIFont systemFontOfSize:15];
+    infoLabel.textAlignment = NSTextAlignmentCenter;
+
+    UIButton *sendRequestButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMidX(infoLabel.frame) - 120/2, infoLabel.frame.origin.y + infoLabel.frame.size.height + 30, 120, 30)];
+    [sendRequestButton setTitle:@"우리 팀 요청하기" forState:UIControlStateNormal];
+    [sendRequestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [sendRequestButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    sendRequestButton.backgroundColor = [UIColor darkGrayColor];
+    sendRequestButton.layer.cornerRadius = 5;
+    sendRequestButton.titleLabel.font = [UIFont boldSystemFontOfSize:15];
+    sendRequestButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    sendRequestButton.tag = 1;
+    [sendRequestButton addTarget:self action:@selector(sendMail:) forControlEvents:UIControlEventTouchUpInside];
+
+    [emptyView addSubview:infoLabel];
+    [emptyView addSubview:emptyImageView];
+    [emptyView addSubview:sendRequestButton];
+    return emptyView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

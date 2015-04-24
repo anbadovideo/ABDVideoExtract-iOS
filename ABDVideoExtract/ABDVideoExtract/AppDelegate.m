@@ -29,7 +29,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    _serverURL = @"http://ekisu.anbado.com";
+    _serverURL = @"http://yaguekisu.anbado.com";
+//    _serverURL = @"http://ekisu.anbado.com";
+//    _serverURL = @"https://stormy-crag-2618.herokuapp.com";
+//    _serverURL = @"http://127.0.0.1:8000";
 
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     [GAI sharedInstance].dispatchInterval = 20;
