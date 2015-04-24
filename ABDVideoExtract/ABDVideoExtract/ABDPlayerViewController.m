@@ -9,15 +9,14 @@
 #import "ABDPlayerViewController.h"
 #import "ABDPlaybackView.h"
 #import "ABDPlayerControls.h"
-#import "XCDYouTubeVideo.h"
-#import "XCDYouTubeClient.h"
 #import "EkisuSection.h"
 #import "ABDEkisuSlider.h"
 #import "Ekisu.h"
-#import "Video.h"
 #import "MBProgressHUD.h"
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
+#import "XCDYouTubeVideo.h"
+#import "XCDYouTubeClient.h"
 
 @interface ABDPlayerViewController ()
 @property (nonatomic, strong) MBProgressHUD *loadingView;
@@ -39,10 +38,10 @@ static void *ABDPlayerViewControllerStatusObservationContext = &ABDPlayerViewCon
 static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerViewControllerCurrentItemObservationContext;
 
 @implementation ABDPlayerViewController
-- (instancetype)initWithIdentifier:(NSString *)identifier {
+- (instancetype)initWithVideoAddress:(NSString *)videoAddress {
     self = [super init];
     if (self) {
-        _identifier = identifier;
+        _videoAddress = videoAddress;
         _playmode = PlaymodeEkisu;
     }
     return self;
@@ -125,7 +124,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
 - (void)setEkisu:(Ekisu *)ekisu {
     _ekisu = ekisu;
-    [self setIdentifier:ekisu.video.identifier];
+    [self setVideoAddress:ekisu.video];
     [self setExtractSections:ekisu.sections];
     [self setExtractDuration:[ekisu.duration floatValue]];
 }
@@ -141,14 +140,31 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
 
 #pragma mark Asset URL
 
-- (void)setIdentifier:(NSString *)identifier {
-    if (identifier == nil || [identifier isEqualToString:@""])
+- (NSString *)extractYoutubeIdFromLink:(NSString *)link {
+
+    NSString *regexString = @"((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)";
+    NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:regexString
+                                                                            options:NSRegularExpressionCaseInsensitive
+                                                                              error:nil];
+
+    NSArray *array = [regExp matchesInString:link options:0 range:NSMakeRange(0,link.length)];
+    if (array.count > 0) {
+        NSTextCheckingResult *result = array.firstObject;
+        return [link substringWithRange:result.range];
+    }
+    return nil;
+}
+
+- (void)setVideoAddress:(NSString *)videoAddress {
+    if (videoAddress == nil || [videoAddress isEqualToString:@""])
         return;
 
     [_loadingView show:YES];    // showing loading view.
 
-    _identifier = identifier;
-    [[XCDYouTubeClient defaultClient] getVideoWithIdentifier:_identifier completionHandler:^(XCDYouTubeVideo *video, NSError *error) {
+    _videoAddress = videoAddress;
+    NSString *identifier = [self extractYoutubeIdFromLink:_videoAddress];
+    NSLog(@"%@", identifier);
+    [[XCDYouTubeClient defaultClient] getVideoWithIdentifier:identifier completionHandler:^(XCDYouTubeVideo *video, NSError *error) {
         if (video) {
             // set video duration for expression of ekisu-spread.
             [self setDuration:video.duration];
@@ -161,6 +177,7 @@ static void *ABDPlayerViewControllerCurrentItemObservationContext = &ABDPlayerVi
             [self setURL:URL];
         } else {
             // Handle error
+
         }
     }];
 }

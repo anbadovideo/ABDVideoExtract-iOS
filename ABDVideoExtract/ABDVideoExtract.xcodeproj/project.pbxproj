@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		042E03AC1ADB639C00E008E4 /* MenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E03AB1ADB639C00E008E4 /* MenuTableViewController.m */; };
 		0466D25C1A77596600092D08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0466D25B1A77596600092D08 /* main.m */; };
 		0466D25F1A77596600092D08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0466D25E1A77596600092D08 /* AppDelegate.m */; };
-		0466D2621A77596600092D08 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0466D2611A77596600092D08 /* ViewController.m */; };
+		0466D2621A77596600092D08 /* EkisuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0466D2611A77596600092D08 /* EkisuViewController.m */; };
 		0466D2651A77596600092D08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0466D2631A77596600092D08 /* Main.storyboard */; };
 		0466D2671A77596600092D08 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0466D2661A77596600092D08 /* Images.xcassets */; };
 		0466D26A1A77596600092D08 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0466D2681A77596600092D08 /* LaunchScreen.xib */; };
@@ -21,13 +22,14 @@
 		048FF2611AB2FA3F00A6DD63 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 048FF2601AB2FA3F00A6DD63 /* InfoPlist.strings */; };
 		049E81A01AA6CEA200AA5EC2 /* progressBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 049E819F1AA6CEA200AA5EC2 /* progressBg.png */; };
 		04E3AFC31A81E865002DBB4D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E3AFC21A81E865002DBB4D /* AVFoundation.framework */; };
+		04ED301E1AE6353F003BBE22 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04ED301D1AE6353F003BBE22 /* MessageUI.framework */; };
+		04F54DCB1AE42D3400F3EB6E /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F54DCA1AE42D3400F3EB6E /* KakaoOpenSDK.framework */; };
 		777221018833D82F25E327F8 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722B16FAADF6BB6DA25D6E /* Utility.m */; };
 		7772229CF85E509617B60DAB /* ABDEkisuSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 777224EB1B0C458AC2423CF0 /* ABDEkisuSlider.m */; };
 		777227875D7B095B5DDCE276 /* EkisuSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772267CEB501E29A49C8FC7 /* EkisuSection.m */; };
+		7772293028A08C300C9E2E32 /* ABDKakaoActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722AF7041A2A4ACEE53B0B /* ABDKakaoActivity.m */; };
 		777229FADE567FA52EC634A6 /* ABDEkisuRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777221649B64504AFFB9EBAF /* ABDEkisuRateView.m */; };
 		77722A4C959236B75369D8DC /* Ekisu.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722F6A80BDE4417B35EF9B /* Ekisu.m */; };
-		77722B751C560653DC1B62C9 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722ECB929ADAB13CF41451 /* Video.m */; };
-		77722C4FF452AF758F9BBB1C /* ABDEkisuIngredientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772295DE7BD976A62574D0A /* ABDEkisuIngredientViewController.m */; };
 		77722E1C6757CA840EDD768A /* ABDPlaybackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722D79972462C08E0CF93C /* ABDPlaybackView.m */; };
 		77722EDEFEF592E1238603FF /* ABDPlayerControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 77722589955D461E8EE4F7F7 /* ABDPlayerControls.m */; };
 		77722F54027E30E92EEF59E5 /* ABDPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7772254FA99B63169523E033 /* ABDPlayerViewController.m */; };
@@ -45,13 +47,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		042E03AA1ADB639C00E008E4 /* MenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewController.h; sourceTree = "<group>"; };
+		042E03AB1ADB639C00E008E4 /* MenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewController.m; sourceTree = "<group>"; };
 		0466D2561A77596600092D08 /* ABDVideoExtract.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABDVideoExtract.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0466D25A1A77596600092D08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0466D25B1A77596600092D08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0466D25D1A77596600092D08 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0466D25E1A77596600092D08 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		0466D2601A77596600092D08 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		0466D2611A77596600092D08 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		0466D2601A77596600092D08 /* EkisuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EkisuViewController.h; sourceTree = "<group>"; };
+		0466D2611A77596600092D08 /* EkisuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EkisuViewController.m; sourceTree = "<group>"; };
 		0466D2641A77596600092D08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0466D2661A77596600092D08 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0466D2691A77596600092D08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -65,6 +69,8 @@
 		048FF2601AB2FA3F00A6DD63 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		049E819F1AA6CEA200AA5EC2 /* progressBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressBg.png; sourceTree = "<group>"; };
 		04E3AFC21A81E865002DBB4D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		04ED301D1AE6353F003BBE22 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		04F54DCA1AE42D3400F3EB6E /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		50F14C761127AA8BCD082E3B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		77722022BAA09760E74C1E0D /* ABDEkisuSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDEkisuSlider.h; sourceTree = "<group>"; };
 		7772208354F438CE6D1DBD4E /* ABDPlayerControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDPlayerControls.h; sourceTree = "<group>"; };
@@ -73,19 +79,17 @@
 		777222CA363D93E8DD57617C /* ABDPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDPlayerViewController.h; sourceTree = "<group>"; };
 		77722301481BD5B9A169DC48 /* ABDEkisuRateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDEkisuRateView.h; sourceTree = "<group>"; };
 		777223394EC4D7CDD41EAC48 /* EkisuSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EkisuSection.h; sourceTree = "<group>"; };
-		777224D35CDE6CB0D277DE60 /* ABDEkisuIngredientViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDEkisuIngredientViewController.h; sourceTree = "<group>"; };
+		777223EE6D6AFA47951F16B7 /* ABDKakaoActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDKakaoActivity.h; sourceTree = "<group>"; };
 		777224EB1B0C458AC2423CF0 /* ABDEkisuSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDEkisuSlider.m; sourceTree = "<group>"; };
 		7772254FA99B63169523E033 /* ABDPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDPlayerViewController.m; sourceTree = "<group>"; };
 		77722589955D461E8EE4F7F7 /* ABDPlayerControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDPlayerControls.m; sourceTree = "<group>"; };
 		7772267CEB501E29A49C8FC7 /* EkisuSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EkisuSection.m; sourceTree = "<group>"; };
 		7772285A43C6E2ACC5BA0A18 /* ABDPlaybackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABDPlaybackView.h; sourceTree = "<group>"; };
-		7772295DE7BD976A62574D0A /* ABDEkisuIngredientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDEkisuIngredientViewController.m; sourceTree = "<group>"; };
 		77722A6037AD17B224A5087B /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		77722AF7041A2A4ACEE53B0B /* ABDKakaoActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDKakaoActivity.m; sourceTree = "<group>"; };
 		77722B16FAADF6BB6DA25D6E /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		77722D79972462C08E0CF93C /* ABDPlaybackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABDPlaybackView.m; sourceTree = "<group>"; };
-		77722ECB929ADAB13CF41451 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		77722F6A80BDE4417B35EF9B /* Ekisu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ekisu.m; sourceTree = "<group>"; };
-		77722FCC6FC238CAFF06899C /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
 		AC6009DC0E13367AC920E021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D78DA377083B18294D2CE893 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -95,8 +99,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04ED301E1AE6353F003BBE22 /* MessageUI.framework in Frameworks */,
 				04E3AFC31A81E865002DBB4D /* AVFoundation.framework in Frameworks */,
 				BE8A7480BCE6ABF5789B53B1 /* libPods.a in Frameworks */,
+				04F54DCB1AE42D3400F3EB6E /* KakaoOpenSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,8 +141,10 @@
 			children = (
 				0466D25D1A77596600092D08 /* AppDelegate.h */,
 				0466D25E1A77596600092D08 /* AppDelegate.m */,
-				0466D2601A77596600092D08 /* ViewController.h */,
-				0466D2611A77596600092D08 /* ViewController.m */,
+				0466D2601A77596600092D08 /* EkisuViewController.h */,
+				0466D2611A77596600092D08 /* EkisuViewController.m */,
+				042E03AA1ADB639C00E008E4 /* MenuTableViewController.h */,
+				042E03AB1ADB639C00E008E4 /* MenuTableViewController.m */,
 				0466D2631A77596600092D08 /* Main.storyboard */,
 				0466D2661A77596600092D08 /* Images.xcassets */,
 				0466D2681A77596600092D08 /* LaunchScreen.xib */,
@@ -145,7 +153,8 @@
 				7772245463F68C96AEC5967B /* Models */,
 				7772209E4F718C6C97894D9D /* Utilities */,
 				777229EF4E655C06CBD0A021 /* ABDEkisuRateView */,
-				77722A46D4F95D68FF4FA4C7 /* ABDEkisuIngredientViewController */,
+				777223EE6D6AFA47951F16B7 /* ABDKakaoActivity.h */,
+				77722AF7041A2A4ACEE53B0B /* ABDKakaoActivity.m */,
 			);
 			path = ABDVideoExtract;
 			sourceTree = "<group>";
@@ -212,8 +221,6 @@
 				7772267CEB501E29A49C8FC7 /* EkisuSection.m */,
 				777220DFFFBDDCDEFCA79A8A /* Ekisu.h */,
 				77722F6A80BDE4417B35EF9B /* Ekisu.m */,
-				77722FCC6FC238CAFF06899C /* Video.h */,
-				77722ECB929ADAB13CF41451 /* Video.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -242,15 +249,6 @@
 			name = ABDEkisuRateView;
 			sourceTree = "<group>";
 		};
-		77722A46D4F95D68FF4FA4C7 /* ABDEkisuIngredientViewController */ = {
-			isa = PBXGroup;
-			children = (
-				7772295DE7BD976A62574D0A /* ABDEkisuIngredientViewController.m */,
-				777224D35CDE6CB0D277DE60 /* ABDEkisuIngredientViewController.h */,
-			);
-			name = ABDEkisuIngredientViewController;
-			sourceTree = "<group>";
-		};
 		77722FD62A986BB3B5FF2D49 /* extractSliderAssets */ = {
 			isa = PBXGroup;
 			children = (
@@ -265,6 +263,8 @@
 		C4FC5D47B386172ED7EFE1C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04ED301D1AE6353F003BBE22 /* MessageUI.framework */,
+				04F54DCA1AE42D3400F3EB6E /* KakaoOpenSDK.framework */,
 				04E3AFC21A81E865002DBB4D /* AVFoundation.framework */,
 				D78DA377083B18294D2CE893 /* libPods.a */,
 			);
@@ -412,7 +412,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0466D2621A77596600092D08 /* ViewController.m in Sources */,
+				0466D2621A77596600092D08 /* EkisuViewController.m in Sources */,
 				0466D25F1A77596600092D08 /* AppDelegate.m in Sources */,
 				0466D25C1A77596600092D08 /* main.m in Sources */,
 				777227875D7B095B5DDCE276 /* EkisuSection.m in Sources */,
@@ -421,10 +421,10 @@
 				77722F54027E30E92EEF59E5 /* ABDPlayerViewController.m in Sources */,
 				77722EDEFEF592E1238603FF /* ABDPlayerControls.m in Sources */,
 				777221018833D82F25E327F8 /* Utility.m in Sources */,
+				042E03AC1ADB639C00E008E4 /* MenuTableViewController.m in Sources */,
 				777229FADE567FA52EC634A6 /* ABDEkisuRateView.m in Sources */,
 				77722A4C959236B75369D8DC /* Ekisu.m in Sources */,
-				77722B751C560653DC1B62C9 /* Video.m in Sources */,
-				77722C4FF452AF758F9BBB1C /* ABDEkisuIngredientViewController.m in Sources */,
+				7772293028A08C300C9E2E32 /* ABDKakaoActivity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,6 +547,10 @@
 			baseConfigurationReference = 50F14C761127AA8BCD082E3B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ABDVideoExtract/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -560,6 +564,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ABDVideoExtract/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

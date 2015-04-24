@@ -7,7 +7,6 @@
 //
 
 #import "Ekisu.h"
-#import "Video.h"
 #import "EkisuSection.h"
 #import "Utility.h"
 
@@ -17,11 +16,13 @@
     self = [super init];
     if (self) {
         _ekisuId = [dictionary[@"id"] stringValue];
-        _video = [[Video alloc] initFromDictionary:dictionary[@"video"]];
+        _video = dictionary[@"video"];
         _title = dictionary[@"title"];
         _thumbnail = dictionary[@"thumbnail"];
         _sections = [self parseSectionString:dictionary[@"section"]];
         _duration = dictionary[@"duration"];
+        _index = dictionary[@"index"];
+        _shareLink = dictionary[@"sharelink"];
 
         if ([dictionary[@"created"] isKindOfClass:[NSDate class]]) {
             _created = dictionary[@"created"];
@@ -44,10 +45,5 @@
     }
     return sections;
 }
-
-- (float)concentrationRate {
-    return 1 - ( [_duration floatValue] / [_video.duration floatValue]);
-}
-
 
 @end
